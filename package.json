@@ -1,0 +1,46 @@
+{
+  "name": "ehsan-front",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 7070",
+    "build": "next build",
+    "start": "next start -p 7070",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@bprogress/next": "^3.2.12",
+    "@heroui/react": "^3.1.0",
+    "@heroui/styles": "^3.1.0",
+    "@reduxjs/toolkit": "^2.12.0",
+    "@tiptap/extension-image": "^3.26.1",
+    "@tiptap/extension-link": "^3.26.1",
+    "@tiptap/extension-placeholder": "^3.26.1",
+    "@tiptap/react": "^3.26.1",
+    "@tiptap/starter-kit": "^3.26.1",
+    "axios": "^1.17.0",
+    "formik": "^2.4.9",
+    "iconsax-reactjs": "^0.0.8",
+    "js-cookie": "^3.0.8",
+    "lucide-react": "^1.17.0",
+    "motion": "^12.40.0",
+    "next": "16.2.4",
+    "react": "19.2.4",
+    "react-aria": "^3.48.0",
+    "react-dom": "19.2.4",
+    "react-redux": "^9.3.0",
+    "yup": "^1.7.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/js-cookie": "^3.0.6",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "packageManager": "pnpm@11.6.0+sha512.9a36518224080c6fe5165afdcfe79bfa118c29be703f3f462b1e32efe1e98e47e8750b148e08286250aad4113cc7993ca413c4e2cd447752708c2ee5751bc95f"
+}

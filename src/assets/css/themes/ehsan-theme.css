@@ -1,0 +1,303 @@
+/* ── Light theme (mockup: deep green hero, white chrome, light content) ── */
+html:not(.dark),
+html[data-theme="light"] {
+  --green-950: #061a14;
+  --green-900: #0f2922;
+  --green-800: #1b4332;
+  --green-700: #2d6a4f;
+  --green-600: #40916c;
+  --green-500: #52b788;
+
+  --brand-green-950: var(--green-950);
+  --brand-green-900: var(--green-800);
+  --brand-green-800: var(--green-700);
+  --brand-green-700: var(--green-600);
+  --brand-green-100: #d8f3dc;
+  --brand-green-50: #f1faee;
+
+  --shell-bg: #061a14;
+  --frame-border: rgb(255 255 255 / 0.22);
+  --frame-bg: #f4f9f6;
+
+  --hero-gradient: linear-gradient(
+    180deg,
+    var(--green-950) 0%,
+    var(--green-800) 22%,
+    var(--green-800) 52%,
+    var(--green-700) 78%,
+    var(--green-600) 100%
+  );
+  --hero-mist: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgb(244 249 246 / 0.08) 30%,
+    rgb(248 252 250 / 0.55) 55%,
+    rgb(255 255 255 / 0.92) 82%,
+    #ffffff 100%
+  );
+  --hero-text: #ffffff;
+  --hero-text-muted: rgb(255 255 255 / 0.72);
+  --hero-badge-bg: rgb(255 255 255 / 0.1);
+  --hero-badge-border: rgb(255 255 255 / 0.18);
+
+  --pillar-highlight: rgb(116 198 157 / 0.28);
+  --pillar-face: rgb(82 183 136 / 0.1);
+  --pillar-shade: rgb(8 31 23 / 0.26);
+  --pillar-groove: rgb(6 26 20 / 0.38);
+
+  --chrome-fg: #ffffff;
+  --chrome-fg-muted: rgb(255 255 255 / 0.72);
+  --header-bg: rgb(15 41 34 / 0.94);
+
+  --header-link: var(--chrome-fg-muted);
+  --header-link-active: var(--chrome-fg);
+  --header-bullet: rgb(255 255 255 / 0.32);
+  --nav-link: var(--chrome-fg-muted);
+  --nav-link-active: var(--chrome-fg);
+  --nav-bullet: rgb(255 255 255 / 0.32);
+
+  --content-bg: #f4f9f6;
+  --content-fg: var(--green-950);
+  --content-fg-muted: #3d5a4c;
+  --section-label: #5c7a6a;
+  --section-divider: #d8e8de;
+
+  --card-bg: #d8f3dc;
+  --card-border: #b7ddc8;
+  --card-shadow: rgb(27 67 50 / 0.1);
+  --tag-bg: #c8e8d4;
+  --service-card-bg: #d8f3dc;
+  --service-card-border: #b7ddc8;
+  --service-card-fg: var(--green-950);
+  --service-card-fg-muted: #3d5a4c;
+  --service-card-shadow: rgb(27 67 50 / 0.1);
+  --image-placeholder: linear-gradient(135deg, var(--green-700), var(--green-800));
+
+  --experience-panel-border: var(--card-border);
+  --experience-row-bg: #d8f3dc;
+  --experience-row-border: #b7ddc8;
+  --experience-row-highlight-bg: var(--green-800);
+  --experience-row-highlight-fg: #ffffff;
+
+  --contact-bg: var(--green-800);
+  --contact-fg: #ffffff;
+  --hero-cta-bg: var(--green-950);
+  --hero-cta-fg: #ffffff;
+  --hero-cta-border: rgb(255 255 255 / 0.14);
+  --hero-cta-bg-hover: var(--green-900);
+  --hero-cta-shadow: 0 10px 28px rgb(6 26 20 / 0.32);
+  --hero-footer-fg: var(--green-950);
+  --hero-footer-fg-muted: #3d5a4c;
+  --hero-footer-pill-bg: var(--green-800);
+  --hero-footer-pill-fg: #ffffff;
+  --hero-footer-pill-border: var(--green-700);
+  --hero-footer-pill-bg-hover: var(--green-700);
+  --footer-bg: var(--green-800);
+  --footer-bg-bottom: var(--green-900);
+  --footer-fg: #ffffff;
+  --footer-fg-muted: rgb(255 255 255 / 0.62);
+  --footer-link: rgb(255 255 255 / 0.78);
+  --footer-link-hover: #ffffff;
+  --footer-border: rgb(255 255 255 / 0.12);
+  --footer-social: rgb(255 255 255 / 0.72);
+  --footer-social-hover: #ffffff;
+
+  --admin-sidebar-bg: var(--green-900);
+  --admin-sidebar-border: rgb(255 255 255 / 0.08);
+  --admin-header-bg: rgb(15 41 34 / 0.92);
+  --admin-main-bg: var(--content-bg);
+  --admin-main-fg: var(--content-fg);
+  --admin-chrome-fg: #ffffff;
+  --admin-nav-fg: rgb(255 255 255 / 0.72);
+  --admin-nav-fg-active: #ffffff;
+  --admin-nav-bg-active: rgb(255 255 255 / 0.12);
+  --admin-subtitle-fg: rgb(255 255 255 / 0.45);
+
+  --accent: var(--green-800);
+  --accent-foreground: #ffffff;
+  --accent-hover: var(--green-700);
+  --default: #ffffff;
+  --default-foreground: var(--green-950);
+  --default-hover: #f1faee;
+  --accent-soft-foreground: var(--green-800);
+  --background: var(--content-bg);
+  --border: var(--card-border);
+  --danger: #dc2626;
+  --danger-foreground: #ffffff;
+  --default: #d8f3dc;
+  --default-foreground: var(--green-950);
+  --field-background: #e8f5ec;
+  --field-foreground: var(--green-950);
+  --field-placeholder: #6b8a7a;
+  --focus: var(--green-700);
+  --foreground: var(--content-fg);
+  --muted: #6b8a7a;
+  --overlay: #e8f5ec;
+  --overlay-foreground: var(--green-950);
+  --scrollbar: #b7ddc8;
+  --segment: #d8f3dc;
+  --segment-foreground: var(--green-950);
+  --separator: #b7ddc8;
+  --success: #2d6a4f;
+  --success-foreground: #ffffff;
+  --surface: #dff0e6;
+  --surface-foreground: var(--green-950);
+  --surface-secondary: #d8f3dc;
+  --surface-secondary-foreground: var(--green-950);
+  --surface-tertiary: #c8e8d4;
+  --surface-tertiary-foreground: var(--green-950);
+  --warning: #d97706;
+  --warning-foreground: var(--green-950);
+  --radius: 0.75rem;
+  --field-radius: 0.875rem;
+  --font-inter: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter);
+  color-scheme: light;
+}
+
+/* ── Dark theme (green slightly darker; light surfaces → dark) ── */
+html.dark,
+html[data-theme="dark"] {
+  --green-950: #040e0b;
+  --green-900: #081912;
+  --green-800: #122820;
+  --green-700: #1b4332;
+  --green-600: #245a42;
+  --green-500: #2d6a4f;
+
+  --shell-bg: #030303;
+  --frame-border: rgb(255 255 255 / 0.1);
+  --frame-bg: #0a0a0a;
+
+  --hero-gradient: linear-gradient(
+    180deg,
+    var(--green-950) 0%,
+    var(--green-900) 16%,
+    var(--green-800) 40%,
+    var(--green-700) 62%,
+    var(--green-600) 82%,
+    var(--green-600) 100%
+  );
+  --hero-mist: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgb(10 10 10 / 0.25) 38%,
+    rgb(10 10 10 / 0.72) 68%,
+    #0a0a0a 100%
+  );
+  --hero-text: #f5f5f5;
+  --hero-text-muted: rgb(245 245 245 / 0.68);
+  --hero-badge-bg: rgb(255 255 255 / 0.06);
+  --hero-badge-border: rgb(255 255 255 / 0.12);
+
+  --pillar-highlight: rgb(82 183 136 / 0.2);
+  --pillar-face: rgb(45 106 79 / 0.09);
+  --pillar-shade: rgb(4 14 11 / 0.34);
+  --pillar-groove: rgb(4 14 11 / 0.48);
+
+  --chrome-fg: #f5f5f5;
+  --chrome-fg-muted: rgb(245 245 245 / 0.72);
+  --header-bg: rgb(8 25 18 / 0.96);
+  --header-link: var(--chrome-fg-muted);
+  --header-link-active: var(--chrome-fg);
+  --header-bullet: rgb(245 245 245 / 0.28);
+  --nav-link: var(--chrome-fg-muted);
+  --nav-link-active: var(--chrome-fg);
+  --nav-bullet: var(--header-bullet);
+
+  --content-bg: #0a0a0a;
+  --content-fg: #ededed;
+  --content-fg-muted: #a3a3a3;
+  --section-label: #737373;
+  --section-divider: #262626;
+
+  --card-bg: #1b4332;
+  --card-border: #2d6a4f;
+  --card-shadow: rgb(0 0 0 / 0.28);
+  --tag-bg: #244735;
+  --service-card-bg: #1b4332;
+  --service-card-border: #2d6a4f;
+  --service-card-fg: #f1faee;
+  --service-card-fg-muted: rgb(209 231 221 / 0.78);
+  --service-card-shadow: rgb(0 0 0 / 0.28);
+  --image-placeholder: linear-gradient(135deg, var(--green-800), var(--green-950));
+
+  --experience-panel-border: var(--card-border);
+  --experience-row-bg: #1b4332;
+  --experience-row-border: #2d6a4f;
+  --experience-row-highlight-bg: var(--green-800);
+  --experience-row-highlight-fg: #f5f5f5;
+
+  --contact-bg: var(--green-900);
+  --contact-fg: #f5f5f5;
+  --hero-cta-bg: var(--green-600);
+  --hero-cta-fg: #ffffff;
+  --hero-cta-border: rgb(255 255 255 / 0.14);
+  --hero-cta-bg-hover: var(--green-500);
+  --hero-cta-shadow: 0 10px 28px rgb(0 0 0 / 0.35);
+  --hero-footer-fg: var(--hero-text);
+  --hero-footer-fg-muted: var(--hero-text-muted);
+  --hero-footer-pill-bg: var(--hero-cta-bg);
+  --hero-footer-pill-fg: var(--hero-cta-fg);
+  --hero-footer-pill-border: var(--hero-cta-border);
+  --hero-footer-pill-bg-hover: var(--hero-cta-bg-hover);
+  --footer-bg: var(--green-900);
+  --footer-bg-bottom: var(--green-950);
+  --footer-fg: #ededed;
+  --footer-fg-muted: rgb(237 237 237 / 0.58);
+  --footer-link: rgb(237 237 237 / 0.76);
+  --footer-link-hover: #ffffff;
+  --footer-border: rgb(255 255 255 / 0.08);
+  --footer-social: rgb(237 237 237 / 0.68);
+  --footer-social-hover: #ffffff;
+
+  --admin-sidebar-bg: var(--green-950);
+  --admin-sidebar-border: rgb(255 255 255 / 0.08);
+  --admin-header-bg: rgb(8 25 18 / 0.96);
+  --admin-main-bg: #0a0a0a;
+  --admin-main-fg: #ededed;
+  --admin-chrome-fg: #ffffff;
+  --admin-nav-fg: rgb(255 255 255 / 0.72);
+  --admin-nav-fg-active: #ffffff;
+  --admin-nav-bg-active: rgb(255 255 255 / 0.1);
+  --admin-subtitle-fg: rgb(255 255 255 / 0.42);
+
+  --accent: var(--green-600);
+  --accent-foreground: #ffffff;
+  --accent-hover: var(--green-500);
+  --default: #1f3d2f;
+  --default-foreground: #f1faee;
+  --default-hover: #245a42;
+  --accent-soft-foreground: #d8f3dc;
+  --background: #0a0a0a;
+  --border: #262626;
+  --danger: #ef4444;
+  --danger-foreground: #ffffff;
+  --field-background: #1a3428;
+  --field-foreground: #ededed;
+  --field-placeholder: #8fb39f;
+  --focus: var(--green-600);
+  --foreground: #ededed;
+  --muted: #a3c4b3;
+  --overlay: #1b4332;
+  --overlay-foreground: #ededed;
+  --scrollbar: #2d6a4f;
+  --segment: #1f3d2f;
+  --segment-foreground: #ededed;
+  --separator: #2d6a4f;
+  --success: var(--green-600);
+  --success-foreground: #ffffff;
+  --surface: #1b4332;
+  --surface-foreground: #ededed;
+  --surface-secondary: #1f3d2f;
+  --surface-secondary-foreground: #ededed;
+  --surface-tertiary: #244735;
+  --surface-tertiary-foreground: #ededed;
+  --warning: #f59e0b;
+  --warning-foreground: #0a0a0a;
+  --radius: 0.75rem;
+  --field-radius: 0.875rem;
+  --font-inter: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter);
+  color-scheme: dark;
+}

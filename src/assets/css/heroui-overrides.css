@@ -1,0 +1,95 @@
+[data-slot="search-field-input"]::placeholder {
+  text-align: start;
+}
+
+.admin-table-wrap {
+  @apply overflow-x-auto rounded-2xl ring-1 ring-border/50;
+}
+
+/* Public site buttons — scoped away from admin chrome */
+.site-frame:not(.admin-frame) .button--primary {
+  --button-bg: var(--accent);
+  --button-bg-hover: var(--accent-hover);
+  --button-bg-pressed: var(--accent-hover);
+  --button-fg: var(--accent-foreground);
+}
+
+.site-frame:not(.admin-frame) .button--secondary {
+  --button-bg: var(--default);
+  --button-bg-hover: var(--default-hover);
+  --button-bg-pressed: var(--default-hover);
+  --button-fg: var(--accent-soft-foreground);
+  border: 1px solid var(--card-border);
+}
+
+/* Primary on dark green bands (contact section, glass card on hero) */
+.site-frame:not(.admin-frame) .contact-band .button--primary,
+.site-frame:not(.admin-frame) .glass-card .button--primary {
+  --button-bg: #ffffff;
+  --button-bg-hover: #f1faee;
+  --button-bg-pressed: #e8f5ec;
+  --button-fg: var(--green-950);
+  border: 1px solid rgb(255 255 255 / 0.2);
+}
+
+html.dark .site-frame:not(.admin-frame) .contact-band .button--primary,
+html.dark .site-frame:not(.admin-frame) .glass-card .button--primary {
+  --button-bg: #f1faee;
+  --button-bg-hover: #ffffff;
+  --button-bg-pressed: #e8f5ec;
+  --button-fg: var(--green-950);
+}
+
+/* Auth / hero overlay forms */
+.site-frame:not(.admin-frame) .button--hero-cta {
+  --button-bg: var(--hero-cta-bg);
+  --button-bg-hover: var(--hero-cta-bg-hover);
+  --button-bg-pressed: var(--hero-cta-bg-hover);
+  --button-fg: var(--hero-cta-fg);
+  border: 1px solid var(--hero-cta-border);
+  box-shadow: var(--hero-cta-shadow);
+  border-radius: 9999px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+html:not(.dark) .site-frame:not(.admin-frame) .auth-card .button--hero-cta {
+  --button-bg: rgb(255 255 255 / 0.16);
+  --button-bg-hover: rgb(255 255 255 / 0.24);
+  --button-bg-pressed: rgb(255 255 255 / 0.2);
+  --button-fg: #ffffff;
+  border: 1px solid rgb(255 255 255 / 0.28);
+  box-shadow: 0 10px 28px rgb(0 0 0 / 0.18);
+}
+
+.auth-card .input {
+  --input-bg: rgb(255 255 255 / 0.1);
+  --input-bg-hover: rgb(255 255 255 / 0.14);
+  --input-bg-focus: rgb(255 255 255 / 0.16);
+  color: #ffffff;
+  border-color: rgb(255 255 255 / 0.22);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.auth-card .input::placeholder {
+  color: rgb(255 255 255 / 0.48);
+}
+
+.auth-card .input:hover:not(:focus):not(:focus-visible),
+.auth-card .input[data-hovered="true"]:not([data-focused="true"]) {
+  border-color: rgb(255 255 255 / 0.32);
+}
+
+.auth-card .input:focus,
+.auth-card .input[data-focused="true"] {
+  border-color: rgb(255 255 255 / 0.45);
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 0.12);
+}
+
+.auth-card [data-slot="field-error"] {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #fecaca;
+}

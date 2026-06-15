@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" role="img" aria-label="Portrait placeholder">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e5e5e5"/>
+      <stop offset="50%" style="stop-color:#d4d4d4"/>
+      <stop offset="100%" style="stop-color:#a3a3a3"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="500" fill="url(#g)"/>
+  <circle cx="200" cy="170" r="70" fill="#737373" opacity="0.35"/>
+  <ellipse cx="200" cy="380" rx="110" ry="90" fill="#737373" opacity="0.35"/>
+  <text x="200" y="470" text-anchor="middle" fill="#525252" font-family="Inter, sans-serif" font-size="14" font-weight="600">Ehsan Mortazavi</text>
+</svg>
