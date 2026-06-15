@@ -2,7 +2,7 @@
 
 import { Button, Card, Spinner } from "@heroui/react";
 import { useMemo, useState } from "react";
-import { adminUpdate } from "@/common/api/admin";
+import { adminDelete, adminUpdate } from "@/common/api/admin";
 import type { AdminUserDto } from "@/common/interfaces";
 import { useTranslation } from "@/common/i18n/useTranslation";
 import { isCreatorUser } from "@/common/utils/auth-user";
@@ -90,6 +90,22 @@ export default function AdminUsersPage() {
       toast.error(err instanceof Error ? err.message : t("admin.loadFailed"));
     } finally {
       setRoleBusyId(null);
+    }
+  }
+
+  async function deleteUser(id: string) {
+    if (!token || !id || !canManageRoles) return;
+    if (currentUser?.id === id) {
+      toast.error(t("admin.selfUserDeleteForbidden"));
+      return;
+    }
+    if (!confirm(t("admin.deleteUserConfirm"))) return;
+    try {
+      await adminDelete(token, `/admin/users/${id}`);
+      toast.success(t("admin.userDeleted"));
+      await reload();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : t("admin.deleteFailed"));
     }
   }
 
@@ -181,25 +197,40 @@ export default function AdminUsersPage() {
                     )}
                   </td>
                   <td className="px-4 py-3 text-end">
-                    {user.status === "pending" || user.status === "rejected" ? (
-                      <div className="flex justify-end gap-2">
-                        <Button size="sm" variant="primary" onPress={() => void approveUser(user.id)}>
-                          {t("admin.approveUser")}
-                        </Button>
-                        {user.status === "pending" ? (
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            className="text-danger"
-                            onPress={() => void rejectUser(user.id)}
-                          >
-                            {t("admin.rejectUser")}
+                    <div className="flex flex-wrap justify-end gap-2">
+                      {user.status === "pending" || user.status === "rejected" ? (
+                        <>
+                          <Button size="sm" variant="primary" onPress={() => void approveUser(user.id)}>
+                            {t("admin.approveUser")}
                           </Button>
-                        ) : null}
-                      </div>
-                    ) : (
-                      <span className="text-xs text-foreground/45">—</span>
-                    )}
+                          {user.status === "pending" ? (
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="text-danger"
+                              onPress={() => void rejectUser(user.id)}
+                            >
+                              {t("admin.rejectUser")}
+                            </Button>
+                          ) : null}
+                        </>
+                      ) : null}
+                      {canManageRoles && currentUser?.id !== user.id ? (
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="text-danger"
+                          onPress={() => void deleteUser(user.id)}
+                        >
+                          {t("admin.deleteUser")}
+                        </Button>
+                      ) : null}
+                      {!canManageRoles &&
+                      user.status !== "pending" &&
+                      user.status !== "rejected" ? (
+                        <span className="text-xs text-foreground/45">—</span>
+                      ) : null}
+                    </div>
                   </td>
                 </tr>
               ))}

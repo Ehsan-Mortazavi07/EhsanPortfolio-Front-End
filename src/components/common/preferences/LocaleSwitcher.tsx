@@ -11,10 +11,9 @@ import { useAppDispatch, useAppSelector } from "@/stores/hooks";
 type Props = {
   light?: boolean;
   chrome?: boolean;
-  hero?: boolean;
 };
 
-export function LocaleSwitcher({ light, chrome, hero }: Props) {
+export function LocaleSwitcher({ light, chrome }: Props) {
   const dispatch = useAppDispatch();
   const locale = useAppSelector(localeSelector);
   const { t } = useTranslation();
@@ -31,7 +30,7 @@ export function LocaleSwitcher({ light, chrome, hero }: Props) {
         variant="ghost"
         aria-label={t("prefs.language")}
         className={`min-w-[4.5rem] gap-1.5 text-xs font-semibold uppercase tracking-wider ${
-          chrome ? "admin-chrome-btn site-chrome-btn" : hero || light ? "auth-chrome-btn site-chrome-btn" : ""
+          chrome ? "admin-chrome-btn site-chrome-btn" : light ? "site-chrome-btn" : ""
         }`}
       >
         {locale.toUpperCase()}

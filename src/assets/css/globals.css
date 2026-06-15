@@ -195,28 +195,88 @@ body {
 }
 
 /* ── Auth pages (sign-in / sign-up) ── */
+.site-frame:has(.auth-page) {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100dvh - 20px);
+  height: calc(100dvh - 20px);
+}
+
+@media (min-width: 640px) {
+  .site-frame:has(.auth-page) {
+    min-height: calc(100dvh - 28px);
+    height: calc(100dvh - 28px);
+  }
+}
+
+html:not(.dark) .site-shell:has(.auth-page) {
+  background: #62c49a;
+}
+
+html:not(.dark) .site-frame:has(.auth-page) {
+  background: #62c49a;
+  border-color: rgb(255 255 255 / 0.2);
+}
+
+html.dark .site-shell:has(.auth-page) {
+  background: #245a42;
+}
+
+html.dark .site-frame:has(.auth-page) {
+  background: #245a42;
+}
+
 .auth-page {
   position: relative;
   isolation: isolate;
-  color: #ffffff;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  color: var(--hero-text);
 }
 
-.auth-page-topbar {
-  text-shadow: 0 1px 14px rgb(0 0 0 / 0.28);
+.auth-page.hero-section {
+  min-height: 100%;
 }
 
-.auth-chrome-btn {
-  color: rgb(255 255 255 / 0.9) !important;
-  text-shadow: 0 1px 10px rgb(0 0 0 / 0.22);
+/* Light theme auth: brighter hero tokens (gradient + pillars both use these) */
+html:not(.dark) .auth-page {
+  --hero-gradient: linear-gradient(
+    180deg,
+    #1b4332 0%,
+    #2d6a4f 24%,
+    #40916c 50%,
+    #52b788 72%,
+    #62c49a 90%,
+    #62c49a 100%
+  );
+  --hero-mist: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 58%,
+    rgb(98 196 154 / 0.22) 80%,
+    #62c49a 100%
+  );
+  --pillar-highlight: rgb(150 220 185 / 0.34);
+  --pillar-face: rgb(110 200 155 / 0.16);
+  --pillar-shade: rgb(22 70 52 / 0.16);
+  --pillar-groove: rgb(18 58 42 / 0.2);
 }
 
-.auth-chrome-btn:hover {
-  color: #ffffff !important;
-  background: rgb(255 255 255 / 0.12) !important;
+html.dark .auth-page {
+  --hero-mist: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 55%,
+    rgb(36 90 66 / 0.4) 78%,
+    #245a42 100%
+  );
 }
 
-.auth-logo-text {
-  text-shadow: 0 1px 12px rgb(0 0 0 / 0.25);
+.auth-page .hero-mist {
+  height: 34%;
 }
 
 .auth-card {
@@ -226,69 +286,24 @@ body {
   max-width: 28rem;
   border-radius: 1rem;
   padding: 2rem;
-  border: 1px solid rgb(255 255 255 / 0.2);
+  border: 1px solid rgb(255 255 255 / 0.16);
   background: rgb(255 255 255 / 0.1);
-  color: #ffffff;
+  color: var(--hero-text);
   box-shadow: 0 24px 48px rgb(0 0 0 / 0.22);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .auth-card .card__title {
-  color: #ffffff !important;
+  color: var(--hero-text) !important;
 }
 
 .auth-card .card__description {
-  color: rgb(255 255 255 / 0.76) !important;
-}
-
-.auth-card-title {
-  font-size: 1.5rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-  color: #ffffff;
-}
-
-.auth-card-desc {
-  font-size: 0.875rem;
-  line-height: 1.55;
-  color: rgb(255 255 255 / 0.76);
-}
-
-.auth-card-label {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: rgb(255 255 255 / 0.92) !important;
+  color: var(--hero-text-muted) !important;
 }
 
 .auth-card .label {
-  color: rgb(255 255 255 / 0.92) !important;
-}
-
-.auth-card-body-text {
-  font-size: 0.875rem;
-  line-height: 1.65;
-  color: rgb(255 255 255 / 0.86);
-}
-
-.auth-card-link {
-  font-size: 0.875rem;
-  color: rgb(255 255 255 / 0.72);
-  transition: color 0.2s;
-}
-
-.auth-card-link:hover {
-  color: #ffffff;
-}
-
-.auth-card-link-strong {
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.auth-card-link-strong:hover {
-  text-decoration: underline;
+  color: rgb(255 255 255 / 0.88) !important;
 }
 
 .hero-footer {

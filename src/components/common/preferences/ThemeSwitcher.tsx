@@ -11,7 +11,6 @@ import { useAppDispatch, useAppSelector } from "@/stores/hooks";
 type Props = {
   light?: boolean;
   chrome?: boolean;
-  hero?: boolean;
 };
 
 const options: { id: ThemeMode; Icon: typeof Sun1 }[] = [
@@ -20,7 +19,7 @@ const options: { id: ThemeMode; Icon: typeof Sun1 }[] = [
   { id: "system", Icon: Global },
 ];
 
-export function ThemeSwitcher({ light, chrome, hero }: Props) {
+export function ThemeSwitcher({ light, chrome }: Props) {
   const dispatch = useAppDispatch();
   const theme = useAppSelector(themeSelector);
   const { t } = useTranslation();
@@ -33,13 +32,7 @@ export function ThemeSwitcher({ light, chrome, hero }: Props) {
         size="sm"
         variant="ghost"
         aria-label={t("prefs.theme")}
-        className={
-          chrome
-            ? "admin-chrome-btn site-chrome-btn"
-            : hero || light
-              ? "auth-chrome-btn site-chrome-btn"
-              : ""
-        }
+        className={chrome ? "admin-chrome-btn site-chrome-btn" : light ? "site-chrome-btn" : ""}
       >
         <ActiveIcon size={18} variant="Linear" />
       </Button>

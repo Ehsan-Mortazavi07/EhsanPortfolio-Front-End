@@ -58,19 +58,22 @@ export function SignInPage() {
 
   return (
     <PublicShell>
-      <div className="auth-page hero-atmosphere hero-pillars flex min-h-dvh flex-col px-4 py-8">
-        <div className="auth-page-topbar section-container relative z-10 flex items-center justify-between py-4">
-          <Logo hero />
+      <div className="auth-page hero-section flex flex-1 flex-col px-4 py-8">
+        <div className="hero-atmosphere" aria-hidden />
+        <div className="hero-pillars" aria-hidden />
+        <div className="hero-mist" aria-hidden />
+        <div className="section-container relative z-10 flex items-center justify-between py-4">
+          <Logo light />
           <div className="flex items-center gap-1">
-            <ThemeSwitcher hero />
-            <LocaleSwitcher hero />
+            <ThemeSwitcher light />
+            <LocaleSwitcher light />
           </div>
         </div>
         <div className="relative z-10 flex flex-1 items-center justify-center">
           <Card className="auth-card">
             <Card.Header className="flex-col items-start gap-2 pb-6">
-              <Card.Title className="auth-card-title">{t("auth.signIn")}</Card.Title>
-              <Card.Description className="auth-card-desc">{t("admin.panel")}</Card.Description>
+              <Card.Title className="text-2xl font-extrabold uppercase tracking-tight">{t("auth.signIn")}</Card.Title>
+              <Card.Description className="text-sm text-white/65">{t("admin.panel")}</Card.Description>
             </Card.Header>
             <Card.Content>
               <Formik initialValues={initial} validationSchema={loginSchema} onSubmit={onSubmit}>
@@ -84,7 +87,7 @@ export function SignInPage() {
                       onBlur={() => setFieldTouched("email", true)}
                       onChange={(v) => void setFieldValue("email", String(v ?? ""))}
                     >
-                      <Label className="auth-card-label">{t("auth.email")}</Label>
+                      <Label className="text-sm font-semibold text-white/80">{t("auth.email")}</Label>
                       <Input type="email" autoComplete="email" />
                       {touched.email && errors.email ? <FieldError>{errors.email}</FieldError> : null}
                     </TextField>
@@ -96,7 +99,7 @@ export function SignInPage() {
                       onBlur={() => setFieldTouched("password", true)}
                       onChange={(v) => void setFieldValue("password", String(v ?? ""))}
                     >
-                      <Label className="auth-card-label">{t("auth.password")}</Label>
+                      <Label className="text-sm font-semibold text-white/80">{t("auth.password")}</Label>
                       <Input type="password" autoComplete="current-password" />
                       {touched.password && errors.password ? <FieldError>{errors.password}</FieldError> : null}
                     </TextField>
@@ -113,12 +116,12 @@ export function SignInPage() {
                   </Form>
                 )}
               </Formik>
-              <Link href={PATHS.HOME} className="auth-card-link mt-6 inline-block">
+              <Link href={PATHS.HOME} className="mt-6 inline-block text-sm text-white/60 hover:text-white">
                 ← {t("nav.home")}
               </Link>
-              <p className="auth-card-link mt-4 text-sm">
+              <p className="mt-4 text-sm text-white/60">
                 {t("auth.needAccount")}{" "}
-                <Link href={PATHS.SIGN_UP} className="auth-card-link-strong hover:underline">
+                <Link href={PATHS.SIGN_UP} className="font-semibold text-white hover:underline">
                   {t("auth.signUp")}
                 </Link>
               </p>

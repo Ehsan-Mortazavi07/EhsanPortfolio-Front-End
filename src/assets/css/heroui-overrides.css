@@ -54,42 +54,19 @@ html.dark .site-frame:not(.admin-frame) .glass-card .button--primary {
   text-transform: uppercase;
 }
 
-html:not(.dark) .site-frame:not(.admin-frame) .auth-card .button--hero-cta {
-  --button-bg: rgb(255 255 255 / 0.16);
-  --button-bg-hover: rgb(255 255 255 / 0.24);
-  --button-bg-pressed: rgb(255 255 255 / 0.2);
-  --button-fg: #ffffff;
-  border: 1px solid rgb(255 255 255 / 0.28);
-  box-shadow: 0 10px 28px rgb(0 0 0 / 0.18);
-}
-
 .auth-card .input {
   --input-bg: rgb(255 255 255 / 0.1);
   --input-bg-hover: rgb(255 255 255 / 0.14);
-  --input-bg-focus: rgb(255 255 255 / 0.16);
+  --input-bg-focus: rgb(255 255 255 / 0.12);
   color: #ffffff;
-  border-color: rgb(255 255 255 / 0.22);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  border-color: rgb(255 255 255 / 0.18);
 }
 
 .auth-card .input::placeholder {
-  color: rgb(255 255 255 / 0.48);
-}
-
-.auth-card .input:hover:not(:focus):not(:focus-visible),
-.auth-card .input[data-hovered="true"]:not([data-focused="true"]) {
-  border-color: rgb(255 255 255 / 0.32);
-}
-
-.auth-card .input:focus,
-.auth-card .input[data-focused="true"] {
-  border-color: rgb(255 255 255 / 0.45);
-  box-shadow: 0 0 0 2px rgb(255 255 255 / 0.12);
+  color: rgb(255 255 255 / 0.42);
 }
 
 .auth-card [data-slot="field-error"] {
   font-size: 0.8125rem;
   font-weight: 500;
-  color: #fecaca;
 }

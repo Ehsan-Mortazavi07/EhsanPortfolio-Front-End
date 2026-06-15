@@ -46,24 +46,27 @@ export function SignUpPage() {
 
   return (
     <PublicShell>
-      <div className="auth-page hero-atmosphere hero-pillars flex min-h-dvh flex-col px-4 py-8">
-        <div className="auth-page-topbar section-container relative z-10 flex items-center justify-between py-4">
-          <Logo hero />
+      <div className="auth-page hero-section flex flex-1 flex-col px-4 py-8">
+        <div className="hero-atmosphere" aria-hidden />
+        <div className="hero-pillars" aria-hidden />
+        <div className="hero-mist" aria-hidden />
+        <div className="section-container relative z-10 flex items-center justify-between py-4">
+          <Logo light />
           <div className="flex items-center gap-1">
-            <ThemeSwitcher hero />
-            <LocaleSwitcher hero />
+            <ThemeSwitcher light />
+            <LocaleSwitcher light />
           </div>
         </div>
         <div className="relative z-10 flex flex-1 items-center justify-center">
           <Card className="auth-card">
             <Card.Header className="flex-col items-start gap-2 pb-6">
-              <Card.Title className="auth-card-title">{t("auth.signUpTitle")}</Card.Title>
-              <Card.Description className="auth-card-desc">{t("auth.signUpSubtitle")}</Card.Description>
+              <Card.Title className="text-2xl font-extrabold uppercase tracking-tight">{t("auth.signUpTitle")}</Card.Title>
+              <Card.Description className="text-sm text-white/65">{t("auth.signUpSubtitle")}</Card.Description>
             </Card.Header>
             <Card.Content>
               {done ? (
                 <div className="space-y-5">
-                  <p className="auth-card-body-text">{t("auth.signUpSuccess")}</p>
+                  <p className="text-sm leading-relaxed text-white/80">{t("auth.signUpSuccess")}</p>
                   <Button
                     variant="primary"
                     fullWidth
@@ -85,7 +88,7 @@ export function SignUpPage() {
                         onBlur={() => setFieldTouched("name", true)}
                         onChange={(v) => void setFieldValue("name", String(v ?? ""))}
                       >
-                        <Label className="auth-card-label">{t("auth.name")}</Label>
+                        <Label className="text-sm font-semibold text-white/80">{t("auth.name")}</Label>
                         <Input autoComplete="name" />
                         {touched.name && errors.name ? <FieldError>{errors.name}</FieldError> : null}
                       </TextField>
@@ -97,7 +100,7 @@ export function SignUpPage() {
                         onBlur={() => setFieldTouched("email", true)}
                         onChange={(v) => void setFieldValue("email", String(v ?? ""))}
                       >
-                        <Label className="auth-card-label">{t("auth.email")}</Label>
+                        <Label className="text-sm font-semibold text-white/80">{t("auth.email")}</Label>
                         <Input type="email" autoComplete="email" />
                         {touched.email && errors.email ? <FieldError>{errors.email}</FieldError> : null}
                       </TextField>
@@ -109,7 +112,7 @@ export function SignUpPage() {
                         onBlur={() => setFieldTouched("password", true)}
                         onChange={(v) => void setFieldValue("password", String(v ?? ""))}
                       >
-                        <Label className="auth-card-label">{t("auth.password")}</Label>
+                        <Label className="text-sm font-semibold text-white/80">{t("auth.password")}</Label>
                         <Input type="password" autoComplete="new-password" />
                         {touched.password && errors.password ? <FieldError>{errors.password}</FieldError> : null}
                       </TextField>
@@ -127,13 +130,13 @@ export function SignUpPage() {
                   )}
                 </Formik>
               )}
-              <p className="auth-card-link mt-6 text-sm">
+              <p className="mt-6 text-sm text-white/60">
                 {t("auth.haveAccount")}{" "}
-                <Link href={PATHS.SIGN_IN} className="auth-card-link-strong hover:underline">
+                <Link href={PATHS.SIGN_IN} className="font-semibold text-white hover:underline">
                   {t("auth.signIn")}
                 </Link>
               </p>
-              <Link href={PATHS.HOME} className="auth-card-link mt-4 inline-block">
+              <Link href={PATHS.HOME} className="mt-4 inline-block text-sm text-white/60 hover:text-white">
                 ← {t("nav.home")}
               </Link>
             </Card.Content>
