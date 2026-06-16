@@ -2,6 +2,9 @@
   "name": "ehsan-front",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "next dev -p 7070",
     "build": "next build",
