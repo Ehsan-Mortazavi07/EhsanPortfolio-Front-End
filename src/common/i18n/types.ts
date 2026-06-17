@@ -176,6 +176,7 @@ export type MessageKey =
   | "admin.iconUrlPlaceholder"
   | "admin.iconUrlHint"
   | "admin.published"
+  | "admin.publishedHint"
   | "admin.aboutContent"
   | "admin.saveSettings"
   | "admin.newProject"

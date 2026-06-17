@@ -174,6 +174,7 @@ export const messages: Messages = {
   "admin.iconUrlPlaceholder": "https://cdn.example.com/icon.svg یا /images/icon.svg",
   "admin.iconUrlHint": "لینک مستقیم تصویر (PNG، JPG، SVG، WebP، GIF) بگذارید یا فایل آپلود کنید.",
   "admin.published": "نمایش در سایت",
+  "admin.publishedHint": "برای نمایش پروژه در سایت عمومی باید فعال باشد.",
   "admin.aboutContent": "محتوای درباره من",
   "admin.saveSettings": "ذخیره تنظیمات",
   "admin.newProject": "پروژه جدید",

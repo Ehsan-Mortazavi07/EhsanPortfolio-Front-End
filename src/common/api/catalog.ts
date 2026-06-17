@@ -31,7 +31,7 @@ async function getJson<T>(path: string, fallback: T): Promise<T> {
 async function fetchCatalogList<T>(path: string): Promise<T[]> {
   try {
     const res = await fetch(`${SERVER_BASE_API_URL}${path}`, {
-      next: { revalidate: 0 },
+      cache: "no-store",
     });
     if (!res.ok) return [];
     return (await res.json()) as T[];
@@ -44,7 +44,7 @@ async function fetchCatalogPaged<T>(path: string): Promise<PagedResult<T>> {
   const empty: PagedResult<T> = { items: [], total: 0, page: 1, pageSize: 20 };
   try {
     const res = await fetch(`${SERVER_BASE_API_URL}${path}`, {
-      next: { revalidate: 0 },
+      cache: "no-store",
     });
     if (!res.ok) return empty;
     return (await res.json()) as PagedResult<T>;
@@ -91,7 +91,7 @@ export async function fetchProjects(params?: {
 export async function fetchProjectBySlug(slug: string): Promise<ProjectDto | null> {
   try {
     const res = await fetch(`${SERVER_BASE_API_URL}/catalog/projects/${encodeURIComponent(slug)}`, {
-      next: { revalidate: 0 },
+      cache: "no-store",
     });
     if (!res.ok) return null;
     return (await res.json()) as ProjectDto;

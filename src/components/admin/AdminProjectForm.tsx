@@ -161,8 +161,27 @@ export function AdminProjectForm({ mode, slug }: { mode: Mode; slug?: string }) 
             <Input />
           </TextField>
           <AdminImageField label={t("admin.coverImage")} value={values.coverImageUrl} onChange={(p) => void setFieldValue("coverImageUrl", p)} token={token} />
-          <Checkbox isSelected={values.featured} onChange={(v) => void setFieldValue("featured", v)}>{t("admin.featured")}</Checkbox>
-          <Checkbox isSelected={values.published ?? true} onChange={(v) => void setFieldValue("published", v)}>{t("admin.published")}</Checkbox>
+          <div className="rounded-xl border border-[var(--card-border)] bg-[var(--tag-bg)] p-4 space-y-4">
+            <Checkbox
+              isSelected={Boolean(values.published)}
+              onChange={(selected) => void setFieldValue("published", selected)}
+            >
+              <Checkbox.Control>
+                <Checkbox.Indicator />
+              </Checkbox.Control>
+              <Checkbox.Content>{t("admin.published")}</Checkbox.Content>
+            </Checkbox>
+            <p className="text-xs text-foreground/55 ps-7">{t("admin.publishedHint")}</p>
+            <Checkbox
+              isSelected={Boolean(values.featured)}
+              onChange={(selected) => void setFieldValue("featured", selected)}
+            >
+              <Checkbox.Control>
+                <Checkbox.Indicator />
+              </Checkbox.Control>
+              <Checkbox.Content>{t("admin.featured")}</Checkbox.Content>
+            </Checkbox>
+          </div>
           <div className="flex gap-3">
             <Button type="submit" variant="primary" isPending={isSubmitting} isDisabled={isSubmitting}>{t("admin.save")}</Button>
             <Button variant="ghost" onPress={() => router.push(PATHS.ADMIN_PROJECTS)}>{t("admin.cancel")}</Button>

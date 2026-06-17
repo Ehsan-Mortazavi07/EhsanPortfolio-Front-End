@@ -174,6 +174,7 @@ export const messages: Messages = {
   "admin.iconUrlPlaceholder": "https://cdn.example.com/icon.svg or /images/icon.svg",
   "admin.iconUrlHint": "Paste a direct image link (PNG, JPG, SVG, WebP, GIF) or upload a file.",
   "admin.published": "Published on site",
+  "admin.publishedHint": "Must be checked for the project to appear on the public site.",
   "admin.aboutContent": "About content",
   "admin.saveSettings": "Save settings",
   "admin.newProject": "New Project",
