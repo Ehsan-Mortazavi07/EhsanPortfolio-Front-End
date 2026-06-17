@@ -3,7 +3,7 @@
 import { Button } from "@heroui/react";
 import { ArrowUp2 } from "iconsax-reactjs";
 import { motion } from "motion/react";
-import Image from "next/image";
+import { RemoteImage } from "@/components/common/media";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import { PATHS } from "@/common/constants";
@@ -57,7 +57,7 @@ export function ProjectsSection({ projects }: Props) {
                   <div className="green-card flex h-full flex-col overflow-hidden !p-0">
                     <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--card-border)]">
                       {cover ? (
-                        <Image src={cover} alt={title} fill className="object-cover transition duration-500 group-hover:scale-105" sizes="400px" />
+                        <RemoteImage src={cover} alt={title} fill className="object-cover transition duration-500 group-hover:scale-105" sizes="400px" />
                       ) : (
                         <div className="image-placeholder size-full" />
                       )}

@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowUp2 } from "iconsax-reactjs";
-import Image from "next/image";
+import { RemoteImage } from "@/components/common/media";
 import NextLink from "next/link";
 import { PageHeroBand, PublicPageLayout } from "@/components/common/shell";
 import { PATHS } from "@/common/constants";
@@ -38,7 +38,7 @@ export function ProjectsPage({ projects, settings }: Props) {
                 <div className="green-card flex h-full flex-col overflow-hidden !p-0">
                   <div className="relative aspect-[16/10] overflow-hidden bg-[var(--card-border)]">
                     {cover ? (
-                      <Image src={cover} alt={title} fill className="object-cover transition group-hover:scale-105" sizes="400px" />
+                      <RemoteImage src={cover} alt={title} fill className="object-cover transition group-hover:scale-105" sizes="400px" />
                     ) : (
                       <div className="image-placeholder size-full" />
                     )}

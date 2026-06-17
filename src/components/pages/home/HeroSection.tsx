@@ -2,10 +2,10 @@
 
 import { ArrowDown2, DocumentDownload } from "iconsax-reactjs";
 import { motion } from "motion/react";
-import Image from "next/image";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import { PATHS } from "@/common/constants";
+import { RemoteImage } from "@/components/common/media";
 import { useTranslation } from "@/common/i18n/useTranslation";
 import { useLocalizedText } from "@/common/i18n/useLocalizedText";
 import type { ProjectDto, SiteSettingsDto } from "@/common/interfaces";
@@ -121,7 +121,7 @@ export function HeroSection({ settings, projects }: Props) {
           const className = `portfolio-thumb ${isCenter ? "portfolio-thumb-center" : "portfolio-thumb-side"}`;
           const image = (
             <div className={className}>
-              <Image src={thumb.src} alt={thumb.alt} fill className="object-cover" sizes="140px" priority={isCenter} />
+              <RemoteImage src={thumb.src} alt={thumb.alt} fill className="object-cover" sizes="140px" priority={isCenter} />
             </div>
           );
 

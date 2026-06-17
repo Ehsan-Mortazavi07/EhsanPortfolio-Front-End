@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import NextLink from "next/link";
 import { PublicPageLayout } from "@/components/common/shell";
 import { SkillLogo } from "@/components/common/skills/SkillLogo";
@@ -20,8 +21,13 @@ const PORTRAIT_FALLBACK = "/images/hero-portrait.svg";
 function AboutIntro({ settings }: { settings: SiteSettingsDto }) {
   const { t } = useTranslation();
   const l = useLocalizedText();
-  const portrait = resolvePublicUploadUrl(settings.heroPortraitUrl) || PORTRAIT_FALLBACK;
+  const portraitSrc = resolvePublicUploadUrl(settings.heroPortraitUrl) || PORTRAIT_FALLBACK;
+  const [portrait, setPortrait] = useState(portraitSrc);
   const subtitle = l(settings.heroSubtitle, settings.heroSubtitleFa);
+
+  useEffect(() => {
+    setPortrait(portraitSrc);
+  }, [portraitSrc]);
 
   return (
     <section className="about-intro">
@@ -34,7 +40,14 @@ function AboutIntro({ settings }: { settings: SiteSettingsDto }) {
 
         <figure className="about-hero-portrait">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={portrait} alt={t("about.portraitAlt")} className="about-hero-portrait-img" />
+          <img
+            src={portrait}
+            alt={t("about.portraitAlt")}
+            className="about-hero-portrait-img"
+            onError={() => {
+              if (portrait !== PORTRAIT_FALLBACK) setPortrait(PORTRAIT_FALLBACK);
+            }}
+          />
         </figure>
       </div>
     </section>

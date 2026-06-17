@@ -2,7 +2,7 @@
 
 import { Button } from "@heroui/react";
 import { ExportSquare, ProgrammingArrow } from "iconsax-reactjs";
-import Image from "next/image";
+import { RemoteImage } from "@/components/common/media";
 import NextLink from "next/link";
 import { PageHeroBand, PublicPageLayout } from "@/components/common/shell";
 import { PATHS } from "@/common/constants";
@@ -31,7 +31,7 @@ export function ProjectDetailPage({ project, settings }: Props) {
 
         {cover ? (
           <div className="project-detail-cover relative mt-8 aspect-[16/10] overflow-hidden">
-            <Image src={cover} alt={l(project.title, project.titleFa)} fill className="object-cover" sizes="768px" priority />
+            <RemoteImage src={cover} alt={l(project.title, project.titleFa)} fill className="object-cover" sizes="768px" priority />
           </div>
         ) : null}
 
