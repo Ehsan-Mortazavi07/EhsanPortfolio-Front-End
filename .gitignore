@@ -28,9 +28,11 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files
+# env files (secrets only — production URLs live in .env.production + vercel.json)
 .env
 .env*.local
+!.env.production
+!.env.production.example
 
 # typescript
 *.tsbuildinfo

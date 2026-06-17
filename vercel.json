@@ -3,6 +3,12 @@
   "framework": "nextjs",
   "installCommand": "pnpm install",
   "buildCommand": "pnpm build",
+  "env": {
+    "NEXT_PUBLIC_API_URL": "https://api.ehsanmor.ir/v1",
+    "INTERNAL_API_URL": "https://api.ehsanmor.ir/v1",
+    "NEXT_PUBLIC_IMAGE_BASE_URL": "https://api.ehsanmor.ir",
+    "NEXT_PUBLIC_SITE_URL": "https://ehsanmor.ir"
+  },
   "redirects": [
     {
       "source": "/:path*",
