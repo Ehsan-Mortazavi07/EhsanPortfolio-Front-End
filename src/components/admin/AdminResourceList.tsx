@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, Link, Spinner } from "@heroui/react";
+import { Button, Card, Link } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { adminDelete, adminUpdate } from "@/common/api/admin";
@@ -10,6 +10,7 @@ import { toast } from "@/common/utils/toast";
 import { tokenSelector } from "@/stores/auth/selectors";
 import { useAppSelector } from "@/stores/hooks";
 import { AdminCheckboxField } from "@/components/admin/AdminCheckboxField";
+import { AdminListLoading } from "@/components/admin/AdminListLoading";
 import { AdminListToolbar } from "@/components/admin/AdminListToolbar";
 import { useAdminList } from "@/components/admin/useAdminList";
 
@@ -102,10 +103,7 @@ export function AdminResourceList({
       />
 
       {loading ? (
-        <div className="flex items-center gap-2 py-12">
-          <Spinner size="sm" />
-          <span className="text-sm text-foreground/60">{t("admin.loading")}</span>
-        </div>
+        <AdminListLoading />
       ) : (
         <div className="admin-table-wrap">
           <table className="w-full text-start text-sm">

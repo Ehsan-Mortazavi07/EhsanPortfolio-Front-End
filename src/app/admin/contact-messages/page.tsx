@@ -1,11 +1,12 @@
 "use client";
 
-import { Button, Card, Spinner } from "@heroui/react";
+import { Button, Card } from "@heroui/react";
 import { adminDelete } from "@/common/api/admin";
 import type { ContactMessageDto } from "@/common/interfaces";
 import { formatAdminDate } from "@/common/utils/format-date";
 import { useTranslation } from "@/common/i18n/useTranslation";
 import { toast } from "@/common/utils/toast";
+import { AdminListLoading } from "@/components/admin/AdminListLoading";
 import { AdminListToolbar } from "@/components/admin/AdminListToolbar";
 import { useAdminList } from "@/components/admin/useAdminList";
 import { tokenSelector } from "@/stores/auth/selectors";
@@ -34,16 +35,28 @@ export default function Page() {
         <h1 className="text-2xl font-bold sm:text-3xl">{t("admin.messages")}</h1>
         <p className="mt-1 text-sm text-foreground/60">{t("admin.messagesSubtitle")}</p>
       </div>
-      <AdminListToolbar query={q} onQueryChange={setQ} page={page} pageSize={pageSize} total={total} loading={loading} onPageChange={setPage} />
+
+      <AdminListToolbar
+        query={q}
+        onQueryChange={setQ}
+        page={page}
+        pageSize={pageSize}
+        total={total}
+        loading={loading}
+        onPageChange={setPage}
+      />
+
       {loading ? (
-        <Spinner size="sm" />
+        <AdminListLoading />
       ) : (
         <div className="space-y-4">
           {items.map((msg) => (
             <Card key={msg.id} className="rounded-2xl p-5 ring-1 ring-border/50">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
-                  <p className="font-semibold">{msg.name} · {msg.email}</p>
+                  <p className="font-semibold">
+                    {msg.name} · {msg.email}
+                  </p>
                   <p className="text-sm text-foreground/60">
                     {t("admin.dateAdded")}: {formatAdminDate(msg.createdAt, locale)}
                   </p>
@@ -57,6 +70,12 @@ export default function Page() {
             </Card>
           ))}
         </div>
+      )}
+
+      {!loading && items.length === 0 && (
+        <Card className="rounded-2xl p-8 text-center ring-1 ring-border/50">
+          <p className="text-sm text-foreground/60">{t("admin.noItems")}</p>
+        </Card>
       )}
     </section>
   );

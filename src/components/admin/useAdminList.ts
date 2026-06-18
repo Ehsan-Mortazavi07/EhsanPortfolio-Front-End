@@ -31,10 +31,7 @@ export function useAdminList<T>(
   }, [q]);
 
   const load = useCallback(async () => {
-    if (!token) {
-      setLoading(false);
-      return;
-    }
+    if (!token) return;
     setLoading(true);
     try {
       const res = await adminList<T>(token, path, {
