@@ -41,7 +41,7 @@ export function AdminImageField({ label, value, onChange, token }: Props) {
       <Label className="text-sm font-semibold">{label}</Label>
       {preview && (
         <div className="relative aspect-[3/4] w-full max-w-[11rem] overflow-hidden rounded-xl bg-surface-secondary ring-1 ring-border/50">
-          <Image src={preview} alt="" fill className="object-contain object-center" unoptimized />
+          <Image src={preview} alt="" fill className="object-cover object-center" unoptimized />
         </div>
       )}
       <div className="flex gap-2">
