@@ -10,6 +10,7 @@ import { useTranslation } from "@/common/i18n/useTranslation";
 import { applyApiErrorsToFormik, parseApiError } from "@/common/utils";
 import { toast } from "@/common/utils/toast";
 import { siteSettingsSchema, toSiteSettingsPayload } from "@/common/validators";
+import { AdminPageSubtitlesFields } from "@/components/admin/AdminPageSubtitlesFields";
 import { AdminDualLocaleFields } from "@/components/admin/AdminDualLocaleFields";
 import { AdminFileField } from "@/components/admin/AdminFileField";
 import { AdminImageField } from "@/components/admin/AdminImageField";
@@ -70,6 +71,7 @@ export default function AdminSettingsPage() {
           <AdminImageField label={t("admin.heroPortrait")} value={values.heroPortraitUrl} onChange={(p) => void setFieldValue("heroPortraitUrl", p)} token={token} />
           <AdminRichTextEditor label={`${t("admin.aboutContent")} (${t("admin.localeEn")})`} value={values.aboutContent ?? ""} onChange={(html) => void setFieldValue("aboutContent", html)} uploadToken={token} />
           <AdminRichTextEditor label={`${t("admin.aboutContent")} (${t("admin.localeFa")})`} value={values.aboutContentFa ?? ""} onChange={(html) => void setFieldValue("aboutContentFa", html)} uploadToken={token} />
+          <AdminPageSubtitlesFields values={values} setFieldValue={setFieldValue} />
           <Button type="submit" variant="primary" isPending={isSubmitting} isDisabled={isSubmitting}>{t("admin.saveSettings")}</Button>
         </Form>
       )}

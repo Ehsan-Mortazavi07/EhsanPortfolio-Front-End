@@ -3,13 +3,20 @@
 import { FieldError, Input, Label, TextArea, TextField } from "@heroui/react";
 import { useTranslation } from "@/common/i18n/useTranslation";
 
+function getByPath(source: object, path: string): unknown {
+  return path.split(".").reduce<unknown>((acc, key) => {
+    if (acc && typeof acc === "object") return (acc as Record<string, unknown>)[key];
+    return undefined;
+  }, source);
+}
+
 type Props<T extends object> = {
-  enName: keyof T & string;
-  faName: keyof T & string;
+  enName: string;
+  faName: string;
   enLabel: string;
   values: T;
-  errors?: Partial<Record<keyof T, unknown>>;
-  touched?: Partial<Record<keyof T, unknown>>;
+  errors?: Partial<Record<string, unknown>>;
+  touched?: Partial<Record<string, unknown>>;
   setFieldValue: (field: string, value: string) => void;
   setFieldTouched?: (field: string, touched: boolean) => void;
   multiline?: boolean;
@@ -31,12 +38,16 @@ export function AdminDualLocaleFields<T extends object>({
   const { t } = useTranslation();
   const faLabel = `${enLabel} (${t("admin.localeFa")})`;
 
-  function renderField(name: keyof T & string, label: string) {
+  function readValue(name: string) {
+    return String(getByPath(values, name) ?? "");
+  }
+
+  function renderField(name: string, label: string) {
     const invalid = Boolean(touched?.[name] && errors?.[name]);
     return (
       <TextField
         key={name}
-        value={String((values as Record<string, unknown>)[name] ?? "")}
+        value={readValue(name)}
         variant="secondary"
         fullWidth
         isRequired={required}

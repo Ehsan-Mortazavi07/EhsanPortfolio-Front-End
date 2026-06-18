@@ -8,13 +8,14 @@ import { PATHS } from "@/common/constants";
 import { useTranslation } from "@/common/i18n/useTranslation";
 import { useLocalizedText } from "@/common/i18n/useLocalizedText";
 import type { ProjectDto, SiteSettingsDto } from "@/common/interfaces";
-import { resolvePublicUploadUrl } from "@/common/utils";
+import { resolvePageSubtitle, resolvePublicUploadUrl } from "@/common/utils";
 
 type Props = { projects: ProjectDto[]; settings: SiteSettingsDto };
 
 export function ProjectsPage({ projects, settings }: Props) {
   const { t } = useTranslation();
   const l = useLocalizedText();
+  const subtitle = resolvePageSubtitle(settings, "projects", l, t, "projects.pageSubtitle");
 
   return (
     <PublicPageLayout
@@ -23,7 +24,7 @@ export function ProjectsPage({ projects, settings }: Props) {
         <PageHeroBand
           label={t("hero.portfolio")}
           title={t("projects.pageTitle")}
-          subtitle={t("projects.pageSubtitle")}
+          subtitle={subtitle}
         />
       }
     >

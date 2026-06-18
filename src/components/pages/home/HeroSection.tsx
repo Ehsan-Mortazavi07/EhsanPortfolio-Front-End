@@ -68,20 +68,10 @@ export function HeroSection({ settings, projects }: Props) {
       <div className="hero-mist" aria-hidden />
 
       <div className="hero-content flex flex-1 flex-col items-center justify-center px-4 pb-52 pt-28 text-center sm:px-6 sm:pb-56 sm:pt-32">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="hero-badge mb-8"
-        >
-          <span className="hero-badge-dot" />
-          {t("hero.available")}
-        </motion.div>
-
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.08 }}
+          transition={{ duration: 0.6 }}
           className="hero-headline max-w-5xl"
         >
           {lines.map((line) => (

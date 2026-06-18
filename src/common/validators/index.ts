@@ -150,6 +150,7 @@ export function toSkillPayload(values: Omit<SkillDto, "id"> & { id?: string }) {
   return {
     name: values.name,
     category: values.category,
+    icon: values.icon?.trim() || "",
     sortOrder: values.sortOrder,
     published: values.published ?? true,
   };
@@ -180,9 +181,24 @@ export const experienceFormSchema = Yup.object({
 });
 
 export const skillFormSchema = Yup.object({
-  slug: slugSchema,
   name: Yup.string().required("Name is required"),
   category: Yup.string().required("Category is required"),
+  icon: Yup.string()
+    .nullable()
+    .transform((v) => (typeof v === "string" ? v.trim() : v))
+    .test("valid-icon", "Enter a valid image URL or upload a file", (v) => {
+      if (!v) return true;
+      if (v.startsWith("/")) return true;
+      if (v.startsWith("http://") || v.startsWith("https://")) {
+        try {
+          new URL(v);
+          return true;
+        } catch {
+          return false;
+        }
+      }
+      return true;
+    }),
   sortOrder: Yup.number().default(0),
   published: Yup.boolean().default(true),
 });
@@ -208,6 +224,11 @@ export const articleFormSchema = Yup.object({
   published: Yup.boolean().default(true),
 });
 
+const pageSubtitleSchema = Yup.object({
+  subtitle: Yup.string().default(""),
+  subtitleFa: Yup.string().default(""),
+});
+
 export const siteSettingsSchema = Yup.object({
   heroTitle: Yup.string().required("Hero title is required"),
   heroSubtitle: Yup.string().required("Hero subtitle is required"),
@@ -222,6 +243,12 @@ export const siteSettingsSchema = Yup.object({
   telegramUrl: Yup.string().url("Invalid URL").nullable(),
   instagramUrl: Yup.string().url("Invalid URL").nullable(),
   twitterUrl: Yup.string().url("Invalid URL").nullable(),
+  pageSubtitles: Yup.object({
+    services: pageSubtitleSchema.default(undefined),
+    experience: pageSubtitleSchema.default(undefined),
+    projects: pageSubtitleSchema.default(undefined),
+    testimonials: pageSubtitleSchema.default(undefined),
+  }).default(undefined),
 });
 
 export function toSiteSettingsPayload(values: SiteSettingsDto) {
@@ -244,5 +271,6 @@ export function toSiteSettingsPayload(values: SiteSettingsDto) {
     twitterUrl: values.twitterUrl ?? "",
     aboutContent: values.aboutContent ?? "",
     aboutContentFa: values.aboutContentFa ?? "",
+    pageSubtitles: values.pageSubtitles ?? {},
   };
 }

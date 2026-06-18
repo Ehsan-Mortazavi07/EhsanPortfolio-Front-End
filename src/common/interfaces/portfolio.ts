@@ -16,6 +16,7 @@ export interface ProjectDto {
   published?: boolean;
   liveUrl?: string | null;
   repoUrl?: string | null;
+  createdAt?: string | null;
 }
 
 export interface ServiceDto {
@@ -29,6 +30,7 @@ export interface ServiceDto {
   highlighted: boolean;
   sortOrder: number;
   published?: boolean;
+  createdAt?: string | null;
 }
 
 export interface ExperienceDto {
@@ -45,6 +47,7 @@ export interface ExperienceDto {
   current: boolean;
   sortOrder: number;
   published?: boolean;
+  createdAt?: string | null;
 }
 
 export interface SkillDto {
@@ -52,8 +55,10 @@ export interface SkillDto {
   slug: string;
   name: string;
   category: string;
+  icon?: string | null;
   sortOrder: number;
   published?: boolean;
+  createdAt?: string | null;
 }
 
 export interface TestimonialDto {
@@ -67,6 +72,7 @@ export interface TestimonialDto {
   avatarUrl: string | null;
   sortOrder: number;
   published?: boolean;
+  createdAt?: string | null;
 }
 
 export interface ArticleListItemDto {
@@ -79,6 +85,7 @@ export interface ArticleListItemDto {
   coverImageUrl: string | null;
   publishedAt: string;
   published?: boolean;
+  createdAt?: string | null;
 }
 
 export interface ArticleDetailDto extends ArticleListItemDto {
@@ -105,6 +112,21 @@ export interface SiteSettingsDto {
   twitterUrl: string | null;
   aboutContent?: string;
   aboutContentFa?: string;
+  pageSubtitles?: PageSubtitlesDto;
+}
+
+export interface PageSubtitleDto {
+  subtitle?: string;
+  subtitleFa?: string;
+}
+
+export type PageSubtitleKey = "services" | "experience" | "projects" | "testimonials";
+
+export interface PageSubtitlesDto {
+  services?: PageSubtitleDto;
+  experience?: PageSubtitleDto;
+  projects?: PageSubtitleDto;
+  testimonials?: PageSubtitleDto;
 }
 
 export interface ContactMessageDto {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Checkbox, Form, Input, Label, TextField } from "@heroui/react";
+import { Button, Form, Input, Label, TextField } from "@heroui/react";
 import { Formik, FormikHelpers } from "formik";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,6 +12,8 @@ import { applyApiErrorsToFormik, parseApiError } from "@/common/utils";
 import { toast } from "@/common/utils/toast";
 import { experienceFormSchema, toExperiencePayload } from "@/common/validators";
 import { AdminDualLocaleFields } from "@/components/admin/AdminDualLocaleFields";
+import { AdminCheckboxField } from "@/components/admin/AdminCheckboxField";
+import { AdminPublishedField } from "@/components/admin/AdminPublishedField";
 import { tokenSelector } from "@/stores/auth/selectors";
 import { useAppSelector } from "@/stores/hooks";
 
@@ -73,8 +75,15 @@ export function AdminExperienceForm({ mode, slug }: { mode: "create" | "edit"; s
           <AdminDualLocaleFields enName="role" faName="roleFa" enLabel="Role" values={values} setFieldValue={setFieldValue} />
           <AdminDualLocaleFields enName="period" faName="periodFa" enLabel="Period" values={values} setFieldValue={setFieldValue} />
           <AdminDualLocaleFields enName="description" faName="descriptionFa" enLabel={t("admin.description")} values={values} setFieldValue={setFieldValue} multiline />
-          <Checkbox isSelected={values.current} onChange={(v) => void setFieldValue("current", v)}>{t("admin.currentRole")}</Checkbox>
-          <Checkbox isSelected={values.published ?? true} onChange={(v) => void setFieldValue("published", v)}>{t("admin.published")}</Checkbox>
+          <AdminCheckboxField
+            label={t("admin.currentRole")}
+            checked={Boolean(values.current)}
+            onChange={(v) => void setFieldValue("current", v)}
+          />
+          <AdminPublishedField
+            checked={Boolean(values.published)}
+            onChange={(v) => void setFieldValue("published", v)}
+          />
           <div className="flex gap-3">
             <Button type="submit" variant="primary" isPending={isSubmitting} isDisabled={isSubmitting}>{t("admin.save")}</Button>
             <Button variant="ghost" onPress={() => router.push(PATHS.ADMIN_EXPERIENCE)}>{t("admin.cancel")}</Button>

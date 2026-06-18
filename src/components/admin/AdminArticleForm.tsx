@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Checkbox, Form, Input, Label, TextField } from "@heroui/react";
+import { Button, Form, Input, Label, TextField } from "@heroui/react";
 import { Formik, FormikHelpers } from "formik";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ import { applyApiErrorsToFormik, parseApiError } from "@/common/utils";
 import { toast } from "@/common/utils/toast";
 import { articleFormSchema, toArticlePayload } from "@/common/validators";
 import { AdminDualLocaleFields } from "@/components/admin/AdminDualLocaleFields";
+import { AdminPublishedField } from "@/components/admin/AdminPublishedField";
 import { AdminImageField } from "@/components/admin/AdminImageField";
 import { AdminRichTextEditor } from "@/components/admin/AdminRichTextEditor";
 import { tokenSelector } from "@/stores/auth/selectors";
@@ -104,7 +105,10 @@ export function AdminArticleForm({ mode, slug }: { mode: "create" | "edit"; slug
             <Input type="date" />
           </TextField>
           <AdminImageField label={t("admin.cover")} value={values.coverImageUrl} onChange={(p) => void setFieldValue("coverImageUrl", p)} token={token} />
-          <Checkbox isSelected={values.published ?? true} onChange={(v) => void setFieldValue("published", v)}>{t("admin.published")}</Checkbox>
+          <AdminPublishedField
+            checked={Boolean(values.published)}
+            onChange={(v) => void setFieldValue("published", v)}
+          />
           <AdminRichTextEditor label={`${t("admin.content")} (${t("admin.localeEn")})`} value={values.contentHtml} onChange={(html) => void setFieldValue("contentHtml", html)} uploadToken={token} />
           <AdminRichTextEditor label={`${t("admin.content")} (${t("admin.localeFa")})`} value={values.contentHtmlFa} onChange={(html) => void setFieldValue("contentHtmlFa", html)} uploadToken={token} />
           <Button type="submit" variant="primary" isPending={isSubmitting} isDisabled={isSubmitting}>{t("admin.save")}</Button>

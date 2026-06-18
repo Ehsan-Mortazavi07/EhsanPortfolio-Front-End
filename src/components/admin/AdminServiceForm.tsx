@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Checkbox, FieldError, Form, Input, Label, TextField } from "@heroui/react";
+import { Button, FieldError, Form, Input, Label, TextField } from "@heroui/react";
 import { Formik, FormikHelpers } from "formik";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,6 +12,8 @@ import { applyApiErrorsToFormik, parseApiError } from "@/common/utils";
 import { toast } from "@/common/utils/toast";
 import { serviceFormSchema, toServicePayload } from "@/common/validators";
 import { AdminDualLocaleFields } from "@/components/admin/AdminDualLocaleFields";
+import { AdminCheckboxField } from "@/components/admin/AdminCheckboxField";
+import { AdminPublishedField } from "@/components/admin/AdminPublishedField";
 import { AdminIconField } from "@/components/admin/AdminIconField";
 import { tokenSelector } from "@/stores/auth/selectors";
 import { useAppSelector } from "@/stores/hooks";
@@ -91,8 +93,15 @@ export function AdminServiceForm({ mode, slug }: { mode: Mode; slug?: string }) 
             token={token}
           />
           <AdminDualLocaleFields enName="description" faName="descriptionFa" enLabel={t("admin.description")} values={values} setFieldValue={setFieldValue} multiline />
-          <Checkbox isSelected={values.highlighted} onChange={(v) => void setFieldValue("highlighted", v)}>{t("admin.highlighted")}</Checkbox>
-          <Checkbox isSelected={values.published ?? true} onChange={(v) => void setFieldValue("published", v)}>{t("admin.published")}</Checkbox>
+          <AdminCheckboxField
+            label={t("admin.highlighted")}
+            checked={Boolean(values.highlighted)}
+            onChange={(v) => void setFieldValue("highlighted", v)}
+          />
+          <AdminPublishedField
+            checked={Boolean(values.published)}
+            onChange={(v) => void setFieldValue("published", v)}
+          />
           <div className="flex gap-3">
             <Button type="submit" variant="primary" isPending={isSubmitting} isDisabled={isSubmitting}>{t("admin.save")}</Button>
             <Button variant="ghost" onPress={() => router.push(PATHS.ADMIN_SERVICES)}>{t("admin.cancel")}</Button>

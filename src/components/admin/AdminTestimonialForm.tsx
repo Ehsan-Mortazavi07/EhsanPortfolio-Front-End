@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Checkbox, Form, Input, Label, TextField } from "@heroui/react";
+import { Button, Form, Input, Label, TextField } from "@heroui/react";
 import { Formik, FormikHelpers } from "formik";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,6 +12,7 @@ import { applyApiErrorsToFormik, parseApiError } from "@/common/utils";
 import { toast } from "@/common/utils/toast";
 import { testimonialFormSchema, toTestimonialPayload } from "@/common/validators";
 import { AdminDualLocaleFields } from "@/components/admin/AdminDualLocaleFields";
+import { AdminPublishedField } from "@/components/admin/AdminPublishedField";
 import { AdminImageField } from "@/components/admin/AdminImageField";
 import { tokenSelector } from "@/stores/auth/selectors";
 import { useAppSelector } from "@/stores/hooks";
@@ -71,7 +72,10 @@ export function AdminTestimonialForm({ mode, slug }: { mode: "create" | "edit"; 
           ))}
           <AdminDualLocaleFields enName="content" faName="contentFa" enLabel={t("admin.content")} values={values} setFieldValue={setFieldValue} multiline />
           <AdminImageField label={t("admin.avatar")} value={values.avatarUrl} onChange={(p) => void setFieldValue("avatarUrl", p)} token={token} />
-          <Checkbox isSelected={values.published ?? true} onChange={(v) => void setFieldValue("published", v)}>{t("admin.published")}</Checkbox>
+          <AdminPublishedField
+            checked={Boolean(values.published)}
+            onChange={(v) => void setFieldValue("published", v)}
+          />
           <Button type="submit" variant="primary" isPending={isSubmitting} isDisabled={isSubmitting}>{t("admin.save")}</Button>
         </Form>
       )}

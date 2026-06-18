@@ -54,8 +54,15 @@ async function fetchCatalogPaged<T>(path: string): Promise<PagedResult<T>> {
 }
 
 export async function fetchSiteSettings(): Promise<SiteSettingsDto> {
-  const settings = await getJson("/catalog/settings", SEED_SETTINGS);
-  return withSocialDefaults(settings);
+  try {
+    const res = await fetch(`${SERVER_BASE_API_URL}/catalog/settings`, {
+      cache: "no-store",
+    });
+    if (!res.ok) return withSocialDefaults(SEED_SETTINGS);
+    return withSocialDefaults((await res.json()) as SiteSettingsDto);
+  } catch {
+    return withSocialDefaults(SEED_SETTINGS);
+  }
 }
 
 export async function fetchServices(): Promise<ServiceDto[]> {

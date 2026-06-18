@@ -3,6 +3,7 @@
 import { Button, Card, Spinner } from "@heroui/react";
 import { adminDelete } from "@/common/api/admin";
 import type { ContactMessageDto } from "@/common/interfaces";
+import { formatAdminDate } from "@/common/utils/format-date";
 import { useTranslation } from "@/common/i18n/useTranslation";
 import { toast } from "@/common/utils/toast";
 import { AdminListToolbar } from "@/components/admin/AdminListToolbar";
@@ -11,7 +12,7 @@ import { tokenSelector } from "@/stores/auth/selectors";
 import { useAppSelector } from "@/stores/hooks";
 
 export default function Page() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const token = useAppSelector(tokenSelector);
   const { items, total, page, setPage, q, setQ, loading, reload, pageSize } =
     useAdminList<ContactMessageDto>("/admin/contact-messages");
@@ -43,7 +44,9 @@ export default function Page() {
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <p className="font-semibold">{msg.name} · {msg.email}</p>
-                  <p className="text-sm text-foreground/60">{new Date(msg.createdAt).toLocaleString()}</p>
+                  <p className="text-sm text-foreground/60">
+                    {t("admin.dateAdded")}: {formatAdminDate(msg.createdAt, locale)}
+                  </p>
                 </div>
                 <Button size="sm" variant="ghost" className="text-danger" onPress={() => void onDelete(msg.id)}>
                   {t("admin.delete")}

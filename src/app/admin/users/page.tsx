@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { adminDelete, adminUpdate } from "@/common/api/admin";
 import type { AdminUserDto } from "@/common/interfaces";
 import { useTranslation } from "@/common/i18n/useTranslation";
+import { formatAdminDate } from "@/common/utils/format-date";
 import { isCreatorUser } from "@/common/utils/auth-user";
 import { toast } from "@/common/utils/toast";
 import { AdminListToolbar } from "@/components/admin/AdminListToolbar";
@@ -40,7 +41,7 @@ function roleClass(role: AdminUserDto["role"]) {
 }
 
 export default function AdminUsersPage() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const token = useAppSelector(tokenSelector);
   const currentUser = useAppSelector(userSelector);
   const canManageRoles = isCreatorUser(currentUser);
@@ -167,6 +168,7 @@ export default function AdminUsersPage() {
                 <th className="px-4 py-3 font-semibold">{t("auth.email")}</th>
                 <th className="px-4 py-3 font-semibold">{t("admin.userStatusLabel")}</th>
                 <th className="px-4 py-3 font-semibold">{t("admin.userRoleLabel")}</th>
+                <th className="px-4 py-3 font-semibold">{t("admin.dateAdded")}</th>
                 <th className="px-4 py-3 font-semibold text-end">{t("common.actions")}</th>
               </tr>
             </thead>
@@ -195,6 +197,9 @@ export default function AdminUsersPage() {
                     ) : (
                       <span className={roleClass(user.role)}>{t(roleLabelKey(user.role))}</span>
                     )}
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-3 text-foreground/60">
+                    {formatAdminDate(user.createdAt, locale)}
                   </td>
                   <td className="px-4 py-3 text-end">
                     <div className="flex flex-wrap justify-end gap-2">

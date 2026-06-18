@@ -2,7 +2,6 @@
 
 import {
   Button,
-  Checkbox,
   FieldError,
   Form,
   Input,
@@ -20,6 +19,8 @@ import { useTranslation } from "@/common/i18n/useTranslation";
 import { applyApiErrorsToFormik, parseApiError } from "@/common/utils";
 import { toast } from "@/common/utils/toast";
 import { projectFormSchema, toProjectPayload } from "@/common/validators";
+import { AdminPublishedField } from "@/components/admin/AdminPublishedField";
+import { AdminCheckboxField } from "@/components/admin/AdminCheckboxField";
 import { AdminDualLocaleFields } from "@/components/admin/AdminDualLocaleFields";
 import { AdminImageField } from "@/components/admin/AdminImageField";
 import { tokenSelector } from "@/stores/auth/selectors";
@@ -162,25 +163,15 @@ export function AdminProjectForm({ mode, slug }: { mode: Mode; slug?: string }) 
           </TextField>
           <AdminImageField label={t("admin.coverImage")} value={values.coverImageUrl} onChange={(p) => void setFieldValue("coverImageUrl", p)} token={token} />
           <div className="rounded-xl border border-[var(--card-border)] bg-[var(--tag-bg)] p-4 space-y-4">
-            <Checkbox
-              isSelected={Boolean(values.published)}
+            <AdminPublishedField
+              checked={Boolean(values.published)}
               onChange={(selected) => void setFieldValue("published", selected)}
-            >
-              <Checkbox.Control>
-                <Checkbox.Indicator />
-              </Checkbox.Control>
-              <Checkbox.Content>{t("admin.published")}</Checkbox.Content>
-            </Checkbox>
-            <p className="text-xs text-foreground/55 ps-7">{t("admin.publishedHint")}</p>
-            <Checkbox
-              isSelected={Boolean(values.featured)}
+            />
+            <AdminCheckboxField
+              label={t("admin.featured")}
+              checked={Boolean(values.featured)}
               onChange={(selected) => void setFieldValue("featured", selected)}
-            >
-              <Checkbox.Control>
-                <Checkbox.Indicator />
-              </Checkbox.Control>
-              <Checkbox.Content>{t("admin.featured")}</Checkbox.Content>
-            </Checkbox>
+            />
           </div>
           <div className="flex gap-3">
             <Button type="submit" variant="primary" isPending={isSubmitting} isDisabled={isSubmitting}>{t("admin.save")}</Button>

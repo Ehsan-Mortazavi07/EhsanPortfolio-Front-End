@@ -474,10 +474,94 @@ html.dark .hero-footer .scroll-pill {
   color: var(--chrome-fg);
 }
 
+:root {
+  --site-chrome-bar-height: 4.25rem;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --site-chrome-bar-height: 4.75rem;
+  }
+}
+
 .site-chrome--overlay {
-  position: absolute;
   background: linear-gradient(180deg, rgb(6 26 20 / 0.62) 0%, rgb(6 26 20 / 0.22) 42%, transparent 100%);
   border-bottom: 1px solid rgb(255 255 255 / 0.1);
+}
+
+@media (max-width: 1279px) {
+  .site-chrome--hero-mobile {
+    position: relative;
+  }
+}
+
+@media (min-width: 1280px) {
+  .site-chrome--hero-mobile {
+    position: absolute;
+  }
+}
+
+.site-chrome--menu-open {
+  background: var(--header-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--hero-badge-border);
+}
+
+.site-chrome-mobile-nav {
+  display: grid;
+  grid-template-rows: 0fr;
+  border-top: 1px solid transparent;
+  transition:
+    grid-template-rows 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s ease;
+}
+
+.site-chrome-mobile-nav--open {
+  grid-template-rows: 1fr;
+  border-top-color: rgb(255 255 255 / 0.08);
+}
+
+.site-chrome-mobile-nav-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.site-chrome-mobile-nav:not(.site-chrome-mobile-nav--open) .site-chrome-mobile-nav-inner {
+  pointer-events: none;
+}
+
+.site-chrome-mobile-nav-links {
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+
+.site-chrome-mobile-nav--open .site-chrome-mobile-nav-links {
+  opacity: 1;
+  transition: opacity 0.32s ease 0.14s;
+}
+
+@media (max-width: 1279px) {
+  .site-frame:has(.site-chrome--hero-mobile) > main {
+    margin-top: calc(-1 * var(--site-chrome-bar-height));
+    transition: margin-top 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .site-frame:has(.site-chrome-mobile-nav--open) > main {
+    margin-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-chrome-mobile-nav,
+  .site-chrome-mobile-nav-links,
+  .site-frame:has(.site-chrome--hero-mobile) > main {
+    transition: none;
+  }
+}
+
+.site-chrome-mobile-link-active {
+  color: var(--chrome-fg);
 }
 
 .site-chrome--bar {
@@ -691,6 +775,19 @@ html.dark .footer-cta:hover {
   object-fit: contain;
   filter: brightness(0) saturate(100%);
   opacity: 0.85;
+}
+
+.skill-logo-img-custom {
+  width: 2.5rem;
+  height: 2.5rem;
+  object-fit: contain;
+  filter: none;
+  opacity: 1;
+}
+
+.skill-logo--sm .skill-logo-img-custom {
+  width: 2rem;
+  height: 2rem;
 }
 
 html.dark .skill-logo-img {
@@ -961,15 +1058,26 @@ html.dark .about-intro {
 .about-hero-portrait {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 2;
+  max-width: 20rem;
+  margin-inline: auto;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
+  border-radius: 1rem;
+  background: rgb(0 0 0 / 0.04);
+}
+
+html.dark .about-hero-portrait {
+  background: rgb(255 255 255 / 0.06);
 }
 
 .about-hero-portrait-img {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  max-width: none;
+  object-fit: contain;
   object-position: center;
 }
 
@@ -980,7 +1088,9 @@ html.dark .about-intro {
   }
 
   .about-hero-portrait {
-    aspect-ratio: 16 / 10;
+    max-width: 24rem;
+    margin-inline-start: auto;
+    margin-inline-end: 0;
   }
 }
 
