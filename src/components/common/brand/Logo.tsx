@@ -1,7 +1,7 @@
 "use client";
 
+import Image from "next/image";
 import NextLink from "next/link";
-import { BrandMark } from "@/components/common/brand/BrandMark";
 import { PATHS } from "@/common/constants";
 
 type Props = {
@@ -11,15 +11,16 @@ type Props = {
 export function Logo({ light }: Props) {
   return (
     <NextLink href={PATHS.HOME} className="group flex items-center gap-2.5">
-      <span
-        className={`flex size-9 items-center justify-center rounded-xl border transition ${
-          light
-            ? "border-white/20 bg-white/8 text-white group-hover:bg-white/12"
-            : "border-foreground/12 bg-foreground/5 text-foreground group-hover:bg-foreground/8"
+      <Image
+        src="/images/brand/em-monogram.png"
+        alt=""
+        aria-hidden="true"
+        width={58}
+        height={29}
+        className={`h-7 w-auto shrink-0 object-contain transition-opacity group-hover:opacity-80 ${
+          light ? "brightness-0 invert" : ""
         }`}
-      >
-        <BrandMark size={22} />
-      </span>
+      />
       <span className={`text-sm font-bold tracking-tight sm:text-[0.95rem] ${light ? "text-white" : "text-foreground"}`}>
         Ehsan<span className={light ? "text-white/70" : "text-foreground/40"}> Mortazavi</span>
       </span>
