@@ -70,3 +70,30 @@ html.dark .site-frame:not(.admin-frame) .glass-card .button--primary {
   font-size: 0.8125rem;
   font-weight: 500;
 }
+
+/* Contact form fields need a distinct surface and visible boundary on the green card. */
+.site-frame:not(.admin-frame) .contact-form .input,
+.site-frame:not(.admin-frame) .contact-form .textarea {
+  --field-border-width: 1px;
+  --field-border: color-mix(in srgb, var(--foreground) 28%, transparent);
+  --field-border-hover: color-mix(in srgb, var(--foreground) 42%, transparent);
+  --field-border-focus: var(--focus);
+  color: var(--field-foreground);
+}
+
+.site-frame:not(.admin-frame) .contact-form .input {
+  --input-bg: var(--field-background);
+  --input-bg-hover: var(--field-background);
+  --input-bg-focus: var(--field-background);
+}
+
+.site-frame:not(.admin-frame) .contact-form .textarea {
+  --textarea-bg: var(--field-background);
+  --textarea-bg-hover: var(--field-background);
+  --textarea-bg-focus: var(--field-background);
+}
+
+.site-frame:not(.admin-frame) .contact-form .input[data-invalid="true"],
+.site-frame:not(.admin-frame) .contact-form .textarea[data-invalid="true"] {
+  border-color: var(--danger);
+}

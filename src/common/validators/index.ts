@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { translate, type Locale } from "@/common/i18n";
 import type {
   ExperienceDto,
   ProjectDto,
@@ -19,12 +20,18 @@ export const registerSchema = Yup.object({
   password: Yup.string().min(6, "Min 6 characters").required("Password is required"),
 });
 
-export const contactSchema = Yup.object({
-  name: Yup.string().required("Name is required"),
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  subject: Yup.string().required("Subject is required"),
-  message: Yup.string().min(10, "Min 10 characters").required("Message is required"),
-});
+export function createContactSchema(locale: Locale) {
+  return Yup.object({
+    name: Yup.string().required(translate(locale, "contact.validation.nameRequired")),
+    email: Yup.string()
+      .email(translate(locale, "contact.validation.emailInvalid"))
+      .required(translate(locale, "contact.validation.emailRequired")),
+    subject: Yup.string().required(translate(locale, "contact.validation.subjectRequired")),
+    message: Yup.string()
+      .min(10, translate(locale, "contact.validation.messageMinLength"))
+      .required(translate(locale, "contact.validation.messageRequired")),
+  });
+}
 
 export const slugSchema = Yup.string()
   .matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use lowercase letters, numbers, and hyphens")

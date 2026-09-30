@@ -2,12 +2,13 @@
 
 import { Button, FieldError, Form, Input, Label, TextArea, TextField } from "@heroui/react";
 import { Formik, FormikHelpers } from "formik";
+import { useMemo } from "react";
 import { submitContactForm } from "@/common/api/catalog";
 import { useTranslation } from "@/common/i18n/useTranslation";
 import type { ContactFormDto } from "@/common/interfaces";
 import { applyApiErrorsToFormik, parseApiError } from "@/common/utils";
 import { toast } from "@/common/utils/toast";
-import { contactSchema } from "@/common/validators";
+import { createContactSchema } from "@/common/validators";
 
 const initial: ContactFormDto = { name: "", email: "", subject: "", message: "" };
 
@@ -21,7 +22,8 @@ const fieldKeys = {
 } as const;
 
 export function ContactForm({ dark }: Props) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
+  const validationSchema = useMemo(() => createContactSchema(locale), [locale]);
 
   async function onSubmit(values: ContactFormDto, helpers: FormikHelpers<ContactFormDto>) {
     try {
@@ -37,9 +39,9 @@ export function ContactForm({ dark }: Props) {
   }
 
   return (
-    <Formik initialValues={initial} validationSchema={contactSchema} onSubmit={onSubmit}>
+    <Formik initialValues={initial} validationSchema={validationSchema} onSubmit={onSubmit}>
       {({ values, errors, touched, handleSubmit, isSubmitting, setFieldValue, setFieldTouched }) => (
-        <Form onSubmit={handleSubmit} className="space-y-4">
+        <Form onSubmit={handleSubmit} className="contact-form space-y-4">
           {(["name", "email", "subject"] as const).map((field) => {
             const err = touched[field] ? errors[field] : undefined;
             return (
