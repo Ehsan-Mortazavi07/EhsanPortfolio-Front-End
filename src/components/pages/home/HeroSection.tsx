@@ -3,7 +3,6 @@
 import { ArrowDown2, DocumentDownload } from "iconsax-reactjs";
 import { motion } from "motion/react";
 import NextLink from "next/link";
-import { useRouter } from "next/navigation";
 import { PATHS } from "@/common/constants";
 import { RemoteImage } from "@/components/common/media";
 import { useTranslation } from "@/common/i18n/useTranslation";
@@ -33,7 +32,6 @@ const FALLBACK_THUMBS = [
 export function HeroSection({ settings, projects }: Props) {
   const { t } = useTranslation();
   const l = useLocalizedText();
-  const router = useRouter();
 
   const title = l(settings.heroTitle, settings.heroTitleFa);
   const lines = heroTitleLines(title);
@@ -56,10 +54,6 @@ export function HeroSection({ settings, projects }: Props) {
           src,
           alt: t("hero.seePortfolio"),
         }));
-
-  function goToServices() {
-    router.push(PATHS.SERVICES);
-  }
 
   return (
     <section className="hero-section">
@@ -137,12 +131,12 @@ export function HeroSection({ settings, projects }: Props) {
         </NextLink>
         <span className="sm:hidden" />
 
-        <button type="button" onClick={goToServices} className="flex items-center gap-3">
+        <a href="#services" aria-label={t("hero.scrollDown")} className="flex items-center gap-3">
           <span className="hero-footer-link hidden sm:inline">{t("hero.scrollDown")}</span>
           <span className="scroll-pill">
             <ArrowDown2 size={18} variant="Linear" />
           </span>
-        </button>
+        </a>
       </motion.div>
     </section>
   );

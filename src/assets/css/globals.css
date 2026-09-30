@@ -339,7 +339,7 @@ html.dark .auth-page {
   color: var(--hero-footer-fg);
 }
 
-.hero-footer button {
+.hero-footer a {
   color: inherit;
 }
 
