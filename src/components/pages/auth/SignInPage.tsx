@@ -7,6 +7,7 @@ import {
   Form,
   Input,
   Label,
+  Spinner,
   TextField,
 } from "@heroui/react";
 import { Formik, FormikHelpers } from "formik";
@@ -25,7 +26,7 @@ import { isAdminUser } from "@/common/utils/auth-user";
 import { toast } from "@/common/utils/toast";
 import { loginSchema } from "@/common/validators";
 import { loginAction } from "@/stores/auth/actions";
-import { isAuthSelector, userSelector } from "@/stores/auth/selectors";
+import { didTryAutoLoginSelector, isAuthSelector, userSelector } from "@/stores/auth/selectors";
 import { useAppDispatch, useAppSelector } from "@/stores/hooks";
 
 const initial: ILoginForm = { email: "", password: "" };
@@ -35,15 +36,15 @@ export function SignInPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { t, locale } = useTranslation();
+  const didTryAutoLogin = useAppSelector(didTryAutoLoginSelector);
   const isAuth = useAppSelector(isAuthSelector);
   const user = useAppSelector(userSelector);
   const next = searchParams.get("next") || PATHS.ADMIN;
 
   useEffect(() => {
-    if (isAuth && isAdminUser(user)) {
-      router.replace(next);
-    }
-  }, [isAuth, next, router, user]);
+    if (!didTryAutoLogin || !isAuth) return;
+    router.replace(isAdminUser(user) ? next : PATHS.HOME);
+  }, [didTryAutoLogin, isAuth, next, router, user]);
 
   async function onSubmit(values: ILoginForm, helpers: FormikHelpers<ILoginForm>) {
     try {
@@ -55,6 +56,16 @@ export function SignInPage() {
     } finally {
       helpers.setSubmitting(false);
     }
+  }
+
+  if (!didTryAutoLogin || isAuth) {
+    return (
+      <PublicShell>
+        <div className="auth-page hero-section flex flex-1 items-center justify-center">
+          <Spinner size="sm" aria-label={t("admin.loading")} />
+        </div>
+      </PublicShell>
+    );
   }
 
   return (

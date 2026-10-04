@@ -7,12 +7,13 @@ import {
   Form,
   Input,
   Label,
+  Spinner,
   TextField,
 } from "@heroui/react";
 import { Formik, FormikHelpers } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { registerAccount } from "@/common/api/auth";
 import { PATHS } from "@/common/constants";
 import type { IRegisterForm } from "@/common/interfaces";
@@ -24,13 +25,24 @@ import { Logo } from "@/components/common/brand/Logo";
 import { LocaleSwitcher } from "@/components/common/preferences/LocaleSwitcher";
 import { ThemeSwitcher } from "@/components/common/preferences/ThemeSwitcher";
 import { PublicShell } from "@/components/common/shell";
+import { isAdminUser } from "@/common/utils/auth-user";
+import { didTryAutoLoginSelector, isAuthSelector, userSelector } from "@/stores/auth/selectors";
+import { useAppSelector } from "@/stores/hooks";
 
 const initial: IRegisterForm = { name: "", email: "", password: "" };
 
 export function SignUpPage() {
   const { t, locale } = useTranslation();
   const router = useRouter();
+  const didTryAutoLogin = useAppSelector(didTryAutoLoginSelector);
+  const isAuth = useAppSelector(isAuthSelector);
+  const user = useAppSelector(userSelector);
   const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    if (!didTryAutoLogin || !isAuth) return;
+    router.replace(isAdminUser(user) ? PATHS.ADMIN : PATHS.HOME);
+  }, [didTryAutoLogin, isAuth, router, user]);
 
   async function onSubmit(values: IRegisterForm, helpers: FormikHelpers<IRegisterForm>) {
     try {
@@ -42,6 +54,16 @@ export function SignUpPage() {
     } finally {
       helpers.setSubmitting(false);
     }
+  }
+
+  if (!didTryAutoLogin || isAuth) {
+    return (
+      <PublicShell>
+        <div className="auth-page hero-section flex flex-1 items-center justify-center">
+          <Spinner size="sm" aria-label={t("admin.loading")} />
+        </div>
+      </PublicShell>
+    );
   }
 
   return (

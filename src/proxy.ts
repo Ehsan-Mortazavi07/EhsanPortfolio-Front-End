@@ -7,6 +7,14 @@ export function proxy(req: NextRequest) {
   const token = req.cookies.get(AUTH_COOKIE)?.value;
   const { pathname, search } = req.nextUrl;
   const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
+  const isAuthRoute = pathname === "/auth/sign-in" || pathname === "/auth/sign-up";
+
+  if (isAuthRoute && token) {
+    const url = req.nextUrl.clone();
+    url.pathname = "/";
+    url.search = "";
+    return NextResponse.redirect(url);
+  }
 
   if (isAdminRoute && !token) {
     const url = req.nextUrl.clone();
@@ -19,5 +27,5 @@ export function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin", "/admin/:path*"],
+  matcher: ["/admin", "/admin/:path*", "/auth/sign-in", "/auth/sign-up"],
 };
