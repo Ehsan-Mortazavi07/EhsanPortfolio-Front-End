@@ -6,6 +6,7 @@ export function normalizeRole(raw: unknown): AppUserRole {
   const role = String(raw ?? "").toLowerCase();
   if (role === "creator") return "creator";
   if (role === "admin") return "admin";
+  if (role === "editor") return "editor";
   return "user";
 }
 
@@ -26,7 +27,7 @@ export function normalizeAuthUser(raw: unknown): IUser {
 }
 
 export function hasPanelAccess(user: IUser | null | undefined): boolean {
-  return user?.role === "admin" || user?.role === "creator";
+  return user?.role === "admin" || user?.role === "editor" || user?.role === "creator";
 }
 
 export function isCreatorUser(user: IUser | null | undefined): boolean {

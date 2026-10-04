@@ -16,7 +16,7 @@ import { tokenSelector, userSelector } from "@/stores/auth/selectors";
 import { useAppSelector } from "@/stores/hooks";
 
 type StatusFilter = "all" | "pending";
-const ROLE_OPTIONS: AdminUserDto["role"][] = ["user", "admin", "creator"];
+const ROLE_OPTIONS: AdminUserDto["role"][] = ["user", "admin", "editor", "creator"];
 type PendingUserAction = { type: "reject" | "delete"; id: string };
 
 function statusLabelKey(status: AdminUserDto["status"]) {
@@ -28,6 +28,7 @@ function statusLabelKey(status: AdminUserDto["status"]) {
 function roleLabelKey(role: AdminUserDto["role"]) {
   if (role === "creator") return "admin.userRole.creator" as const;
   if (role === "admin") return "admin.userRole.admin" as const;
+  if (role === "editor") return "admin.userRole.editor" as const;
   return "admin.userRole.user" as const;
 }
 
@@ -39,7 +40,7 @@ function statusClass(status: AdminUserDto["status"]) {
 
 function roleClass(role: AdminUserDto["role"]) {
   if (role === "creator") return "admin-user-role admin-user-role--creator";
-  if (role === "admin") return "admin-user-role admin-user-role--admin";
+  if (role === "admin" || role === "editor") return "admin-user-role admin-user-role--admin";
   return "admin-user-role admin-user-role--user";
 }
 
@@ -218,7 +219,7 @@ export default function AdminUsersPage() {
                         selectedKey={user.role}
                         isDisabled={roleBusyId === user.id}
                         onSelectionChange={(key) => {
-                          if (key === "user" || key === "admin" || key === "creator") {
+                          if (key === "user" || key === "admin" || key === "editor" || key === "creator") {
                             void changeRole(user.id, key);
                           }
                         }}

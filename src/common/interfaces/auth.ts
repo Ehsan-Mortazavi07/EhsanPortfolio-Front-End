@@ -2,7 +2,7 @@ export interface IUser {
   id: string;
   email: string;
   name: string;
-  role: "creator" | "admin" | "user";
+  role: "creator" | "admin" | "editor" | "user";
   status?: "pending" | "approved" | "rejected";
 }
 
@@ -28,7 +28,7 @@ export interface AdminUserDto {
   id: string;
   email: string;
   name: string;
-  role: "creator" | "admin" | "user";
+  role: "creator" | "admin" | "editor" | "user";
   status: "pending" | "approved" | "rejected";
   createdAt?: string;
   updatedAt?: string;

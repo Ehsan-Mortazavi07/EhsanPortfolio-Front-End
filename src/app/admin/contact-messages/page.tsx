@@ -9,6 +9,7 @@ import { parseApiError } from "@/common/utils/api-error";
 import { useTranslation } from "@/common/i18n/useTranslation";
 import { toast } from "@/common/utils/toast";
 import { AdminConfirmDialog } from "@/components/admin/AdminConfirmDialog";
+import { AdminContactMessageCreateModal } from "@/components/admin/AdminContactMessageCreateModal";
 import { AdminListLoading } from "@/components/admin/AdminListLoading";
 import { AdminListToolbar } from "@/components/admin/AdminListToolbar";
 import { useAdminList } from "@/components/admin/useAdminList";
@@ -87,9 +88,12 @@ export default function Page() {
         onConfirm={() => { if (confirmDeleteId) void deleteMessage(confirmDeleteId); }}
       />
 
-      <div>
-        <h1 className="text-2xl font-bold sm:text-3xl">{t("admin.messages")}</h1>
-        <p className="mt-1 text-sm text-foreground/60">{t("admin.messagesSubtitle")}</p>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold sm:text-3xl">{t("admin.messages")}</h1>
+          <p className="mt-1 text-sm text-foreground/60">{t("admin.messagesSubtitle")}</p>
+        </div>
+        <AdminContactMessageCreateModal onCreated={reload} />
       </div>
 
       <AdminListToolbar
@@ -187,15 +191,6 @@ export default function Page() {
                       <h3 className="text-sm font-semibold text-foreground/70">{t("admin.messageBody")}</h3>
                       <p className="min-h-28 whitespace-pre-wrap rounded-xl bg-surface-secondary p-4 text-sm leading-7">{selected.message}</p>
                     </div>
-                    <div className="space-y-2">
-                      <h3 className="text-sm font-semibold text-foreground/70">{t("admin.messagePublication")}</h3>
-                      <p className="rounded-xl bg-surface-secondary p-4 text-sm">
-                        {t(selected.allowPublicDisplay ? "admin.publicDisplayConsentGiven" : "admin.publicDisplayConsentMissing")}
-                      </p>
-                      {!selected.allowPublicDisplay ? (
-                        <p className="text-xs leading-6 text-foreground/60">{t("admin.publicDisplayConsentRequired")}</p>
-                      ) : null}
-                    </div>
                   </Modal.Body>
                   <Modal.Footer className="flex justify-between">
                     <Button variant="ghost" className="text-danger" onPress={() => { messageModal.close(); setConfirmDeleteId(selected.id); }}>
@@ -205,7 +200,7 @@ export default function Page() {
                       <Button
                         variant={selected.published ? "secondary" : "primary"}
                         isPending={publishingId === selected.id}
-                        isDisabled={publishingId !== null || (!selected.published && !selected.allowPublicDisplay)}
+                        isDisabled={publishingId !== null}
                         onPress={() => void setMessagePublished(selected, !selected.published)}
                       >
                         {t(selected.published ? "admin.removeMessageApproval" : "admin.approveMessage")}

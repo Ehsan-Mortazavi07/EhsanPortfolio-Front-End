@@ -39,7 +39,7 @@ function imageRemotePatterns(): NonNullable<NextConfig["images"]>["remotePattern
 
 const nextConfig: NextConfig = {
   // Isolate the writable dev cache from legacy build artifacts in `.next`.
-  distDir: process.env.NODE_ENV === "development" ? ".next-dev" : ".next",
+  distDir: process.env.NODE_ENV === "development" ? ".next-dev-workspace" : ".next",
   images: {
     dangerouslyAllowLocalIP: true,
     remotePatterns: imageRemotePatterns(),

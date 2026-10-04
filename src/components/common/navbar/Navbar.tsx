@@ -49,7 +49,13 @@ function MobileNavPanel({ open, pathname, onNavigate }: MobileNavProps) {
   );
 }
 
-export function Navbar({ variant = "hero" }: { variant?: "hero" | "inner" }) {
+export function Navbar({
+  variant = "hero",
+  forceVisible = false,
+}: {
+  variant?: "hero" | "inner";
+  forceVisible?: boolean;
+}) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
@@ -59,7 +65,7 @@ export function Navbar({ variant = "hero" }: { variant?: "hero" | "inner" }) {
     setOpen(false);
   }, [pathname]);
 
-  if (pathname.startsWith("/admin") || pathname.startsWith("/auth")) return null;
+  if (!forceVisible && (pathname.startsWith("/admin") || pathname.startsWith("/auth"))) return null;
 
   const linkClass = (active: boolean) => cn("nav-link", active && "nav-link-active");
   const closeMenu = () => setOpen(false);

@@ -30,7 +30,6 @@ export function createContactSchema(locale: Locale) {
     message: Yup.string()
       .min(10, translate(locale, "contact.validation.messageMinLength"))
       .required(translate(locale, "contact.validation.messageRequired")),
-    allowPublicDisplay: Yup.boolean().default(false),
   });
 }
 
