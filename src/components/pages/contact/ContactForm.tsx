@@ -31,7 +31,7 @@ export function ContactForm({ dark }: Props) {
       toast.success(t("contact.success"));
       helpers.resetForm();
     } catch (err) {
-      const parsed = parseApiError(err);
+      const parsed = parseApiError(err, locale);
       if (!applyApiErrorsToFormik(parsed, helpers)) toast.error(parsed.message);
     } finally {
       helpers.setSubmitting(false);

@@ -3,10 +3,14 @@
 import { AdminDualLocaleFields } from "@/components/admin/AdminDualLocaleFields";
 import { useTranslation } from "@/common/i18n/useTranslation";
 import type { PageSubtitleKey, SiteSettingsDto } from "@/common/interfaces";
+import type { FormikErrors, FormikTouched } from "formik";
 
 type Props = {
   values: SiteSettingsDto;
   setFieldValue: (field: string, value: unknown) => void;
+  errors?: FormikErrors<SiteSettingsDto>;
+  touched?: FormikTouched<SiteSettingsDto>;
+  setFieldTouched?: (field: string, touched: boolean) => void;
 };
 
 const PAGES: { key: PageSubtitleKey; labelKey: string }[] = [
@@ -16,7 +20,7 @@ const PAGES: { key: PageSubtitleKey; labelKey: string }[] = [
   { key: "testimonials", labelKey: "admin.pageSubtitleTestimonials" },
 ];
 
-export function AdminPageSubtitlesFields({ values, setFieldValue }: Props) {
+export function AdminPageSubtitlesFields({ values, errors, touched, setFieldValue, setFieldTouched }: Props) {
   const { t } = useTranslation();
 
   return (
@@ -34,7 +38,10 @@ export function AdminPageSubtitlesFields({ values, setFieldValue }: Props) {
             faName={`pageSubtitles.${key}.subtitleFa`}
             enLabel={t("admin.pageSubtitle")}
             values={values}
+            errors={errors}
+            touched={touched}
             setFieldValue={setFieldValue}
+            setFieldTouched={setFieldTouched}
             multiline
           />
         </div>

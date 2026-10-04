@@ -13,6 +13,9 @@ export default function Page() {
       apiPath="/admin/experience"
       newPath={PATHS.ADMIN_EXPERIENCE_NEW}
       editPath={PATHS.ADMIN_EXPERIENCE_EDIT}
+      labelFields={{ en: "role", fa: "roleFa" }}
+      secondaryFields={{ en: "company", fa: "companyFa" }}
+      showSlug={false}
     />
   );
 }

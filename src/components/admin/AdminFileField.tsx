@@ -25,7 +25,7 @@ export function AdminFileField({
   accept,
   preview = "document",
 }: Props) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const ref = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const fileUrl = resolvePublicUploadUrl(value);
@@ -39,7 +39,7 @@ export function AdminFileField({
       onChange(path);
       toast.success(t("admin.fileUploaded"));
     } catch (err) {
-      toast.error(parseApiError(err).message || t("admin.uploadFailed"));
+      toast.error(parseApiError(err, locale).message || t("admin.uploadFailed"));
     } finally {
       setUploading(false);
       if (ref.current) ref.current.value = "";

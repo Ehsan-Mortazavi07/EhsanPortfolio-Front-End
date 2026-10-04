@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Form, Input, Label, TextField } from "@heroui/react";
+import { Button, Form } from "@heroui/react";
 import { Formik, FormikHelpers } from "formik";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -17,11 +17,11 @@ import { AdminPublishedField } from "@/components/admin/AdminPublishedField";
 import { tokenSelector } from "@/stores/auth/selectors";
 import { useAppSelector } from "@/stores/hooks";
 
-type FormValues = Omit<ExperienceDto, "id">;
-const empty: FormValues = { slug: "", company: "", companyFa: "", role: "", roleFa: "", period: "", periodFa: "", description: "", descriptionFa: "", current: false, sortOrder: 0, published: true };
+type FormValues = Omit<ExperienceDto, "id" | "slug">;
+const empty: FormValues = { company: "", companyFa: "", role: "", roleFa: "", period: "", periodFa: "", description: "", descriptionFa: "", current: false, sortOrder: 0, published: true };
 
 export function AdminExperienceForm({ mode, slug }: { mode: "create" | "edit"; slug?: string }) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const token = useAppSelector(tokenSelector);
   const router = useRouter();
   const [initial, setInitial] = useState(empty);
@@ -31,7 +31,7 @@ export function AdminExperienceForm({ mode, slug }: { mode: "create" | "edit"; s
     if (mode !== "edit" || !slug || !token) return;
     void adminGet<ExperienceDto>(token, `/admin/experience/${slug}`)
       .then((data) => {
-        const { id: _id, ...rest } = data;
+        const { id: _id, slug: _slug, ...rest } = data;
         setInitial({
           ...rest,
           companyFa: rest.companyFa ?? "",
@@ -41,8 +41,9 @@ export function AdminExperienceForm({ mode, slug }: { mode: "create" | "edit"; s
           published: rest.published ?? true,
         });
       })
+      .catch((err) => toast.error(parseApiError(err, locale).message))
       .finally(() => setLoading(false));
-  }, [mode, slug, token]);
+  }, [mode, slug, token, locale]);
 
   async function onSubmit(values: FormValues, helpers: FormikHelpers<FormValues>) {
     if (!token) return;
@@ -53,7 +54,7 @@ export function AdminExperienceForm({ mode, slug }: { mode: "create" | "edit"; s
       toast.success(t("admin.saved"));
       router.push(PATHS.ADMIN_EXPERIENCE);
     } catch (err) {
-      const parsed = parseApiError(err);
+      const parsed = parseApiError(err, locale);
       if (!applyApiErrorsToFormik(parsed, helpers)) toast.error(parsed.message);
     } finally {
       helpers.setSubmitting(false);
@@ -64,17 +65,13 @@ export function AdminExperienceForm({ mode, slug }: { mode: "create" | "edit"; s
 
   return (
     <Formik initialValues={initial} validationSchema={experienceFormSchema} enableReinitialize onSubmit={onSubmit}>
-      {({ values, handleSubmit, isSubmitting, setFieldValue }) => (
+      {({ values, errors, touched, handleSubmit, isSubmitting, setFieldValue, setFieldTouched }) => (
         <Form onSubmit={handleSubmit} className="mx-auto max-w-2xl space-y-4">
           <h1 className="text-2xl font-bold">{mode === "create" ? t("admin.newExperience") : t("admin.editExperience")}</h1>
-          <TextField value={values.slug} variant="secondary" fullWidth onChange={(v) => void setFieldValue("slug", String(v ?? ""))}>
-            <Label className="text-sm font-semibold">{t("common.slug")}</Label>
-            <Input />
-          </TextField>
-          <AdminDualLocaleFields enName="company" faName="companyFa" enLabel="Company" values={values} setFieldValue={setFieldValue} />
-          <AdminDualLocaleFields enName="role" faName="roleFa" enLabel="Role" values={values} setFieldValue={setFieldValue} />
-          <AdminDualLocaleFields enName="period" faName="periodFa" enLabel="Period" values={values} setFieldValue={setFieldValue} />
-          <AdminDualLocaleFields enName="description" faName="descriptionFa" enLabel={t("admin.description")} values={values} setFieldValue={setFieldValue} multiline />
+          <AdminDualLocaleFields enName="company" faName="companyFa" enLabel={t("admin.company")} values={values} errors={errors} touched={touched} setFieldValue={setFieldValue} setFieldTouched={setFieldTouched} required />
+          <AdminDualLocaleFields enName="role" faName="roleFa" enLabel={t("admin.role")} values={values} errors={errors} touched={touched} setFieldValue={setFieldValue} setFieldTouched={setFieldTouched} required />
+          <AdminDualLocaleFields enName="period" faName="periodFa" enLabel={t("admin.period")} values={values} errors={errors} touched={touched} setFieldValue={setFieldValue} setFieldTouched={setFieldTouched} required />
+          <AdminDualLocaleFields enName="description" faName="descriptionFa" enLabel={t("admin.description")} values={values} errors={errors} touched={touched} setFieldValue={setFieldValue} setFieldTouched={setFieldTouched} multiline required />
           <AdminCheckboxField
             label={t("admin.currentRole")}
             checked={Boolean(values.current)}

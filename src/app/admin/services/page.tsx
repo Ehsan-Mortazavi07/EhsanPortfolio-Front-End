@@ -13,6 +13,7 @@ export default function Page() {
       apiPath="/admin/services"
       newPath={PATHS.ADMIN_SERVICE_NEW}
       editPath={PATHS.ADMIN_SERVICE_EDIT}
+      labelFields={{ en: "title", fa: "titleFa" }}
     />
   );
 }

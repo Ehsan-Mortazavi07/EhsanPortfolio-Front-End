@@ -19,6 +19,7 @@ import { ThemeSwitcher } from "@/components/common/preferences/ThemeSwitcher";
 import { PublicShell } from "@/components/common/shell";
 import { PATHS } from "@/common/constants";
 import { useTranslation } from "@/common/i18n/useTranslation";
+import { localizeErrorMessage, parseApiError } from "@/common/utils/api-error";
 import type { ILoginForm } from "@/common/interfaces";
 import { isAdminUser } from "@/common/utils/auth-user";
 import { toast } from "@/common/utils/toast";
@@ -33,7 +34,7 @@ export function SignInPage() {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const isAuth = useAppSelector(isAuthSelector);
   const user = useAppSelector(userSelector);
   const next = searchParams.get("next") || PATHS.ADMIN;
@@ -50,7 +51,7 @@ export function SignInPage() {
       toast.success(t("auth.signIn"));
       router.replace(next);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Login failed.");
+      toast.error(parseApiError(err, locale).message || t("admin.loginFailed"));
     } finally {
       helpers.setSubmitting(false);
     }
@@ -89,7 +90,7 @@ export function SignInPage() {
                     >
                       <Label className="text-sm font-semibold text-white/80">{t("auth.email")}</Label>
                       <Input type="email" autoComplete="email" />
-                      {touched.email && errors.email ? <FieldError>{errors.email}</FieldError> : null}
+                      {touched.email && errors.email ? <FieldError>{localizeErrorMessage(errors.email, locale)}</FieldError> : null}
                     </TextField>
                     <TextField
                       value={values.password}
@@ -101,7 +102,7 @@ export function SignInPage() {
                     >
                       <Label className="text-sm font-semibold text-white/80">{t("auth.password")}</Label>
                       <Input type="password" autoComplete="current-password" />
-                      {touched.password && errors.password ? <FieldError>{errors.password}</FieldError> : null}
+                      {touched.password && errors.password ? <FieldError>{localizeErrorMessage(errors.password, locale)}</FieldError> : null}
                     </TextField>
                     <Button
                       type="submit"

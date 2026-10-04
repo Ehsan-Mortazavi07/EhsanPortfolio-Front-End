@@ -13,6 +13,9 @@ export default function Page() {
       apiPath="/admin/skills"
       newPath={PATHS.ADMIN_SKILL_NEW}
       editPath={PATHS.ADMIN_SKILL_EDIT}
+      labelFields={{ en: "name" }}
+      secondaryFields={{ en: "category" }}
+      showSlug={false}
     />
   );
 }

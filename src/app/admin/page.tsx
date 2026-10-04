@@ -7,6 +7,7 @@ import type { AdminDashboardStats } from "@/common/interfaces";
 import type { MessageKey } from "@/common/i18n";
 import { useTranslation } from "@/common/i18n/useTranslation";
 import { toast } from "@/common/utils/toast";
+import { parseApiError } from "@/common/utils/api-error";
 import { tokenSelector } from "@/stores/auth/selectors";
 import { useAppSelector } from "@/stores/hooks";
 
@@ -34,7 +35,7 @@ const statKeys: { key: keyof AdminDashboardStats; labelKey: MessageKey }[] = [
 
 export default function AdminDashboardPage() {
   const token = useAppSelector(tokenSelector);
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const [stats, setStats] = useState<AdminDashboardStats | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -44,14 +45,14 @@ export default function AdminDashboardPage() {
       try {
         const data = await adminDashboardStats(token);
         setStats(data);
-      } catch {
+      } catch (err) {
         setStats(fallback);
-        toast.warning("API unavailable");
+        toast.warning(parseApiError(err, locale).message);
       } finally {
         setLoading(false);
       }
     })();
-  }, [token]);
+  }, [token, locale]);
 
   if (loading) {
     return (

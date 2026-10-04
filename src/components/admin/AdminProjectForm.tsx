@@ -16,7 +16,7 @@ import { adminCreate, adminGet, adminUpdate } from "@/common/api/admin";
 import { PATHS } from "@/common/constants";
 import type { ProjectDto } from "@/common/interfaces";
 import { useTranslation } from "@/common/i18n/useTranslation";
-import { applyApiErrorsToFormik, parseApiError } from "@/common/utils";
+import { applyApiErrorsToFormik, localizeErrorMessage, parseApiError } from "@/common/utils";
 import { toast } from "@/common/utils/toast";
 import { projectFormSchema, toProjectPayload } from "@/common/validators";
 import { AdminPublishedField } from "@/components/admin/AdminPublishedField";
@@ -49,7 +49,7 @@ const empty: FormValues = {
 };
 
 export function AdminProjectForm({ mode, slug }: { mode: Mode; slug?: string }) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const token = useAppSelector(tokenSelector);
   const router = useRouter();
   const [initial, setInitial] = useState(empty);
@@ -78,12 +78,12 @@ export function AdminProjectForm({ mode, slug }: { mode: Mode; slug?: string }) 
           repoUrl: data.repoUrl ?? null,
         });
       } catch (err) {
-        toast.error(err instanceof Error ? err.message : t("admin.loadFailed"));
+        toast.error(parseApiError(err, locale).message || t("admin.loadFailed"));
       } finally {
         setLoading(false);
       }
     })();
-  }, [mode, slug, token, t]);
+  }, [mode, slug, token, t, locale]);
 
   async function onSubmit(values: FormValues, helpers: FormikHelpers<FormValues>) {
     if (!token) return;
@@ -98,7 +98,7 @@ export function AdminProjectForm({ mode, slug }: { mode: Mode; slug?: string }) 
       }
       router.push(PATHS.ADMIN_PROJECTS);
     } catch (err) {
-      const parsed = parseApiError(err);
+      const parsed = parseApiError(err, locale);
       if (!applyApiErrorsToFormik(parsed, helpers)) toast.error(parsed.message);
     } finally {
       helpers.setSubmitting(false);
@@ -122,7 +122,7 @@ export function AdminProjectForm({ mode, slug }: { mode: Mode; slug?: string }) 
           >
             <Label className="text-sm font-semibold">{t("common.slug")}</Label>
             <Input />
-            {touched.slug && errors.slug ? <FieldError>{String(errors.slug)}</FieldError> : null}
+            {touched.slug && errors.slug ? <FieldError>{localizeErrorMessage(String(errors.slug), locale)}</FieldError> : null}
           </TextField>
           <AdminDualLocaleFields
             enName="title"
@@ -138,7 +138,7 @@ export function AdminProjectForm({ mode, slug }: { mode: Mode; slug?: string }) 
           <AdminDualLocaleFields
             enName="excerpt"
             faName="excerptFa"
-            enLabel="Excerpt"
+            enLabel={t("admin.excerpt")}
             values={values}
             errors={errors}
             touched={touched}

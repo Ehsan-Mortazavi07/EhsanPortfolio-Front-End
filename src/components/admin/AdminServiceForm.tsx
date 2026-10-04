@@ -8,7 +8,7 @@ import { adminCreate, adminGet, adminUpdate } from "@/common/api/admin";
 import { PATHS } from "@/common/constants";
 import type { ServiceDto } from "@/common/interfaces";
 import { useTranslation } from "@/common/i18n/useTranslation";
-import { applyApiErrorsToFormik, parseApiError } from "@/common/utils";
+import { applyApiErrorsToFormik, localizeErrorMessage, parseApiError } from "@/common/utils";
 import { toast } from "@/common/utils/toast";
 import { serviceFormSchema, toServicePayload } from "@/common/validators";
 import { AdminDualLocaleFields } from "@/components/admin/AdminDualLocaleFields";
@@ -34,7 +34,7 @@ const empty: FormValues = {
 };
 
 export function AdminServiceForm({ mode, slug }: { mode: Mode; slug?: string }) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const token = useAppSelector(tokenSelector);
   const router = useRouter();
   const [initial, setInitial] = useState(empty);
@@ -53,9 +53,9 @@ export function AdminServiceForm({ mode, slug }: { mode: Mode; slug?: string }) 
           published: rest.published ?? true,
         });
       })
-      .catch((e) => toast.error(String(e)))
+      .catch((e) => toast.error(parseApiError(e, locale).message))
       .finally(() => setLoading(false));
-  }, [mode, slug, token]);
+  }, [mode, slug, token, locale]);
 
   async function onSubmit(values: FormValues, helpers: FormikHelpers<FormValues>) {
     if (!token) return;
@@ -66,7 +66,7 @@ export function AdminServiceForm({ mode, slug }: { mode: Mode; slug?: string }) 
       toast.success(t("admin.saved"));
       router.push(PATHS.ADMIN_SERVICES);
     } catch (err) {
-      const parsed = parseApiError(err);
+      const parsed = parseApiError(err, locale);
       if (!applyApiErrorsToFormik(parsed, helpers)) toast.error(parsed.message);
     } finally {
       helpers.setSubmitting(false);
@@ -83,7 +83,7 @@ export function AdminServiceForm({ mode, slug }: { mode: Mode; slug?: string }) 
           <TextField value={values.slug} variant="secondary" fullWidth isInvalid={Boolean(touched.slug && errors.slug)} onBlur={() => setFieldTouched("slug", true)} onChange={(v) => void setFieldValue("slug", String(v ?? ""))}>
             <Label className="text-sm font-semibold">{t("common.slug")}</Label>
             <Input />
-            {touched.slug && errors.slug ? <FieldError>{String(errors.slug)}</FieldError> : null}
+            {touched.slug && errors.slug ? <FieldError>{localizeErrorMessage(String(errors.slug), locale)}</FieldError> : null}
           </TextField>
           <AdminDualLocaleFields enName="title" faName="titleFa" enLabel={t("common.name")} values={values} errors={errors} touched={touched} setFieldValue={setFieldValue} setFieldTouched={setFieldTouched} required />
           <AdminIconField
@@ -92,7 +92,7 @@ export function AdminServiceForm({ mode, slug }: { mode: Mode; slug?: string }) 
             onChange={(p) => void setFieldValue("icon", p ?? "")}
             token={token}
           />
-          <AdminDualLocaleFields enName="description" faName="descriptionFa" enLabel={t("admin.description")} values={values} setFieldValue={setFieldValue} multiline />
+          <AdminDualLocaleFields enName="description" faName="descriptionFa" enLabel={t("admin.description")} values={values} errors={errors} touched={touched} setFieldValue={setFieldValue} setFieldTouched={setFieldTouched} multiline required />
           <AdminCheckboxField
             label={t("admin.highlighted")}
             checked={Boolean(values.highlighted)}

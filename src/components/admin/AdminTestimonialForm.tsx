@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Form, Input, Label, TextField } from "@heroui/react";
+import { Button, Form } from "@heroui/react";
 import { Formik, FormikHelpers } from "formik";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -17,11 +17,11 @@ import { AdminImageField } from "@/components/admin/AdminImageField";
 import { tokenSelector } from "@/stores/auth/selectors";
 import { useAppSelector } from "@/stores/hooks";
 
-type FormValues = Omit<TestimonialDto, "id">;
-const empty: FormValues = { slug: "", name: "", role: "", company: "", content: "", contentFa: "", avatarUrl: null, sortOrder: 0, published: true };
+type FormValues = Omit<TestimonialDto, "id" | "slug">;
+const empty: FormValues = { name: "", nameFa: "", role: "", roleFa: "", company: "", companyFa: "", content: "", contentFa: "", avatarUrl: null, sortOrder: 0, published: false };
 
 export function AdminTestimonialForm({ mode, slug }: { mode: "create" | "edit"; slug?: string }) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const token = useAppSelector(tokenSelector);
   const router = useRouter();
   const [initial, setInitial] = useState(empty);
@@ -31,11 +31,12 @@ export function AdminTestimonialForm({ mode, slug }: { mode: "create" | "edit"; 
     if (mode !== "edit" || !slug || !token) return;
     void adminGet<TestimonialDto>(token, `/admin/testimonials/${slug}`)
       .then((data) => {
-        const { id: _id, ...rest } = data;
-        setInitial({ ...rest, contentFa: rest.contentFa ?? "", published: rest.published ?? true });
+        const { id: _id, slug: _slug, ...rest } = data;
+        setInitial({ ...rest, nameFa: rest.nameFa ?? "", roleFa: rest.roleFa ?? "", companyFa: rest.companyFa ?? "", contentFa: rest.contentFa ?? "", published: rest.published ?? false });
       })
+      .catch((err) => toast.error(parseApiError(err, locale).message))
       .finally(() => setLoading(false));
-  }, [mode, slug, token]);
+  }, [mode, slug, token, locale]);
 
   async function onSubmit(values: FormValues, helpers: FormikHelpers<FormValues>) {
     if (!token) return;
@@ -46,7 +47,7 @@ export function AdminTestimonialForm({ mode, slug }: { mode: "create" | "edit"; 
       toast.success(t("admin.saved"));
       router.push(PATHS.ADMIN_TESTIMONIALS);
     } catch (err) {
-      const parsed = parseApiError(err);
+      const parsed = parseApiError(err, locale);
       if (!applyApiErrorsToFormik(parsed, helpers)) toast.error(parsed.message);
     } finally {
       helpers.setSubmitting(false);
@@ -57,25 +58,26 @@ export function AdminTestimonialForm({ mode, slug }: { mode: "create" | "edit"; 
 
   return (
     <Formik initialValues={initial} validationSchema={testimonialFormSchema} enableReinitialize onSubmit={onSubmit}>
-      {({ values, handleSubmit, isSubmitting, setFieldValue }) => (
+      {({ values, errors, touched, handleSubmit, isSubmitting, setFieldValue, setFieldTouched }) => (
         <Form onSubmit={handleSubmit} className="mx-auto max-w-2xl space-y-4">
           <h1 className="text-2xl font-bold">{mode === "create" ? t("admin.newTestimonial") : t("admin.editTestimonial")}</h1>
-          <TextField value={values.slug} variant="secondary" fullWidth onChange={(v) => void setFieldValue("slug", String(v ?? ""))}>
-            <Label className="text-sm font-semibold">{t("common.slug")}</Label>
-            <Input />
-          </TextField>
-          {(["name", "role", "company"] as const).map((f) => (
-            <TextField key={f} value={String(values[f])} variant="secondary" fullWidth onChange={(v) => void setFieldValue(f, String(v ?? ""))}>
-              <Label className="text-sm font-semibold capitalize">{f}</Label>
-              <Input />
-            </TextField>
-          ))}
-          <AdminDualLocaleFields enName="content" faName="contentFa" enLabel={t("admin.content")} values={values} setFieldValue={setFieldValue} multiline />
+          <AdminDualLocaleFields enName="name" faName="nameFa" enLabel={t("admin.fieldName")} values={values} errors={errors} touched={touched} setFieldValue={setFieldValue} setFieldTouched={setFieldTouched} required />
+          <AdminDualLocaleFields enName="role" faName="roleFa" enLabel={t("admin.role")} values={values} errors={errors} touched={touched} setFieldValue={setFieldValue} setFieldTouched={setFieldTouched} required />
+          <AdminDualLocaleFields enName="company" faName="companyFa" enLabel={t("admin.company")} values={values} errors={errors} touched={touched} setFieldValue={setFieldValue} setFieldTouched={setFieldTouched} required />
+          <AdminDualLocaleFields enName="content" faName="contentFa" enLabel={t("admin.content")} values={values} errors={errors} touched={touched} setFieldValue={setFieldValue} setFieldTouched={setFieldTouched} multiline required />
           <AdminImageField label={t("admin.avatar")} value={values.avatarUrl} onChange={(p) => void setFieldValue("avatarUrl", p)} token={token} />
-          <AdminPublishedField
-            checked={Boolean(values.published)}
-            onChange={(v) => void setFieldValue("published", v)}
-          />
+          {mode === "create" ? (
+            <p className="rounded-xl border border-border/50 bg-surface-secondary px-4 py-3 text-sm leading-6 text-foreground/70">
+              {t("admin.approvalRequired")}
+            </p>
+          ) : (
+            <AdminPublishedField
+              checked={Boolean(values.published)}
+              onChange={(v) => void setFieldValue("published", v)}
+              labelKey="admin.approveToPublish"
+              hintKey="admin.approvalRequired"
+            />
+          )}
           <Button type="submit" variant="primary" isPending={isSubmitting} isDisabled={isSubmitting}>{t("admin.save")}</Button>
         </Form>
       )}

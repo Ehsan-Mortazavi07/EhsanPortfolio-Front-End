@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { adminList } from "@/common/api/admin";
+import { useTranslation } from "@/common/i18n/useTranslation";
+import { parseApiError } from "@/common/utils/api-error";
 import { toast } from "@/common/utils/toast";
 import { tokenSelector } from "@/stores/auth/selectors";
 import { useAppSelector } from "@/stores/hooks";
@@ -12,6 +14,7 @@ export function useAdminList<T>(
   extraParams?: Record<string, string | undefined>,
 ) {
   const token = useAppSelector(tokenSelector);
+  const { locale } = useTranslation();
   const [items, setItems] = useState<T[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -43,11 +46,11 @@ export function useAdminList<T>(
       setItems(res.items);
       setTotal(res.total);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Failed to load list");
+      toast.error(parseApiError(err, locale).message);
     } finally {
       setLoading(false);
     }
-  }, [token, path, page, pageSize, debouncedQ, extraParams]);
+  }, [token, path, page, pageSize, debouncedQ, extraParams, locale]);
 
   useEffect(() => {
     void load();

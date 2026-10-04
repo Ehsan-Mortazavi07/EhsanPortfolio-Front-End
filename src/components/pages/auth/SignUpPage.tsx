@@ -17,7 +17,7 @@ import { registerAccount } from "@/common/api/auth";
 import { PATHS } from "@/common/constants";
 import type { IRegisterForm } from "@/common/interfaces";
 import { useTranslation } from "@/common/i18n/useTranslation";
-import { parseApiError } from "@/common/utils";
+import { localizeErrorMessage, parseApiError } from "@/common/utils";
 import { toast } from "@/common/utils/toast";
 import { registerSchema } from "@/common/validators";
 import { Logo } from "@/components/common/brand/Logo";
@@ -28,7 +28,7 @@ import { PublicShell } from "@/components/common/shell";
 const initial: IRegisterForm = { name: "", email: "", password: "" };
 
 export function SignUpPage() {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const router = useRouter();
   const [done, setDone] = useState(false);
 
@@ -38,7 +38,7 @@ export function SignUpPage() {
       setDone(true);
       toast.success(t("auth.signUpSuccess"));
     } catch (err) {
-      toast.error(parseApiError(err).message || "Registration failed.");
+      toast.error(parseApiError(err, locale).message || t("admin.registrationFailed"));
     } finally {
       helpers.setSubmitting(false);
     }
@@ -90,7 +90,7 @@ export function SignUpPage() {
                       >
                         <Label className="text-sm font-semibold text-white/80">{t("auth.name")}</Label>
                         <Input autoComplete="name" />
-                        {touched.name && errors.name ? <FieldError>{errors.name}</FieldError> : null}
+                        {touched.name && errors.name ? <FieldError>{localizeErrorMessage(errors.name, locale)}</FieldError> : null}
                       </TextField>
                       <TextField
                         value={values.email}
@@ -102,7 +102,7 @@ export function SignUpPage() {
                       >
                         <Label className="text-sm font-semibold text-white/80">{t("auth.email")}</Label>
                         <Input type="email" autoComplete="email" />
-                        {touched.email && errors.email ? <FieldError>{errors.email}</FieldError> : null}
+                        {touched.email && errors.email ? <FieldError>{localizeErrorMessage(errors.email, locale)}</FieldError> : null}
                       </TextField>
                       <TextField
                         value={values.password}
@@ -114,7 +114,7 @@ export function SignUpPage() {
                       >
                         <Label className="text-sm font-semibold text-white/80">{t("auth.password")}</Label>
                         <Input type="password" autoComplete="new-password" />
-                        {touched.password && errors.password ? <FieldError>{errors.password}</FieldError> : null}
+                        {touched.password && errors.password ? <FieldError>{localizeErrorMessage(errors.password, locale)}</FieldError> : null}
                       </TextField>
                       <Button
                         type="submit"

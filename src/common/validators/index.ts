@@ -137,7 +137,7 @@ export function toArticlePayload(values: {
   };
 }
 
-export function toExperiencePayload(values: Omit<ExperienceDto, "id"> & { id?: string }) {
+export function toExperiencePayload(values: Omit<ExperienceDto, "id" | "slug">) {
   return {
     company: values.company,
     companyFa: values.companyFa ?? "",
@@ -153,7 +153,7 @@ export function toExperiencePayload(values: Omit<ExperienceDto, "id"> & { id?: s
   };
 }
 
-export function toSkillPayload(values: Omit<SkillDto, "id"> & { id?: string }) {
+export function toSkillPayload(values: Omit<SkillDto, "id" | "slug">) {
   return {
     name: values.name,
     category: values.category,
@@ -163,21 +163,23 @@ export function toSkillPayload(values: Omit<SkillDto, "id"> & { id?: string }) {
   };
 }
 
-export function toTestimonialPayload(values: Omit<TestimonialDto, "id"> & { id?: string; contentFa?: string }) {
+export function toTestimonialPayload(values: Omit<TestimonialDto, "id" | "slug"> & { contentFa?: string }) {
   return {
     name: values.name,
+    nameFa: values.nameFa ?? "",
     role: values.role,
+    roleFa: values.roleFa ?? "",
     company: values.company,
+    companyFa: values.companyFa ?? "",
     content: values.content,
     contentFa: values.contentFa ?? "",
     avatarUrl: values.avatarUrl ?? "",
     sortOrder: values.sortOrder,
-    published: values.published ?? true,
+    published: values.published ?? false,
   };
 }
 
 export const experienceFormSchema = Yup.object({
-  slug: slugSchema,
   company: Yup.string().required("Company is required"),
   role: Yup.string().required("Role is required"),
   period: Yup.string().required("Period is required"),
@@ -211,7 +213,6 @@ export const skillFormSchema = Yup.object({
 });
 
 export const testimonialFormSchema = Yup.object({
-  slug: slugSchema,
   name: Yup.string().required("Name is required"),
   role: Yup.string().required("Role is required"),
   company: Yup.string().required("Company is required"),

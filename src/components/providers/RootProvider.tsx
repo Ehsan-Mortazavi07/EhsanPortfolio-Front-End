@@ -24,7 +24,12 @@ const RootProvider: FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
       {children}
-      <Toast.Provider maxVisibleToasts={5} />
+      <Toast.Provider
+        maxVisibleToasts={5}
+        placement="top end"
+        width="min(26rem, calc(100vw - 2rem))"
+        className="app-toast-region"
+      />
     </>
   );
 };

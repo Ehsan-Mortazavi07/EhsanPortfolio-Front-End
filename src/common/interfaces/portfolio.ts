@@ -65,8 +65,11 @@ export interface TestimonialDto {
   id: string;
   slug: string;
   name: string;
+  nameFa?: string;
   role: string;
+  roleFa?: string;
   company: string;
+  companyFa?: string;
   content: string;
   contentFa?: string;
   avatarUrl: string | null;

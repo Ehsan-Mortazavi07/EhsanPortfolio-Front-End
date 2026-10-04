@@ -1,20 +1,23 @@
 "use client";
 
-import { Button, Card, Spinner } from "@heroui/react";
+import { Button, Card, ListBox, Select, Spinner } from "@heroui/react";
 import { useMemo, useState } from "react";
 import { adminDelete, adminUpdate } from "@/common/api/admin";
 import type { AdminUserDto } from "@/common/interfaces";
 import { useTranslation } from "@/common/i18n/useTranslation";
+import { parseApiError } from "@/common/utils/api-error";
 import { formatAdminDate } from "@/common/utils/format-date";
 import { isCreatorUser } from "@/common/utils/auth-user";
 import { toast } from "@/common/utils/toast";
 import { AdminListToolbar } from "@/components/admin/AdminListToolbar";
+import { AdminConfirmDialog } from "@/components/admin/AdminConfirmDialog";
 import { useAdminList } from "@/components/admin/useAdminList";
 import { tokenSelector, userSelector } from "@/stores/auth/selectors";
 import { useAppSelector } from "@/stores/hooks";
 
 type StatusFilter = "all" | "pending";
 const ROLE_OPTIONS: AdminUserDto["role"][] = ["user", "admin", "creator"];
+type PendingUserAction = { type: "reject" | "delete"; id: string };
 
 function statusLabelKey(status: AdminUserDto["status"]) {
   if (status === "pending") return "admin.userStatus.pending" as const;
@@ -47,6 +50,8 @@ export default function AdminUsersPage() {
   const canManageRoles = isCreatorUser(currentUser);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [roleBusyId, setRoleBusyId] = useState<string | null>(null);
+  const [pendingAction, setPendingAction] = useState<PendingUserAction | null>(null);
+  const [confirmationBusy, setConfirmationBusy] = useState(false);
   const listParams = useMemo(
     () => ({ status: statusFilter === "pending" ? "pending" : undefined }),
     [statusFilter],
@@ -61,18 +66,18 @@ export default function AdminUsersPage() {
       toast.success(t("admin.userApproved"));
       await reload();
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : t("admin.loadFailed"));
+      toast.error(parseApiError(err, locale).message || t("admin.loadFailed"));
     }
   }
 
   async function rejectUser(id: string) {
-    if (!token || !id || !confirm(t("admin.rejectUserConfirm"))) return;
+    if (!token || !id) return;
     try {
       await adminUpdate(token, `/admin/users/${id}`, { status: "rejected", role: "user" });
       toast.success(t("admin.userRejected"));
       await reload();
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : t("admin.loadFailed"));
+      toast.error(parseApiError(err, locale).message || t("admin.loadFailed"));
     }
   }
 
@@ -88,7 +93,7 @@ export default function AdminUsersPage() {
       toast.success(t("admin.roleUpdated"));
       await reload();
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : t("admin.loadFailed"));
+      toast.error(parseApiError(err, locale).message || t("admin.loadFailed"));
     } finally {
       setRoleBusyId(null);
     }
@@ -100,18 +105,44 @@ export default function AdminUsersPage() {
       toast.error(t("admin.selfUserDeleteForbidden"));
       return;
     }
-    if (!confirm(t("admin.deleteUserConfirm"))) return;
     try {
       await adminDelete(token, `/admin/users/${id}`);
       toast.success(t("admin.userDeleted"));
       await reload();
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : t("admin.deleteFailed"));
+      toast.error(parseApiError(err, locale).message || t("admin.deleteFailed"));
+    }
+  }
+
+  async function confirmPendingAction() {
+    if (!pendingAction || confirmationBusy) return;
+    setConfirmationBusy(true);
+    try {
+      if (pendingAction.type === "reject") await rejectUser(pendingAction.id);
+      else await deleteUser(pendingAction.id);
+      setPendingAction(null);
+    } finally {
+      setConfirmationBusy(false);
     }
   }
 
   return (
     <section className="space-y-6">
+      <AdminConfirmDialog
+        isOpen={pendingAction !== null}
+        onOpenChange={(open) => { if (!open) setPendingAction(null); }}
+        title={t("admin.confirmTitle")}
+        message={t(
+          pendingAction?.type === "reject"
+            ? "admin.confirmRejectUser"
+            : pendingAction?.type === "delete"
+              ? "admin.confirmDeleteUser"
+              : "admin.confirmAction",
+        )}
+        confirmLabel={t(pendingAction?.type === "reject" ? "admin.rejectUser" : "admin.deleteUser")}
+        isPending={confirmationBusy}
+        onConfirm={() => void confirmPendingAction()}
+      />
       <div>
         <h1 className="text-2xl font-bold sm:text-3xl">{t("admin.users")}</h1>
         <p className="mt-1 text-sm text-foreground/60">{t("admin.usersSubtitle")}</p>
@@ -182,18 +213,33 @@ export default function AdminUsersPage() {
                   </td>
                   <td className="px-4 py-3">
                     {canManageRoles ? (
-                      <select
-                        className="admin-role-select"
-                        value={user.role}
-                        disabled={roleBusyId === user.id}
-                        onChange={(e) => void changeRole(user.id, e.target.value as AdminUserDto["role"])}
+                      <Select
+                        aria-label={t("admin.userRoleLabel")}
+                        selectedKey={user.role}
+                        isDisabled={roleBusyId === user.id}
+                        onSelectionChange={(key) => {
+                          if (key === "user" || key === "admin" || key === "creator") {
+                            void changeRole(user.id, key);
+                          }
+                        }}
+                        variant="secondary"
+                        className="admin-themed-select-control"
                       >
-                        {ROLE_OPTIONS.map((role) => (
-                          <option key={role} value={role}>
-                            {t(roleLabelKey(role))}
-                          </option>
-                        ))}
-                      </select>
+                        <Select.Trigger className="admin-themed-select-trigger">
+                          <Select.Value />
+                          <Select.Indicator />
+                        </Select.Trigger>
+                        <Select.Popover className="admin-themed-select-popover">
+                          <ListBox>
+                            {ROLE_OPTIONS.map((role) => (
+                              <ListBox.Item key={role} id={role} textValue={t(roleLabelKey(role))}>
+                                {t(roleLabelKey(role))}
+                                <ListBox.ItemIndicator>✓</ListBox.ItemIndicator>
+                              </ListBox.Item>
+                            ))}
+                          </ListBox>
+                        </Select.Popover>
+                      </Select>
                     ) : (
                       <span className={roleClass(user.role)}>{t(roleLabelKey(user.role))}</span>
                     )}
@@ -213,7 +259,7 @@ export default function AdminUsersPage() {
                               size="sm"
                               variant="ghost"
                               className="text-danger"
-                              onPress={() => void rejectUser(user.id)}
+                              onPress={() => setPendingAction({ type: "reject", id: user.id })}
                             >
                               {t("admin.rejectUser")}
                             </Button>
@@ -225,7 +271,7 @@ export default function AdminUsersPage() {
                           size="sm"
                           variant="ghost"
                           className="text-danger"
-                          onPress={() => void deleteUser(user.id)}
+                          onPress={() => setPendingAction({ type: "delete", id: user.id })}
                         >
                           {t("admin.deleteUser")}
                         </Button>

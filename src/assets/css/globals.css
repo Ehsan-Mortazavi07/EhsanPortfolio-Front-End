@@ -1260,19 +1260,80 @@ html.dark .about-intro {
   color: #c084fc;
 }
 
-.admin-role-select {
+.admin-themed-select-control {
   min-width: 7.5rem;
+}
+
+.admin-themed-select-trigger {
+  width: 100%;
+  min-height: 2.35rem;
   border-radius: 0.75rem;
   border: 1px solid var(--card-border);
-  background: var(--card-bg);
+  background: var(--field-background);
   color: var(--content-fg);
   padding: 0.35rem 0.65rem;
   font-size: 0.8125rem;
   font-weight: 600;
 }
 
-.admin-role-select:disabled {
+.admin-themed-select-trigger:disabled {
   opacity: 0.6;
+}
+
+.admin-themed-select-popover {
+  min-width: 10rem;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  border-radius: 0.875rem;
+  background: var(--surface);
+  color: var(--surface-foreground);
+  box-shadow: 0 16px 40px rgb(0 0 0 / 0.22);
+}
+
+.admin-themed-select-popover [data-slot="list-box-item"] {
+  min-height: 2.5rem;
+  color: var(--surface-foreground);
+}
+
+.admin-themed-select-popover [data-slot="list-box-item"][data-focused],
+.admin-themed-select-popover [data-slot="list-box-item"][data-selected] {
+  background: var(--surface-tertiary);
+  color: var(--surface-tertiary-foreground);
+}
+
+.admin-confirm-dialog,
+.admin-message-dialog {
+  border: 1px solid var(--card-border);
+  background: var(--surface);
+  color: var(--surface-foreground);
+  box-shadow: 0 24px 72px rgb(0 0 0 / 0.32);
+}
+
+.admin-message-dialog [data-slot="modal-header"],
+.admin-confirm-dialog [data-slot="modal-header"] {
+  border-bottom: 1px solid color-mix(in srgb, var(--card-border) 65%, transparent);
+}
+
+.admin-message-dialog [data-slot="modal-footer"],
+.admin-confirm-dialog [data-slot="modal-footer"] {
+  border-top: 1px solid color-mix(in srgb, var(--card-border) 65%, transparent);
+}
+
+.app-toast-region [data-slot="toast"] {
+  border: 1px solid var(--card-border);
+  border-radius: 1rem;
+  background: var(--surface);
+  color: var(--surface-foreground);
+  box-shadow: 0 16px 48px rgb(0 0 0 / 0.24);
+}
+
+.app-toast-region [data-slot="toast-title"] {
+  color: var(--surface-foreground);
+  font-weight: 700;
+}
+
+.app-toast-region [data-slot="toast-description"] {
+  color: var(--content-fg-muted);
 }
 
 .admin-chrome-btn {

@@ -13,6 +13,10 @@ export default function Page() {
       apiPath="/admin/testimonials"
       newPath={PATHS.ADMIN_TESTIMONIAL_NEW}
       editPath={PATHS.ADMIN_TESTIMONIAL_EDIT}
+      labelFields={{ en: "name", fa: "nameFa" }}
+      secondaryFields={{ en: "company", fa: "companyFa" }}
+      showSlug={false}
+      publicationLabelKey="admin.approveToPublish"
     />
   );
 }

@@ -2,6 +2,7 @@
 
 import { FieldError, Input, Label, TextArea, TextField } from "@heroui/react";
 import { useTranslation } from "@/common/i18n/useTranslation";
+import { localizeErrorMessage } from "@/common/utils/api-error";
 
 function getByPath(source: object, path: string): unknown {
   return path.split(".").reduce<unknown>((acc, key) => {
@@ -35,7 +36,7 @@ export function AdminDualLocaleFields<T extends object>({
   multiline,
   required,
 }: Props<T>) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const faLabel = `${enLabel} (${t("admin.localeFa")})`;
 
   function readValue(name: string) {
@@ -43,7 +44,8 @@ export function AdminDualLocaleFields<T extends object>({
   }
 
   function renderField(name: string, label: string) {
-    const invalid = Boolean(touched?.[name] && errors?.[name]);
+    const fieldError = getByPath(errors ?? {}, name);
+    const invalid = Boolean(getByPath(touched ?? {}, name) && fieldError);
     return (
       <TextField
         key={name}
@@ -57,7 +59,7 @@ export function AdminDualLocaleFields<T extends object>({
       >
         <Label className="text-sm font-semibold">{label}</Label>
         {multiline ? <TextArea className="min-h-24" /> : <Input />}
-        {invalid ? <FieldError>{String(errors?.[name])}</FieldError> : null}
+        {invalid ? <FieldError>{localizeErrorMessage(String(fieldError), locale)}</FieldError> : null}
       </TextField>
     );
   }

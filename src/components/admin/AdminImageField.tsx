@@ -16,7 +16,7 @@ type Props = {
 };
 
 export function AdminImageField({ label, value, onChange, token }: Props) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const ref = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const preview = resolvePublicUploadUrl(value);
@@ -29,7 +29,7 @@ export function AdminImageField({ label, value, onChange, token }: Props) {
       onChange(path);
       toast.success(t("admin.imageUploaded"));
     } catch (err) {
-      toast.error(parseApiError(err).message || t("admin.uploadFailed"));
+      toast.error(parseApiError(err, locale).message || t("admin.uploadFailed"));
     } finally {
       setUploading(false);
       if (ref.current) ref.current.value = "";

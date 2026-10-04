@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Form, Input, Label, TextField } from "@heroui/react";
+import { Button, FieldError, Form, Input, Label, TextField } from "@heroui/react";
 import { Formik, FormikHelpers } from "formik";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ import { adminCreate, adminGet, adminUpdate } from "@/common/api/admin";
 import { PATHS } from "@/common/constants";
 import type { ArticleDetailDto } from "@/common/interfaces";
 import { useTranslation } from "@/common/i18n/useTranslation";
-import { applyApiErrorsToFormik, parseApiError } from "@/common/utils";
+import { applyApiErrorsToFormik, localizeErrorMessage, parseApiError } from "@/common/utils";
 import { toast } from "@/common/utils/toast";
 import { articleFormSchema, toArticlePayload } from "@/common/validators";
 import { AdminDualLocaleFields } from "@/components/admin/AdminDualLocaleFields";
@@ -45,7 +45,7 @@ const empty: FormValues = {
 };
 
 export function AdminArticleForm({ mode, slug }: { mode: "create" | "edit"; slug?: string }) {
-  const { t } = useTranslation();
+  const { t, locale } = useTranslation();
   const token = useAppSelector(tokenSelector);
   const router = useRouter();
   const [initial, setInitial] = useState(empty);
@@ -68,8 +68,9 @@ export function AdminArticleForm({ mode, slug }: { mode: "create" | "edit"; slug
           published: data.published ?? true,
         }),
       )
+      .catch((err) => toast.error(parseApiError(err, locale).message))
       .finally(() => setLoading(false));
-  }, [mode, slug, token]);
+  }, [mode, slug, token, locale]);
 
   async function onSubmit(values: FormValues, helpers: FormikHelpers<FormValues>) {
     if (!token) return;
@@ -80,7 +81,7 @@ export function AdminArticleForm({ mode, slug }: { mode: "create" | "edit"; slug
       toast.success(t("admin.saved"));
       router.push(PATHS.ADMIN_ARTICLES);
     } catch (err) {
-      const parsed = parseApiError(err);
+      const parsed = parseApiError(err, locale);
       if (!applyApiErrorsToFormik(parsed, helpers)) toast.error(parsed.message);
     } finally {
       helpers.setSubmitting(false);
@@ -91,25 +92,27 @@ export function AdminArticleForm({ mode, slug }: { mode: "create" | "edit"; slug
 
   return (
     <Formik initialValues={initial} validationSchema={articleFormSchema} enableReinitialize onSubmit={onSubmit}>
-      {({ values, handleSubmit, isSubmitting, setFieldValue }) => (
+      {({ values, errors, touched, handleSubmit, isSubmitting, setFieldValue, setFieldTouched }) => (
         <Form onSubmit={handleSubmit} className="mx-auto max-w-3xl space-y-4">
           <h1 className="text-2xl font-bold">{mode === "create" ? t("admin.newArticle") : t("admin.editArticle")}</h1>
-          <TextField value={values.slug} variant="secondary" fullWidth onChange={(v) => void setFieldValue("slug", String(v ?? ""))}>
+          <TextField value={values.slug} variant="secondary" fullWidth isInvalid={Boolean(touched.slug && errors.slug)} onBlur={() => setFieldTouched("slug", true)} onChange={(v) => void setFieldValue("slug", String(v ?? ""))}>
             <Label className="text-sm font-semibold">{t("common.slug")}</Label>
             <Input />
+            {touched.slug && errors.slug ? <FieldError>{localizeErrorMessage(String(errors.slug), locale)}</FieldError> : null}
           </TextField>
-          <AdminDualLocaleFields enName="title" faName="titleFa" enLabel={t("common.name")} values={values} setFieldValue={setFieldValue} />
-          <AdminDualLocaleFields enName="excerpt" faName="excerptFa" enLabel="Excerpt" values={values} setFieldValue={setFieldValue} multiline />
-          <TextField value={values.publishedAt} variant="secondary" fullWidth onChange={(v) => void setFieldValue("publishedAt", String(v ?? ""))}>
-            <Label className="text-sm font-semibold">Published at</Label>
+          <AdminDualLocaleFields enName="title" faName="titleFa" enLabel={t("common.name")} values={values} errors={errors} touched={touched} setFieldValue={setFieldValue} setFieldTouched={setFieldTouched} required />
+          <AdminDualLocaleFields enName="excerpt" faName="excerptFa" enLabel={t("admin.excerpt")} values={values} errors={errors} touched={touched} setFieldValue={setFieldValue} setFieldTouched={setFieldTouched} multiline required />
+          <TextField value={values.publishedAt} variant="secondary" fullWidth isInvalid={Boolean(touched.publishedAt && errors.publishedAt)} onBlur={() => setFieldTouched("publishedAt", true)} onChange={(v) => void setFieldValue("publishedAt", String(v ?? ""))}>
+            <Label className="text-sm font-semibold">{t("admin.publishedAt")}</Label>
             <Input type="date" />
+            {touched.publishedAt && errors.publishedAt ? <FieldError>{localizeErrorMessage(String(errors.publishedAt), locale)}</FieldError> : null}
           </TextField>
           <AdminImageField label={t("admin.cover")} value={values.coverImageUrl} onChange={(p) => void setFieldValue("coverImageUrl", p)} token={token} />
           <AdminPublishedField
             checked={Boolean(values.published)}
             onChange={(v) => void setFieldValue("published", v)}
           />
-          <AdminRichTextEditor label={`${t("admin.content")} (${t("admin.localeEn")})`} value={values.contentHtml} onChange={(html) => void setFieldValue("contentHtml", html)} uploadToken={token} />
+          <AdminRichTextEditor label={`${t("admin.content")} (${t("admin.localeEn")})`} value={values.contentHtml} onChange={(html) => void setFieldValue("contentHtml", html)} onBlur={() => setFieldTouched("contentHtml", true)} error={touched.contentHtml && errors.contentHtml ? localizeErrorMessage(String(errors.contentHtml), locale) : undefined} uploadToken={token} />
           <AdminRichTextEditor label={`${t("admin.content")} (${t("admin.localeFa")})`} value={values.contentHtmlFa} onChange={(html) => void setFieldValue("contentHtmlFa", html)} uploadToken={token} />
           <Button type="submit" variant="primary" isPending={isSubmitting} isDisabled={isSubmitting}>{t("admin.save")}</Button>
         </Form>

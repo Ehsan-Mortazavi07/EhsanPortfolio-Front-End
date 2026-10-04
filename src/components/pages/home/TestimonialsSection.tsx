@@ -35,9 +35,9 @@ export function TestimonialsSection({ testimonials, hideHeader }: Props) {
               <div className="green-card h-full">
                 <p className="text-sm leading-relaxed text-[var(--content-fg-muted)]">&ldquo;{l(item.content, item.contentFa)}&rdquo;</p>
                 <div className="mt-6 border-t border-[var(--experience-row-border)] pt-4">
-                  <p className="font-semibold">{item.name}</p>
+                  <p className="font-semibold">{l(item.name, item.nameFa)}</p>
                   <p className="text-xs text-[var(--content-fg-muted)]">
-                    {item.role} · {item.company}
+                    {l(item.role, item.roleFa)} · {l(item.company, item.companyFa)}
                   </p>
                 </div>
               </div>

@@ -13,6 +13,7 @@ export default function Page() {
       apiPath="/admin/articles"
       newPath={PATHS.ADMIN_ARTICLE_NEW}
       editPath={PATHS.ADMIN_ARTICLE_EDIT}
+      labelFields={{ en: "title", fa: "titleFa" }}
     />
   );
 }
