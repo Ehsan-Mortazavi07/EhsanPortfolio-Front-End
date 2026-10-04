@@ -74,7 +74,7 @@ export const messages: Messages = {
   "projects.pageTitle": "پروژه‌ها",
   "projects.pageSubtitle": "مطالعات موردی و محصولات تحویل‌داده‌شده.",
   "projects.back": "بازگشت به پروژه‌ها →",
-  "projects.liveDemo": "نسخه زنده",
+  "projects.viewSite": "مشاهده سایت",
   "projects.sourceCode": "سورس کد",
   "auth.signIn": "ورود",
   "auth.signUp": "ثبت‌نام",

@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@heroui/react";
 import { ArrowUp2, ExportSquare } from "iconsax-reactjs";
 import { RemoteImage } from "@/components/common/media";
 import NextLink from "next/link";
@@ -38,35 +39,40 @@ export function ProjectsPage({ projects, settings }: Props) {
 
             return (
               <div key={project.id} className="group green-card flex h-full flex-col overflow-hidden !p-0">
-                <NextLink href={detailUrl} aria-label={`${t("projects.seeDetails")}: ${title}`} className="relative block aspect-[16/10] overflow-hidden bg-[var(--card-border)]">
+                <NextLink href={detailUrl} aria-label={`${t("projects.seeDetails")}: ${title}`} className="flex flex-1 flex-col">
+                  <div className="relative block aspect-[16/10] overflow-hidden bg-[var(--card-border)]">
                     {cover ? (
                       <RemoteImage src={cover} alt={title} fill className="object-cover transition group-hover:scale-105" sizes="400px" />
                     ) : (
                       <div className="image-placeholder size-full" />
                     )}
+                  </div>
+                  <div className="flex flex-1 flex-col p-5">
+                    <div className="flex items-start justify-between gap-3">
+                      <h2 className="text-lg font-bold uppercase tracking-tight group-hover:underline">{title}</h2>
+                      <ArrowUp2 size={16} className="text-foreground/35" aria-hidden="true" />
+                    </div>
+                    <p className="mt-2 text-sm text-foreground/65">{l(project.excerpt, project.excerptFa)}</p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span key={tag} className="tag-pill">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </NextLink>
-                <div className="flex flex-1 flex-col p-5">
-                  <div className="flex items-start justify-between gap-3">
-                    <h2 className="text-lg font-bold uppercase tracking-tight">
-                      {liveUrl ? (
-                        <a href={liveUrl} target="_blank" rel="noopener noreferrer" className="group-hover:underline">
-                          {title}
-                        </a>
-                      ) : (
-                        <NextLink href={detailUrl} className="group-hover:underline">{title}</NextLink>
-                      )}
-                    </h2>
-                    {liveUrl ? <ExportSquare size={16} className="text-foreground/35" aria-hidden="true" /> : <ArrowUp2 size={16} className="text-foreground/35" />}
+                {liveUrl ? (
+                  <div className="px-5 pb-5">
+                    <Button
+                      variant="secondary"
+                      className="rounded-full font-semibold"
+                      onPress={() => window.open(liveUrl, "_blank", "noopener,noreferrer")}
+                    >
+                      <ExportSquare size={16} aria-hidden="true" /> {t("projects.viewSite")}
+                    </Button>
                   </div>
-                  <p className="mt-2 text-sm text-foreground/65">{l(project.excerpt, project.excerptFa)}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
-                      <span key={tag} className="tag-pill">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+                ) : null}
               </div>
             );
           })}

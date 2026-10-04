@@ -76,7 +76,7 @@ export type MessageKey =
   | "projects.pageTitle"
   | "projects.pageSubtitle"
   | "projects.back"
-  | "projects.liveDemo"
+  | "projects.viewSite"
   | "projects.sourceCode"
   | "auth.signIn"
   | "auth.signUp"

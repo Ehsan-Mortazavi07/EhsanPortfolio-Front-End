@@ -58,7 +58,7 @@ export function ProjectDetailPage({ project, settings }: Props) {
         <div className="project-detail-actions mt-10 flex flex-wrap gap-3">
           {isSafeExternalUrl(project.liveUrl) && (
             <Button variant="primary" className="rounded-full font-semibold" onPress={() => window.open(project.liveUrl!, "_blank", "noopener,noreferrer")}>
-              <ExportSquare size={16} variant="Linear" /> {t("projects.liveDemo")}
+              <ExportSquare size={16} variant="Linear" /> {t("projects.viewSite")}
             </Button>
           )}
           {isSafeExternalUrl(project.repoUrl) && (

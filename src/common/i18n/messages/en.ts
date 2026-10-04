@@ -74,7 +74,7 @@ export const messages: Messages = {
   "projects.pageTitle": "Projects",
   "projects.pageSubtitle": "Case studies and shipped products.",
   "projects.back": "← Back to projects",
-  "projects.liveDemo": "Live demo",
+  "projects.viewSite": "View site",
   "projects.sourceCode": "Source code",
   "auth.signIn": "Sign in",
   "auth.signUp": "Sign up",

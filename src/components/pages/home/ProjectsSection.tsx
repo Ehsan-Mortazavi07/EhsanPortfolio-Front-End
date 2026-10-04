@@ -56,39 +56,40 @@ export function ProjectsSection({ projects }: Props) {
                 transition={{ delay: index * 0.06 }}
               >
                 <div className="group green-card flex h-full flex-col overflow-hidden !p-0">
-                  <NextLink href={detailUrl} aria-label={`${t("projects.seeDetails")}: ${title}`} className="relative block aspect-[16/10] w-full overflow-hidden bg-[var(--card-border)]">
-                    {cover ? (
-                      <RemoteImage src={cover} alt={title} fill className="object-cover transition duration-500 group-hover:scale-105" sizes="400px" />
-                    ) : (
-                      <div className="image-placeholder size-full" />
-                    )}
-                  </NextLink>
-                  <div className="flex flex-1 flex-col p-5 sm:p-6">
-                    <div className="flex items-start justify-between gap-3">
-                      <h3 className="text-lg font-bold uppercase tracking-tight">
-                        {liveUrl ? (
-                          <a href={liveUrl} target="_blank" rel="noopener noreferrer" className="group-hover:underline">
-                            {title}
-                          </a>
-                        ) : (
-                          <NextLink href={detailUrl} className="group-hover:underline">{title}</NextLink>
-                        )}
-                      </h3>
-                      {liveUrl ? (
-                        <ExportSquare size={18} className="shrink-0 text-foreground/35" aria-hidden="true" />
+                  <NextLink href={detailUrl} aria-label={`${t("projects.seeDetails")}: ${title}`} className="flex flex-1 flex-col">
+                    <div className="relative block aspect-[16/10] w-full overflow-hidden bg-[var(--card-border)]">
+                      {cover ? (
+                        <RemoteImage src={cover} alt={title} fill className="object-cover transition duration-500 group-hover:scale-105" sizes="400px" />
                       ) : (
-                        <ArrowUp2 size={18} className="shrink-0 text-foreground/35 transition group-hover:text-foreground" />
+                        <div className="image-placeholder size-full" />
                       )}
                     </div>
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-foreground/65">{excerpt}</p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {project.tags.slice(0, 3).map((tag) => (
-                        <span key={tag} className="tag-pill">
-                          {tag}
-                        </span>
-                      ))}
+                    <div className="flex flex-1 flex-col p-5 sm:p-6">
+                      <div className="flex items-start justify-between gap-3">
+                        <h3 className="text-lg font-bold uppercase tracking-tight group-hover:underline">{title}</h3>
+                        <ArrowUp2 size={18} className="shrink-0 text-foreground/35 transition group-hover:text-foreground" aria-hidden="true" />
+                      </div>
+                      <p className="mt-2 flex-1 text-sm leading-relaxed text-foreground/65">{excerpt}</p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {project.tags.slice(0, 3).map((tag) => (
+                          <span key={tag} className="tag-pill">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  </NextLink>
+                  {liveUrl ? (
+                    <div className="px-5 pb-5 sm:px-6">
+                      <Button
+                        variant="secondary"
+                        className="rounded-full font-semibold"
+                        onPress={() => window.open(liveUrl, "_blank", "noopener,noreferrer")}
+                      >
+                        <ExportSquare size={16} aria-hidden="true" /> {t("projects.viewSite")}
+                      </Button>
+                    </div>
+                  ) : null}
                 </div>
               </motion.div>
             );
