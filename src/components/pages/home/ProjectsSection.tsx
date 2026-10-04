@@ -45,6 +45,7 @@ export function ProjectsSection({ projects }: Props) {
             const excerpt = l(project.excerpt, project.excerptFa);
             const cover = resolvePublicUploadUrl(project.coverImageUrl);
             const liveUrl = isSafeExternalUrl(project.liveUrl) ? project.liveUrl : null;
+            const isPortfolio = project.slug === "portfolio-platform";
             const detailUrl = PATHS.PROJECT(project.slug);
 
             return (
@@ -57,9 +58,16 @@ export function ProjectsSection({ projects }: Props) {
               >
                 <div className="group green-card flex h-full flex-col overflow-hidden !p-0">
                   <NextLink href={detailUrl} aria-label={`${t("projects.seeDetails")}: ${title}`} className="flex flex-1 flex-col">
-                    <div className="relative block aspect-[16/10] w-full overflow-hidden bg-[var(--card-border)]">
+                    <div className={`relative block aspect-[16/10] w-full overflow-hidden ${isPortfolio ? "bg-[#f6f4ec]" : "bg-[var(--card-border)]"}`}>
                       {cover ? (
-                        <RemoteImage src={cover} alt={title} fill className="object-cover transition duration-500 group-hover:scale-105" sizes="400px" />
+                        <RemoteImage
+                          src={cover}
+                          alt={title}
+                          fill
+                          quality={100}
+                          className={isPortfolio ? "object-contain p-8" : "object-cover transition duration-500 group-hover:scale-105"}
+                          sizes="400px"
+                        />
                       ) : (
                         <div className="image-placeholder size-full" />
                       )}

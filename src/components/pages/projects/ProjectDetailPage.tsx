@@ -18,6 +18,7 @@ export function ProjectDetailPage({ project, settings }: Props) {
   const l = useLocalizedText();
   const cover = resolvePublicUploadUrl(project.coverImageUrl);
   const bodyHtml = l(project.contentHtml, project.contentHtmlFa);
+  const isPortfolio = project.slug === "portfolio-platform";
 
   return (
     <PublicPageLayout
@@ -30,8 +31,16 @@ export function ProjectDetailPage({ project, settings }: Props) {
         </NextLink>
 
         {cover ? (
-          <div className="project-detail-cover relative mt-8 aspect-[16/10] overflow-hidden">
-            <RemoteImage src={cover} alt={l(project.title, project.titleFa)} fill className="object-cover" sizes="768px" priority />
+          <div className={`project-detail-cover relative mt-8 aspect-[16/10] overflow-hidden ${isPortfolio ? "bg-[#f6f4ec]" : ""}`}>
+            <RemoteImage
+              src={cover}
+              alt={l(project.title, project.titleFa)}
+              fill
+              quality={100}
+              className={isPortfolio ? "object-contain p-10" : "object-cover"}
+              sizes="768px"
+              priority
+            />
           </div>
         ) : null}
 

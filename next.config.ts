@@ -43,6 +43,7 @@ const nextConfig: NextConfig = {
   images: {
     dangerouslyAllowLocalIP: true,
     remotePatterns: imageRemotePatterns(),
+    qualities: [75, 100],
   },
   async redirects() {
     return [
