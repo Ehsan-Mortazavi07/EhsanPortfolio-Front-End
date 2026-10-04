@@ -26,7 +26,10 @@ function imageRemotePatterns(): NonNullable<NextConfig["images"]>["remotePattern
       pathname: "/**",
     };
     const exists = patterns.some(
-      (p) => p.hostname === fromEnv.hostname && (p.protocol === fromEnv.protocol || !p.protocol),
+      (p) =>
+        p.hostname === fromEnv.hostname &&
+        (p.protocol === fromEnv.protocol || !p.protocol) &&
+        p.port === fromEnv.port,
     );
     return exists ? patterns : [fromEnv, ...patterns];
   } catch {
