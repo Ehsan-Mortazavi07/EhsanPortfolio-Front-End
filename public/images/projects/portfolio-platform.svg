@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" fill="none">
+  <rect width="1600" height="1000" rx="36" fill="#0D1D17"/>
+  <rect x="48" y="48" width="1504" height="904" rx="28" stroke="#365746" stroke-width="2"/>
+  <text x="104" y="146" fill="#F1EEE5" font-family="Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="5">EHSAN MORTAZAVI</text>
+  <text x="104" y="220" fill="#F1EEE5" font-family="Arial, sans-serif" font-size="58" font-weight="700">PORTFOLIO CMS</text>
+  <text x="104" y="270" fill="#A8BBAE" font-family="Arial, sans-serif" font-size="26">A bilingual portfolio with a custom content workspace</text>
+  <rect x="104" y="352" width="424" height="424" rx="24" fill="#173A2C" stroke="#537764" stroke-width="2"/>
+  <text x="152" y="430" fill="#DCC69F" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="3">PUBLIC SITE</text>
+  <rect x="152" y="472" width="328" height="44" rx="10" fill="#28553F"/>
+  <rect x="152" y="542" width="216" height="116" rx="14" fill="#214B38" stroke="#678C72" stroke-width="2"/>
+  <rect x="384" y="542" width="96" height="116" rx="14" fill="#214B38" stroke="#678C72" stroke-width="2"/>
+  <rect x="152" y="682" width="328" height="44" rx="10" fill="#D6C09B"/>
+  <path d="M564 564H672" stroke="#D6C09B" stroke-width="4" stroke-linecap="round"/>
+  <path d="m656 548 18 16-18 16" stroke="#D6C09B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="704" y="352" width="424" height="424" rx="24" fill="#132D23" stroke="#537764" stroke-width="2"/>
+  <text x="752" y="430" fill="#DCC69F" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="3">ADMIN WORKSPACE</text>
+  <rect x="752" y="472" width="120" height="254" rx="14" fill="#1C4030"/>
+  <rect x="896" y="472" width="184" height="70" rx="12" fill="#214B38"/>
+  <rect x="896" y="558" width="184" height="70" rx="12" fill="#214B38"/>
+  <rect x="896" y="644" width="184" height="82" rx="12" fill="#214B38"/>
+  <path d="M1164 564H1272" stroke="#D6C09B" stroke-width="4" stroke-linecap="round"/>
+  <path d="m1256 548 18 16-18 16" stroke="#D6C09B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="1304" y="352" width="192" height="424" rx="24" fill="#173A2C" stroke="#537764" stroke-width="2"/>
+  <circle cx="1400" cy="478" r="42" stroke="#D6C09B" stroke-width="4"/>
+  <path d="M1383 478h34M1400 461v34" stroke="#D6C09B" stroke-width="4" stroke-linecap="round"/>
+  <text x="1400" y="572" fill="#F1EEE5" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700">NestJS API</text>
+  <rect x="1352" y="624" width="96" height="70" rx="12" fill="#214B38" stroke="#678C72" stroke-width="2"/>
+  <path d="M1380 642v34M1400 642v34M1420 642v34M1368 650h64M1368 668h64" stroke="#A8BBAE" stroke-width="3"/>
+  <text x="800" y="872" fill="#A8BBAE" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" letter-spacing="2">NEXT.JS · TYPESCRIPT · NESTJS · MONGODB</text>
+</svg>

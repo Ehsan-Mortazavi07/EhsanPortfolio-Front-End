@@ -5,3 +5,4 @@ export * from "./api-error";
 export * from "./format-date";
 export * from "./page-subtitle";
 export * from "./site-settings";
+export * from "./external-url";

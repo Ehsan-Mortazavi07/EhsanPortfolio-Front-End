@@ -183,6 +183,8 @@ export const messages: Messages = {
   "admin.currentRole": "شغل فعلی",
   "admin.tags": "برچسب‌ها (با کاما جدا کنید)",
   "admin.coverImage": "تصویر کاور",
+  "admin.projectLiveUrl": "آدرس سایت پروژه",
+  "admin.projectRepoUrl": "آدرس مخزن کد",
   "admin.cover": "کاور",
   "admin.avatar": "آواتار",
   "admin.content": "محتوا",

@@ -16,13 +16,14 @@ import { adminCreate, adminGet, adminUpdate } from "@/common/api/admin";
 import { PATHS } from "@/common/constants";
 import type { ProjectDto } from "@/common/interfaces";
 import { useTranslation } from "@/common/i18n/useTranslation";
-import { applyApiErrorsToFormik, localizeErrorMessage, parseApiError } from "@/common/utils";
+import { applyApiErrorsToFormik, isSafeExternalUrl, localizeErrorMessage, parseApiError } from "@/common/utils";
 import { toast } from "@/common/utils/toast";
 import { projectFormSchema, toProjectPayload } from "@/common/validators";
 import { AdminPublishedField } from "@/components/admin/AdminPublishedField";
 import { AdminCheckboxField } from "@/components/admin/AdminCheckboxField";
 import { AdminDualLocaleFields } from "@/components/admin/AdminDualLocaleFields";
 import { AdminImageField } from "@/components/admin/AdminImageField";
+import { AdminRichTextEditor } from "@/components/admin/AdminRichTextEditor";
 import { tokenSelector } from "@/stores/auth/selectors";
 import { useAppSelector } from "@/stores/hooks";
 
@@ -38,6 +39,8 @@ const empty: FormValues = {
   excerptFa: "",
   description: "",
   descriptionFa: "",
+  contentHtml: "",
+  contentHtmlFa: "",
   coverImageUrl: null,
   tags: [],
   tagsInput: "",
@@ -68,14 +71,16 @@ export function AdminProjectForm({ mode, slug }: { mode: Mode; slug?: string }) 
           excerptFa: data.excerptFa ?? "",
           description: data.description,
           descriptionFa: data.descriptionFa ?? "",
+          contentHtml: data.contentHtml ?? "",
+          contentHtmlFa: data.contentHtmlFa ?? "",
           coverImageUrl: data.coverImageUrl,
           tags: data.tags,
           tagsInput: data.tags.join(", "),
           featured: data.featured,
           sortOrder: data.sortOrder,
           published: data.published ?? true,
-          liveUrl: data.liveUrl ?? null,
-          repoUrl: data.repoUrl ?? null,
+          liveUrl: isSafeExternalUrl(data.liveUrl) ? data.liveUrl : null,
+          repoUrl: isSafeExternalUrl(data.repoUrl) ? data.repoUrl : null,
         });
       } catch (err) {
         toast.error(parseApiError(err, locale).message || t("admin.loadFailed"));
@@ -157,11 +162,52 @@ export function AdminProjectForm({ mode, slug }: { mode: Mode; slug?: string }) 
             setFieldTouched={setFieldTouched}
             multiline
           />
+          <AdminRichTextEditor
+            label={`${t("admin.content")} (${t("admin.localeEn")})`}
+            value={values.contentHtml ?? ""}
+            onChange={(html) => void setFieldValue("contentHtml", html)}
+            onBlur={() => setFieldTouched("contentHtml", true)}
+            error={touched.contentHtml && errors.contentHtml ? localizeErrorMessage(String(errors.contentHtml), locale) : undefined}
+            uploadToken={token}
+          />
+          <AdminRichTextEditor
+            label={`${t("admin.content")} (${t("admin.localeFa")})`}
+            value={values.contentHtmlFa ?? ""}
+            onChange={(html) => void setFieldValue("contentHtmlFa", html)}
+            onBlur={() => setFieldTouched("contentHtmlFa", true)}
+            uploadToken={token}
+          />
           <TextField value={values.tagsInput} variant="secondary" fullWidth onChange={(v) => void setFieldValue("tagsInput", String(v ?? ""))}>
             <Label className="text-sm font-semibold">{t("admin.tags")}</Label>
             <Input />
           </TextField>
           <AdminImageField label={t("admin.coverImage")} value={values.coverImageUrl} onChange={(p) => void setFieldValue("coverImageUrl", p)} token={token} />
+          <div className="space-y-4 rounded-xl border border-[var(--card-border)] bg-[var(--tag-bg)] p-4">
+            <TextField
+              value={values.liveUrl ?? ""}
+              variant="secondary"
+              fullWidth
+              isInvalid={Boolean(touched.liveUrl && errors.liveUrl)}
+              onBlur={() => setFieldTouched("liveUrl", true)}
+              onChange={(value) => void setFieldValue("liveUrl", String(value ?? "").trim() || null)}
+            >
+              <Label className="text-sm font-semibold">{t("admin.projectLiveUrl")}</Label>
+              <Input type="url" dir="ltr" placeholder="https://example.com" />
+              {touched.liveUrl && errors.liveUrl ? <FieldError>{localizeErrorMessage(String(errors.liveUrl), locale)}</FieldError> : null}
+            </TextField>
+            <TextField
+              value={values.repoUrl ?? ""}
+              variant="secondary"
+              fullWidth
+              isInvalid={Boolean(touched.repoUrl && errors.repoUrl)}
+              onBlur={() => setFieldTouched("repoUrl", true)}
+              onChange={(value) => void setFieldValue("repoUrl", String(value ?? "").trim() || null)}
+            >
+              <Label className="text-sm font-semibold">{t("admin.projectRepoUrl")}</Label>
+              <Input type="url" dir="ltr" placeholder="https://github.com/username/project" />
+              {touched.repoUrl && errors.repoUrl ? <FieldError>{localizeErrorMessage(String(errors.repoUrl), locale)}</FieldError> : null}
+            </TextField>
+          </div>
           <div className="rounded-xl border border-[var(--card-border)] bg-[var(--tag-bg)] p-4 space-y-4">
             <AdminPublishedField
               checked={Boolean(values.published)}

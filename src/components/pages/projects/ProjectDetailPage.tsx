@@ -9,7 +9,7 @@ import { PATHS } from "@/common/constants";
 import { useTranslation } from "@/common/i18n/useTranslation";
 import { useLocalizedText } from "@/common/i18n/useLocalizedText";
 import type { ProjectDto, SiteSettingsDto } from "@/common/interfaces";
-import { resolvePublicUploadUrl } from "@/common/utils";
+import { isSafeExternalUrl, resolvePublicUploadUrl } from "@/common/utils";
 
 type Props = { project: ProjectDto; settings: SiteSettingsDto };
 
@@ -56,13 +56,13 @@ export function ProjectDetailPage({ project, settings }: Props) {
         )}
 
         <div className="project-detail-actions mt-10 flex flex-wrap gap-3">
-          {project.liveUrl && (
-            <Button variant="primary" className="rounded-full font-semibold" onPress={() => window.open(project.liveUrl!, "_blank")}>
+          {isSafeExternalUrl(project.liveUrl) && (
+            <Button variant="primary" className="rounded-full font-semibold" onPress={() => window.open(project.liveUrl!, "_blank", "noopener,noreferrer")}>
               <ExportSquare size={16} variant="Linear" /> {t("projects.liveDemo")}
             </Button>
           )}
-          {project.repoUrl && (
-            <Button variant="secondary" className="rounded-full font-semibold" onPress={() => window.open(project.repoUrl!, "_blank")}>
+          {isSafeExternalUrl(project.repoUrl) && (
+            <Button variant="secondary" className="rounded-full font-semibold" onPress={() => window.open(project.repoUrl!, "_blank", "noopener,noreferrer")}>
               <ProgrammingArrow size={16} variant="Linear" /> {t("projects.sourceCode")}
             </Button>
           )}

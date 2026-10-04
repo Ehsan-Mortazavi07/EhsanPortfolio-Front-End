@@ -37,6 +37,19 @@ export const slugSchema = Yup.string()
   .matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use lowercase letters, numbers, and hyphens")
   .required("Slug is required");
 
+const optionalExternalUrlSchema = Yup.string()
+  .transform((value) => (typeof value === "string" ? value.trim() || null : value))
+  .nullable()
+  .test("external-url", "Invalid URL", (value) => {
+    if (!value) return true;
+    try {
+      const url = new URL(value);
+      return url.protocol === "http:" || url.protocol === "https:";
+    } catch {
+      return false;
+    }
+  });
+
 export const projectFormSchema = Yup.object({
   slug: slugSchema,
   title: Yup.string().required("Title is required"),
@@ -47,8 +60,8 @@ export const projectFormSchema = Yup.object({
   featured: Yup.boolean().default(false),
   sortOrder: Yup.number().default(0),
   published: Yup.boolean().default(true),
-  liveUrl: Yup.string().url("Invalid URL").nullable(),
-  repoUrl: Yup.string().url("Invalid URL").nullable(),
+  liveUrl: optionalExternalUrlSchema,
+  repoUrl: optionalExternalUrlSchema,
 });
 
 export const serviceFormSchema = Yup.object({
@@ -101,13 +114,15 @@ export function toProjectPayload(values: Omit<ProjectDto, "id"> & { tagsInput?: 
     titleFa: values.titleFa ?? "",
     description: values.description || values.excerpt || "",
     descriptionFa: values.descriptionFa || values.excerptFa || "",
+    contentHtml: values.contentHtml ?? "",
+    contentHtmlFa: values.contentHtmlFa ?? "",
     coverImage: values.coverImageUrl ?? "",
     techStack: tags,
     featured: values.featured,
     sortOrder: values.sortOrder,
     published: values.published !== false,
-    caseStudyUrl: values.liveUrl ?? "",
-    githubUrl: values.repoUrl ?? "",
+    caseStudyUrl: values.liveUrl?.trim() ?? "",
+    githubUrl: values.repoUrl?.trim() ?? "",
   };
 }
 

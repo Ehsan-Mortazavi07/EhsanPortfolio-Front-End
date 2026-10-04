@@ -1,5 +1,5 @@
 import { SERVER_BASE_API_URL } from "@/common/constants";
-import { SEED_SETTINGS } from "@/common/data/seed";
+import { SEED_PROJECTS, SEED_SETTINGS } from "@/common/data/seed";
 import type {
   ArticleDetailDto,
   ArticleListItemDto,
@@ -92,7 +92,21 @@ export async function fetchProjects(params?: {
   if (params?.featured) qs.set("featured", "true");
   const query = qs.toString();
   const path = `/catalog/projects${query ? `?${query}` : ""}`;
-  return fetchCatalogPaged<ProjectDto>(path);
+  const result = await fetchCatalogPaged<ProjectDto>(path);
+  if (result.items.length > 0 || process.env.NODE_ENV === "production") return result;
+
+  const seed = params?.featured
+    ? SEED_PROJECTS.filter((project) => project.featured)
+    : SEED_PROJECTS;
+  const page = params?.page ?? 1;
+  const pageSize = params?.pageSize ?? 20;
+  const start = (page - 1) * pageSize;
+  return {
+    items: seed.slice(start, start + pageSize),
+    total: seed.length,
+    page,
+    pageSize,
+  };
 }
 
 export async function fetchProjectBySlug(slug: string): Promise<ProjectDto | null> {
@@ -100,10 +114,16 @@ export async function fetchProjectBySlug(slug: string): Promise<ProjectDto | nul
     const res = await fetch(`${SERVER_BASE_API_URL}/catalog/projects/${encodeURIComponent(slug)}`, {
       cache: "no-store",
     });
-    if (!res.ok) return null;
+    if (!res.ok) {
+      return process.env.NODE_ENV === "production"
+        ? null
+        : SEED_PROJECTS.find((project) => project.slug === slug) ?? null;
+    }
     return (await res.json()) as ProjectDto;
   } catch {
-    return null;
+    return process.env.NODE_ENV === "production"
+      ? null
+      : SEED_PROJECTS.find((project) => project.slug === slug) ?? null;
   }
 }
 

@@ -183,6 +183,8 @@ export const messages: Messages = {
   "admin.currentRole": "Current role",
   "admin.tags": "Tags (comma-separated)",
   "admin.coverImage": "Cover image",
+  "admin.projectLiveUrl": "Project website URL",
+  "admin.projectRepoUrl": "Source code repository URL",
   "admin.cover": "Cover",
   "admin.avatar": "Avatar",
   "admin.content": "Content",

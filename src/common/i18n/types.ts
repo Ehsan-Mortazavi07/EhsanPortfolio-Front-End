@@ -185,6 +185,8 @@ export type MessageKey =
   | "admin.currentRole"
   | "admin.tags"
   | "admin.coverImage"
+  | "admin.projectLiveUrl"
+  | "admin.projectRepoUrl"
   | "admin.cover"
   | "admin.avatar"
   | "admin.content"

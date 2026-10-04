@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@heroui/react";
-import { ArrowUp2 } from "iconsax-reactjs";
+import { ArrowUp2, ExportSquare } from "iconsax-reactjs";
 import { motion } from "motion/react";
 import { RemoteImage } from "@/components/common/media";
 import NextLink from "next/link";
@@ -10,7 +10,7 @@ import { PATHS } from "@/common/constants";
 import { useTranslation } from "@/common/i18n/useTranslation";
 import { useLocalizedText } from "@/common/i18n/useLocalizedText";
 import type { ProjectDto } from "@/common/interfaces";
-import { resolvePublicUploadUrl } from "@/common/utils";
+import { isSafeExternalUrl, resolvePublicUploadUrl } from "@/common/utils";
 
 type Props = { projects: ProjectDto[] };
 
@@ -44,6 +44,8 @@ export function ProjectsSection({ projects }: Props) {
             const title = l(project.title, project.titleFa);
             const excerpt = l(project.excerpt, project.excerptFa);
             const cover = resolvePublicUploadUrl(project.coverImageUrl);
+            const liveUrl = isSafeExternalUrl(project.liveUrl) ? project.liveUrl : null;
+            const detailUrl = PATHS.PROJECT(project.slug);
 
             return (
               <motion.div
@@ -53,31 +55,41 @@ export function ProjectsSection({ projects }: Props) {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.06 }}
               >
-                <NextLink href={PATHS.PROJECT(project.slug)} className="group block h-full">
-                  <div className="green-card flex h-full flex-col overflow-hidden !p-0">
-                    <div className="relative aspect-[16/10] w-full overflow-hidden bg-[var(--card-border)]">
-                      {cover ? (
-                        <RemoteImage src={cover} alt={title} fill className="object-cover transition duration-500 group-hover:scale-105" sizes="400px" />
+                <div className="group green-card flex h-full flex-col overflow-hidden !p-0">
+                  <NextLink href={detailUrl} aria-label={`${t("projects.seeDetails")}: ${title}`} className="relative block aspect-[16/10] w-full overflow-hidden bg-[var(--card-border)]">
+                    {cover ? (
+                      <RemoteImage src={cover} alt={title} fill className="object-cover transition duration-500 group-hover:scale-105" sizes="400px" />
+                    ) : (
+                      <div className="image-placeholder size-full" />
+                    )}
+                  </NextLink>
+                  <div className="flex flex-1 flex-col p-5 sm:p-6">
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="text-lg font-bold uppercase tracking-tight">
+                        {liveUrl ? (
+                          <a href={liveUrl} target="_blank" rel="noopener noreferrer" className="group-hover:underline">
+                            {title}
+                          </a>
+                        ) : (
+                          <NextLink href={detailUrl} className="group-hover:underline">{title}</NextLink>
+                        )}
+                      </h3>
+                      {liveUrl ? (
+                        <ExportSquare size={18} className="shrink-0 text-foreground/35" aria-hidden="true" />
                       ) : (
-                        <div className="image-placeholder size-full" />
+                        <ArrowUp2 size={18} className="shrink-0 text-foreground/35 transition group-hover:text-foreground" />
                       )}
                     </div>
-                    <div className="flex flex-1 flex-col p-5 sm:p-6">
-                      <div className="flex items-start justify-between gap-3">
-                        <h3 className="text-lg font-bold uppercase tracking-tight group-hover:underline">{title}</h3>
-                        <ArrowUp2 size={18} className="shrink-0 text-foreground/35 transition group-hover:text-foreground" />
-                      </div>
-                      <p className="mt-2 flex-1 text-sm leading-relaxed text-foreground/65">{excerpt}</p>
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {project.tags.slice(0, 3).map((tag) => (
-                          <span key={tag} className="tag-pill">
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-foreground/65">{excerpt}</p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {project.tags.slice(0, 3).map((tag) => (
+                        <span key={tag} className="tag-pill">
+                          {tag}
+                        </span>
+                      ))}
                     </div>
                   </div>
-                </NextLink>
+                </div>
               </motion.div>
             );
           })}
