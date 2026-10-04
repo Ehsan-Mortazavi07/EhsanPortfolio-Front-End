@@ -138,6 +138,8 @@ export interface ContactMessageDto {
   email: string;
   subject: string;
   message: string;
+  allowPublicDisplay: boolean;
+  published: boolean;
   read: boolean;
   createdAt: string;
 }
@@ -147,6 +149,7 @@ export interface ContactFormDto {
   email: string;
   subject: string;
   message: string;
+  allowPublicDisplay: boolean;
 }
 
 export interface PagedResult<T> {

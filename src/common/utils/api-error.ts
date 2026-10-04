@@ -14,6 +14,7 @@ const messageKeys: Record<string, MessageKey> = {
   "دسترسی غیرمجاز است": "errors.unauthorized",
   "شما مجوز انجام این عملیات را ندارید": "errors.forbidden",
   "مورد درخواستی یافت نشد": "errors.notFound",
+  "پیام‌دهنده اجازه نمایش عمومی پیام را نداده است": "errors.publicDisplayConsentRequired",
   "درخواست نامعتبر است": "errors.badRequest",
   "اعتبارسنجی داده‌ها با خطا مواجه شد": "errors.validation",
   "خطای داخلی سرور": "errors.server",

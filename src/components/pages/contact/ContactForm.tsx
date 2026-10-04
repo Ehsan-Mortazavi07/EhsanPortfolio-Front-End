@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, FieldError, Form, Input, Label, TextArea, TextField } from "@heroui/react";
+import { Button, Checkbox, FieldError, Form, Input, Label, TextArea, TextField } from "@heroui/react";
 import { Formik, FormikHelpers } from "formik";
 import { useMemo } from "react";
 import { submitContactForm } from "@/common/api/catalog";
@@ -10,7 +10,7 @@ import { applyApiErrorsToFormik, parseApiError } from "@/common/utils";
 import { toast } from "@/common/utils/toast";
 import { createContactSchema } from "@/common/validators";
 
-const initial: ContactFormDto = { name: "", email: "", subject: "", message: "" };
+const initial: ContactFormDto = { name: "", email: "", subject: "", message: "", allowPublicDisplay: false };
 
 type Props = { dark?: boolean };
 
@@ -72,6 +72,16 @@ export function ContactForm({ dark }: Props) {
             <TextArea className="min-h-24" />
             {touched.message && errors.message ? <FieldError>{errors.message}</FieldError> : null}
           </TextField>
+          <Checkbox
+            isSelected={values.allowPublicDisplay}
+            onChange={(selected) => void setFieldValue("allowPublicDisplay", selected)}
+            className="items-start text-sm"
+          >
+            <Checkbox.Control>
+              <Checkbox.Indicator />
+            </Checkbox.Control>
+            <Checkbox.Content>{t("contact.allowPublicDisplay")}</Checkbox.Content>
+          </Checkbox>
           <Button
             type="submit"
             variant="primary"

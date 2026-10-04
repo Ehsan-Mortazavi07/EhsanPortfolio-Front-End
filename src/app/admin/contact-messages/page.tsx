@@ -21,6 +21,7 @@ export default function Page() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
+  const [publishingId, setPublishingId] = useState<string | null>(null);
   const { items, total, page, setPage, q, setQ, loading, reload, pageSize } =
     useAdminList<ContactMessageDto>("/admin/contact-messages");
   const selected = items.find((msg) => msg.id === selectedId) ?? null;
@@ -57,6 +58,20 @@ export default function Page() {
       toast.error(parseApiError(err, locale).message || t("admin.deleteFailed"));
     } finally {
       setDeleting(false);
+    }
+  }
+
+  async function setMessagePublished(message: ContactMessageDto, published: boolean) {
+    if (!token || publishingId) return;
+    setPublishingId(message.id);
+    try {
+      await adminUpdate(token, `/admin/contact-messages/${message.id}/publication`, { published });
+      toast.success(t(published ? "admin.messageApproved" : "admin.messageApprovalRemoved"));
+      await reload();
+    } catch (err) {
+      toast.error(parseApiError(err, locale).message);
+    } finally {
+      setPublishingId(null);
     }
   }
 
@@ -102,6 +117,7 @@ export default function Page() {
                 <th className="px-4 py-3 font-semibold">{t("auth.email")}</th>
                 <th className="px-4 py-3 font-semibold">{t("admin.messageSubject")}</th>
                 <th className="px-4 py-3 font-semibold">{t("admin.userStatusLabel")}</th>
+                <th className="px-4 py-3 font-semibold">{t("admin.messagePublication")}</th>
                 <th className="px-4 py-3 font-semibold">{t("admin.dateAdded")}</th>
               </tr>
             </thead>
@@ -133,6 +149,11 @@ export default function Page() {
                       {t(msg.read ? "admin.messageRead" : "admin.messageUnread")}
                     </span>
                   </td>
+                  <td className="px-4 py-3">
+                    <span className={`admin-user-status ${msg.published ? "admin-user-status--approved" : "admin-user-status--pending"}`}>
+                      {t(msg.published ? "admin.approvedForDisplay" : "admin.pendingApproval")}
+                    </span>
+                  </td>
                   <td className="whitespace-nowrap px-4 py-3 text-foreground/60">{formatAdminDate(msg.createdAt, locale)}</td>
                 </tr>
               ))}
@@ -153,8 +174,8 @@ export default function Page() {
                       <p className="mt-2 text-sm text-foreground/65">{selected.name} · {selected.email}</p>
                       <p className="mt-1 text-xs text-foreground/50">{t("admin.dateAdded")}: {formatAdminDate(selected.createdAt, locale)}</p>
                     </div>
-                    <span className={`admin-user-status ${selected.read ? "admin-user-status--approved" : "admin-user-status--pending"}`}>
-                      {t(selected.read ? "admin.messageRead" : "admin.messageUnread")}
+                    <span className={`admin-user-status ${selected.published ? "admin-user-status--approved" : "admin-user-status--pending"}`}>
+                      {t(selected.published ? "admin.approvedForDisplay" : "admin.pendingApproval")}
                     </span>
                   </Modal.Header>
                   <Modal.Body className="space-y-5">
@@ -166,12 +187,31 @@ export default function Page() {
                       <h3 className="text-sm font-semibold text-foreground/70">{t("admin.messageBody")}</h3>
                       <p className="min-h-28 whitespace-pre-wrap rounded-xl bg-surface-secondary p-4 text-sm leading-7">{selected.message}</p>
                     </div>
+                    <div className="space-y-2">
+                      <h3 className="text-sm font-semibold text-foreground/70">{t("admin.messagePublication")}</h3>
+                      <p className="rounded-xl bg-surface-secondary p-4 text-sm">
+                        {t(selected.allowPublicDisplay ? "admin.publicDisplayConsentGiven" : "admin.publicDisplayConsentMissing")}
+                      </p>
+                      {!selected.allowPublicDisplay ? (
+                        <p className="text-xs leading-6 text-foreground/60">{t("admin.publicDisplayConsentRequired")}</p>
+                      ) : null}
+                    </div>
                   </Modal.Body>
                   <Modal.Footer className="flex justify-between">
                     <Button variant="ghost" className="text-danger" onPress={() => { messageModal.close(); setConfirmDeleteId(selected.id); }}>
                       {t("admin.delete")}
                     </Button>
+                    <div className="flex flex-wrap justify-end gap-2">
+                      <Button
+                        variant={selected.published ? "secondary" : "primary"}
+                        isPending={publishingId === selected.id}
+                        isDisabled={publishingId !== null || (!selected.published && !selected.allowPublicDisplay)}
+                        onPress={() => void setMessagePublished(selected, !selected.published)}
+                      >
+                        {t(selected.published ? "admin.removeMessageApproval" : "admin.approveMessage")}
+                      </Button>
                     <Button variant="secondary" onPress={() => setSelectedId(null)}>{t("admin.close")}</Button>
+                    </div>
                   </Modal.Footer>
                 </>
               ) : null}

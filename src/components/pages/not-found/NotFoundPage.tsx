@@ -17,7 +17,7 @@ export function NotFoundPage({ settings }: Props) {
 
   return (
     <PublicShell>
-      <Navbar variant="hero" />
+      <Navbar variant="inner" />
       <main>
         <section className="hero-section min-h-dvh">
           <div className="hero-atmosphere" aria-hidden />

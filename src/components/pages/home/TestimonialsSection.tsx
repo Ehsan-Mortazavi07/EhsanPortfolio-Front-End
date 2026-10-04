@@ -24,25 +24,29 @@ export function TestimonialsSection({ testimonials, hideHeader }: Props) {
         )}
 
         <div className={hideHeader ? "grid gap-6 md:grid-cols-2 lg:grid-cols-3" : "mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3"}>
-          {testimonials.map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.08 }}
-            >
-              <div className="green-card h-full">
-                <p className="text-sm leading-relaxed text-[var(--content-fg-muted)]">&ldquo;{l(item.content, item.contentFa)}&rdquo;</p>
-                <div className="mt-6 border-t border-[var(--experience-row-border)] pt-4">
-                  <p className="font-semibold">{l(item.name, item.nameFa)}</p>
-                  <p className="text-xs text-[var(--content-fg-muted)]">
-                    {l(item.role, item.roleFa)} · {l(item.company, item.companyFa)}
-                  </p>
+          {testimonials.map((item, index) => {
+            const attribution = [l(item.role, item.roleFa), l(item.company, item.companyFa)]
+              .filter(Boolean)
+              .join(" · ");
+
+            return (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.08 }}
+              >
+                <div className="green-card h-full">
+                  <p className="text-sm leading-relaxed text-[var(--content-fg-muted)]">&ldquo;{l(item.content, item.contentFa)}&rdquo;</p>
+                  <div className="mt-6 border-t border-[var(--experience-row-border)] pt-4">
+                    <p className="font-semibold">{l(item.name, item.nameFa)}</p>
+                    {attribution ? <p className="text-xs text-[var(--content-fg-muted)]">{attribution}</p> : null}
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>
