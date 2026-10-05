@@ -183,6 +183,8 @@ export const messages: Messages = {
   "admin.currentRole": "Current role",
   "admin.tags": "Tags (comma-separated)",
   "admin.coverImage": "Cover image",
+  "admin.homeImage": "Homepage thumbnail",
+  "admin.homeImageHint": "Optional portrait image used only in the homepage hero. Recommended size: 1200 × 1500 px (4:5).",
   "admin.projectLiveUrl": "Project website URL",
   "admin.projectRepoUrl": "Source code repository URL",
   "admin.cover": "Cover",

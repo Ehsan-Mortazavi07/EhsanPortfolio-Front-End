@@ -183,6 +183,8 @@ export const messages: Messages = {
   "admin.currentRole": "شغل فعلی",
   "admin.tags": "برچسب‌ها (با کاما جدا کنید)",
   "admin.coverImage": "تصویر کاور",
+  "admin.homeImage": "تصویر کارت صفحهٔ اصلی",
+  "admin.homeImageHint": "اختیاری؛ فقط در کارت پروژه‌های هیروی صفحهٔ اصلی استفاده می‌شود. اندازهٔ پیشنهادی: ۱۲۰۰ × ۱۵۰۰ پیکسل (نسبت ۴:۵).",
   "admin.projectLiveUrl": "آدرس سایت پروژه",
   "admin.projectRepoUrl": "آدرس مخزن کد",
   "admin.cover": "کاور",

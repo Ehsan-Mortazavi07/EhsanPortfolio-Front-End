@@ -60,6 +60,7 @@ export function Navbar({
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
   const onHero = variant === "hero";
+  const isHome = pathname === "/";
 
   useEffect(() => {
     setOpen(false);
@@ -80,7 +81,7 @@ export function Navbar({
       )}
     >
       <div className="section-container flex h-[var(--site-chrome-bar-height)] items-center justify-between gap-3">
-        <Logo light />
+        {isHome ? <span className="hidden w-[12rem] xl:block" aria-hidden="true" /> : <Logo light />}
 
         <nav className="absolute left-1/2 hidden max-w-[52%] -translate-x-1/2 items-center xl:max-w-none xl:flex">
           {PUBLIC_NAV.map((item, index) => {

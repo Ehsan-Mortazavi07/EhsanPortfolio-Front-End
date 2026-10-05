@@ -2,6 +2,7 @@
 
 import { ArrowDown2, DocumentDownload } from "iconsax-reactjs";
 import { motion } from "motion/react";
+import Image from "next/image";
 import NextLink from "next/link";
 import { PATHS } from "@/common/constants";
 import { RemoteImage } from "@/components/common/media";
@@ -40,7 +41,7 @@ export function HeroSection({ settings, projects }: Props) {
   const thumbs: Thumb[] =
     projects.length > 0
       ? projects.slice(0, 3).map((project) => {
-          const raw = project.coverImageUrl;
+          const raw = project.homeImageUrl || project.coverImageUrl;
           const src = resolvePublicUploadUrl(raw) || FALLBACK_THUMBS[0];
           return {
             id: project.id,
@@ -60,6 +61,17 @@ export function HeroSection({ settings, projects }: Props) {
       <div className="hero-atmosphere" aria-hidden />
       <div className="hero-pillars" aria-hidden />
       <div className="hero-mist" aria-hidden />
+
+      <div className="hero-brand-mark" aria-hidden="true">
+        <Image
+          src="/images/brand/em-monogram.png"
+          alt=""
+          width={120}
+          height={60}
+          priority
+          className="h-14 w-auto object-contain brightness-0 invert sm:h-[4.5rem]"
+        />
+      </div>
 
       <div className="hero-content flex flex-1 flex-col items-center justify-center px-4 pb-52 pt-28 text-center sm:px-6 sm:pb-56 sm:pt-32">
         <motion.h1
@@ -105,7 +117,7 @@ export function HeroSection({ settings, projects }: Props) {
           const className = `portfolio-thumb ${isCenter ? "portfolio-thumb-center" : "portfolio-thumb-side"}`;
           const image = (
             <div className={className}>
-              <RemoteImage src={thumb.src} alt={thumb.alt} fill className="object-cover" sizes="140px" priority={isCenter} />
+              <RemoteImage src={thumb.src} alt={thumb.alt} fill className="object-cover" sizes="(min-width: 640px) 144px, 104px" quality={100} priority={isCenter} />
             </div>
           );
 

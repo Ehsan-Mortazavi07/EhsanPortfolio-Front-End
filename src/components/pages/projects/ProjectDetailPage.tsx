@@ -31,13 +31,13 @@ export function ProjectDetailPage({ project, settings }: Props) {
         </NextLink>
 
         {cover ? (
-          <div className={`project-detail-cover relative mt-8 aspect-[16/10] overflow-hidden ${isPortfolio ? "bg-[#f6f4ec]" : ""}`}>
+          <div className={`project-detail-cover relative mt-8 aspect-[16/10] overflow-hidden ${isPortfolio ? "bg-[#071a15]" : ""}`}>
             <RemoteImage
               src={cover}
               alt={l(project.title, project.titleFa)}
               fill
               quality={100}
-              className={isPortfolio ? "object-contain p-10" : "object-cover"}
+              className={isPortfolio ? "object-contain" : "object-cover"}
               sizes="768px"
               priority
             />

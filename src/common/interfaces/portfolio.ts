@@ -10,6 +10,7 @@ export interface ProjectDto {
   contentHtml?: string;
   contentHtmlFa?: string;
   coverImageUrl: string | null;
+  homeImageUrl?: string | null;
   tags: string[];
   featured: boolean;
   sortOrder: number;

@@ -42,6 +42,7 @@ const empty: FormValues = {
   contentHtml: "",
   contentHtmlFa: "",
   coverImageUrl: null,
+  homeImageUrl: null,
   tags: [],
   tagsInput: "",
   featured: false,
@@ -74,6 +75,7 @@ export function AdminProjectForm({ mode, slug }: { mode: Mode; slug?: string }) 
           contentHtml: data.contentHtml ?? "",
           contentHtmlFa: data.contentHtmlFa ?? "",
           coverImageUrl: data.coverImageUrl,
+          homeImageUrl: data.homeImageUrl ?? null,
           tags: data.tags,
           tagsInput: data.tags.join(", "),
           featured: data.featured,
@@ -182,6 +184,10 @@ export function AdminProjectForm({ mode, slug }: { mode: Mode; slug?: string }) 
             <Input />
           </TextField>
           <AdminImageField label={t("admin.coverImage")} value={values.coverImageUrl} onChange={(p) => void setFieldValue("coverImageUrl", p)} token={token} />
+          <div className="space-y-2">
+            <p className="text-sm text-foreground/65">{t("admin.homeImageHint")}</p>
+            <AdminImageField label={t("admin.homeImage")} value={values.homeImageUrl ?? null} onChange={(p) => void setFieldValue("homeImageUrl", p)} token={token} previewAspectRatio="4 / 5" />
+          </div>
           <div className="space-y-4 rounded-xl border border-[var(--card-border)] bg-[var(--tag-bg)] p-4">
             <TextField
               value={values.liveUrl ?? ""}
