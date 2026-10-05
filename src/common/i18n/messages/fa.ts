@@ -75,6 +75,8 @@ export const messages: Messages = {
   "projects.pageSubtitle": "مطالعات موردی و محصولات تحویل‌داده‌شده.",
   "projects.back": "بازگشت به پروژه‌ها →",
   "projects.gallery": "تصاویر بیشتر پروژه",
+  "projects.galleryPrevious": "رفتن به تصاویر قبلی پروژه",
+  "projects.galleryNext": "رفتن به تصاویر بعدی پروژه",
   "projects.viewSite": "مشاهده سایت",
   "projects.sourceCode": "سورس کد",
   "auth.signIn": "ورود",

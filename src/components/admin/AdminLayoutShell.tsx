@@ -94,7 +94,7 @@ export function AdminLayoutShell({ children }: { children: React.ReactNode }) {
       <div className="admin-frame site-frame">
         <aside className="admin-sidebar">
           <div className="mb-6 px-2">
-            <Logo light />
+            <Logo light compact />
             <p className="admin-panel-subtitle mt-3">{t("admin.panel")}</p>
           </div>
           <NavButtons pathname={pathname} onNavigate={go} vertical />

@@ -75,6 +75,8 @@ export const messages: Messages = {
   "projects.pageSubtitle": "Case studies and shipped products.",
   "projects.back": "← Back to projects",
   "projects.gallery": "More project images",
+  "projects.galleryPrevious": "Scroll to previous project images",
+  "projects.galleryNext": "Scroll to next project images",
   "projects.viewSite": "View site",
   "projects.sourceCode": "Source code",
   "auth.signIn": "Sign in",

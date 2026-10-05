@@ -6,23 +6,24 @@ import { PATHS } from "@/common/constants";
 
 type Props = {
   light?: boolean;
+  compact?: boolean;
 };
 
-export function Logo({ light }: Props) {
+export function Logo({ light, compact = false }: Props) {
   return (
-    <NextLink href={PATHS.HOME} className="group flex items-center gap-2 sm:gap-3">
+    <NextLink href={PATHS.HOME} className={`group flex items-center ${compact ? "gap-2" : "gap-2 sm:gap-3"}`}>
       <Image
         src="/images/brand/em-monogram.png"
         alt=""
         aria-hidden="true"
         width={80}
         height={40}
-        className={`h-8 w-auto shrink-0 object-contain transition-opacity group-hover:opacity-80 sm:h-10 ${
+        className={`${compact ? "h-8" : "h-8 sm:h-10"} w-auto shrink-0 object-contain transition-opacity group-hover:opacity-80 ${
           light ? "brightness-0 invert" : ""
         }`}
       />
       <span
-        className={`whitespace-nowrap text-[0.9375rem] font-bold leading-none tracking-tight sm:text-lg ${
+        className={`${compact ? "text-sm" : "text-[0.9375rem] sm:text-lg"} whitespace-nowrap font-bold leading-none tracking-tight ${
           light ? "text-white" : "text-foreground"
         }`}
       >

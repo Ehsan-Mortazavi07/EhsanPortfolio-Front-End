@@ -77,6 +77,8 @@ export type MessageKey =
   | "projects.pageSubtitle"
   | "projects.back"
   | "projects.gallery"
+  | "projects.galleryPrevious"
+  | "projects.galleryNext"
   | "projects.viewSite"
   | "projects.sourceCode"
   | "auth.signIn"

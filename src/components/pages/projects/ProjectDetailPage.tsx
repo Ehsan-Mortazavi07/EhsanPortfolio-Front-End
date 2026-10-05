@@ -1,7 +1,8 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@heroui/react";
-import { ExportSquare, ProgrammingArrow } from "iconsax-reactjs";
+import { ArrowLeft2, ArrowRight2, ExportSquare, ProgrammingArrow } from "iconsax-reactjs";
 import { RemoteImage } from "@/components/common/media";
 import NextLink from "next/link";
 import { PageHeroBand, PublicPageLayout } from "@/components/common/shell";
@@ -16,6 +17,8 @@ type Props = { project: ProjectDto; settings: SiteSettingsDto };
 export function ProjectDetailPage({ project, settings }: Props) {
   const { t } = useTranslation();
   const l = useLocalizedText();
+  const galleryRef = useRef<HTMLDivElement>(null);
+  const [galleryScroll, setGalleryScroll] = useState({ canGoPrevious: false, canGoNext: false });
   const cover = resolvePublicUploadUrl(project.coverImageUrl);
   const bodyHtml = l(project.contentHtml, project.contentHtmlFa);
   const isPortfolio = project.slug === "portfolio-platform";
@@ -23,6 +26,34 @@ export function ProjectDetailPage({ project, settings }: Props) {
     .filter((image) => image && image !== project.coverImageUrl)
     .map((image) => resolvePublicUploadUrl(image))
     .filter((image): image is string => Boolean(image));
+
+  useEffect(() => {
+    const gallery = galleryRef.current;
+    if (!gallery) return;
+
+    const updateScrollState = () => {
+      const maxScrollLeft = gallery.scrollWidth - gallery.clientWidth;
+      setGalleryScroll({
+        canGoPrevious: gallery.scrollLeft > 1,
+        canGoNext: gallery.scrollLeft < maxScrollLeft - 1,
+      });
+    };
+
+    updateScrollState();
+    const resizeObserver = new ResizeObserver(updateScrollState);
+    resizeObserver.observe(gallery);
+    return () => resizeObserver.disconnect();
+  }, [galleryImages.length]);
+
+  function scrollGallery(direction: "previous" | "next") {
+    const gallery = galleryRef.current;
+    if (!gallery) return;
+
+    gallery.scrollBy({
+      left: (direction === "previous" ? -1 : 1) * Math.max(240, gallery.clientWidth * 0.85),
+      behavior: "smooth",
+    });
+  }
 
   return (
     <PublicPageLayout
@@ -51,19 +82,63 @@ export function ProjectDetailPage({ project, settings }: Props) {
         {galleryImages.length > 0 ? (
           <section className="mt-8" aria-label={t("projects.gallery")}>
             <h2 className="mb-4 text-xl font-semibold">{t("projects.gallery")}</h2>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {galleryImages.map((image, index) => (
-                <div key={image} className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-[var(--tag-bg)] ring-1 ring-[var(--card-border)]">
-                  <RemoteImage
-                    src={image}
-                    alt={`${l(project.title, project.titleFa)} ${index + 1}`}
-                    fill
-                    quality={100}
-                    className="object-contain"
-                    sizes="(min-width: 1024px) 384px, (min-width: 640px) 50vw, 100vw"
-                  />
-                </div>
-              ))}
+            <div className="flex items-center gap-2" dir="ltr">
+              {galleryImages.length > 1 ? (
+                <Button
+                  isIconOnly
+                  variant="secondary"
+                  aria-label={t("projects.galleryPrevious")}
+                  isDisabled={!galleryScroll.canGoPrevious}
+                  onPress={() => scrollGallery("previous")}
+                  className="shrink-0 rounded-full"
+                >
+                  <ArrowLeft2 size={20} variant="Linear" />
+                </Button>
+              ) : null}
+              <div
+                ref={galleryRef}
+                className="flex min-w-0 flex-1 snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden overscroll-x-contain pb-4"
+                role="list"
+                tabIndex={0}
+                onScroll={() => {
+                  const gallery = galleryRef.current;
+                  if (!gallery) return;
+                  const maxScrollLeft = gallery.scrollWidth - gallery.clientWidth;
+                  setGalleryScroll({
+                    canGoPrevious: gallery.scrollLeft > 1,
+                    canGoNext: gallery.scrollLeft < maxScrollLeft - 1,
+                  });
+                }}
+              >
+                {galleryImages.map((image, index) => (
+                  <div
+                    key={image}
+                    role="listitem"
+                    className="relative aspect-[16/10] w-[min(82vw,23rem)] shrink-0 snap-start overflow-hidden rounded-2xl bg-[var(--tag-bg)] ring-1 ring-[var(--card-border)]"
+                  >
+                    <RemoteImage
+                      src={image}
+                      alt={`${l(project.title, project.titleFa)} ${index + 1}`}
+                      fill
+                      quality={100}
+                      className="object-contain"
+                      sizes="(min-width: 1024px) 384px, (min-width: 640px) 50vw, 100vw"
+                    />
+                  </div>
+                ))}
+              </div>
+              {galleryImages.length > 1 ? (
+                <Button
+                  isIconOnly
+                  variant="secondary"
+                  aria-label={t("projects.galleryNext")}
+                  isDisabled={!galleryScroll.canGoNext}
+                  onPress={() => scrollGallery("next")}
+                  className="shrink-0 rounded-full"
+                >
+                  <ArrowRight2 size={20} variant="Linear" />
+                </Button>
+              ) : null}
             </div>
           </section>
         ) : null}
