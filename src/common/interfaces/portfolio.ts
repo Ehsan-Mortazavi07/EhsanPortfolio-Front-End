@@ -11,6 +11,7 @@ export interface ProjectDto {
   contentHtmlFa?: string;
   coverImageUrl: string | null;
   homeImageUrl?: string | null;
+  gallery?: string[];
   tags: string[];
   featured: boolean;
   sortOrder: number;

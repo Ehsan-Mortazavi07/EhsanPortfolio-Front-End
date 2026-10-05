@@ -19,6 +19,10 @@ export function ProjectDetailPage({ project, settings }: Props) {
   const cover = resolvePublicUploadUrl(project.coverImageUrl);
   const bodyHtml = l(project.contentHtml, project.contentHtmlFa);
   const isPortfolio = project.slug === "portfolio-platform";
+  const galleryImages = [...new Set(project.gallery ?? [])]
+    .filter((image) => image && image !== project.coverImageUrl)
+    .map((image) => resolvePublicUploadUrl(image))
+    .filter((image): image is string => Boolean(image));
 
   return (
     <PublicPageLayout
@@ -42,6 +46,26 @@ export function ProjectDetailPage({ project, settings }: Props) {
               priority
             />
           </div>
+        ) : null}
+
+        {galleryImages.length > 0 ? (
+          <section className="mt-8" aria-label={t("projects.gallery")}>
+            <h2 className="mb-4 text-xl font-semibold">{t("projects.gallery")}</h2>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {galleryImages.map((image, index) => (
+                <div key={image} className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-[var(--tag-bg)] ring-1 ring-[var(--card-border)]">
+                  <RemoteImage
+                    src={image}
+                    alt={`${l(project.title, project.titleFa)} ${index + 1}`}
+                    fill
+                    quality={100}
+                    className="object-contain"
+                    sizes="(min-width: 1024px) 384px, (min-width: 640px) 50vw, 100vw"
+                  />
+                </div>
+              ))}
+            </div>
+          </section>
         ) : null}
 
         <p className="project-detail-lead mt-8">{l(project.excerpt, project.excerptFa)}</p>

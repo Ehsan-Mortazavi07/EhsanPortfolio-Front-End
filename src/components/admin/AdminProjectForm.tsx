@@ -23,6 +23,7 @@ import { AdminPublishedField } from "@/components/admin/AdminPublishedField";
 import { AdminCheckboxField } from "@/components/admin/AdminCheckboxField";
 import { AdminDualLocaleFields } from "@/components/admin/AdminDualLocaleFields";
 import { AdminImageField } from "@/components/admin/AdminImageField";
+import { AdminImageGalleryField } from "@/components/admin/AdminImageGalleryField";
 import { AdminRichTextEditor } from "@/components/admin/AdminRichTextEditor";
 import { tokenSelector } from "@/stores/auth/selectors";
 import { useAppSelector } from "@/stores/hooks";
@@ -43,6 +44,7 @@ const empty: FormValues = {
   contentHtmlFa: "",
   coverImageUrl: null,
   homeImageUrl: null,
+  gallery: [],
   tags: [],
   tagsInput: "",
   featured: false,
@@ -58,6 +60,7 @@ export function AdminProjectForm({ mode, slug }: { mode: Mode; slug?: string }) 
   const router = useRouter();
   const [initial, setInitial] = useState(empty);
   const [loading, setLoading] = useState(mode === "edit");
+  const [galleryUploading, setGalleryUploading] = useState(false);
 
   useEffect(() => {
     if (mode !== "edit" || !slug || !token) return;
@@ -76,6 +79,7 @@ export function AdminProjectForm({ mode, slug }: { mode: Mode; slug?: string }) 
           contentHtmlFa: data.contentHtmlFa ?? "",
           coverImageUrl: data.coverImageUrl,
           homeImageUrl: data.homeImageUrl ?? null,
+          gallery: data.gallery ?? [],
           tags: data.tags,
           tagsInput: data.tags.join(", "),
           featured: data.featured,
@@ -117,7 +121,16 @@ export function AdminProjectForm({ mode, slug }: { mode: Mode; slug?: string }) 
   return (
     <Formik initialValues={initial} validationSchema={projectFormSchema} enableReinitialize onSubmit={onSubmit}>
       {({ values, errors, touched, handleSubmit, isSubmitting, setFieldValue, setFieldTouched }) => (
-        <Form onSubmit={handleSubmit} className="mx-auto max-w-2xl space-y-5">
+        <Form
+          onSubmit={(event) => {
+            if (galleryUploading) {
+              event.preventDefault();
+              return;
+            }
+            handleSubmit(event);
+          }}
+          className="mx-auto max-w-2xl space-y-5"
+        >
           <h1 className="text-2xl font-bold">{mode === "create" ? t("admin.newProject") : t("admin.editProject")}</h1>
           <TextField
             value={values.slug}
@@ -188,6 +201,18 @@ export function AdminProjectForm({ mode, slug }: { mode: Mode; slug?: string }) 
             <p className="text-sm text-foreground/65">{t("admin.homeImageHint")}</p>
             <AdminImageField label={t("admin.homeImage")} value={values.homeImageUrl ?? null} onChange={(p) => void setFieldValue("homeImageUrl", p)} token={token} previewAspectRatio="4 / 5" />
           </div>
+          <div className="space-y-2">
+            <div>
+              <Label className="text-sm font-semibold">{t("admin.projectGallery")}</Label>
+              <p className="mt-1 text-sm text-foreground/65">{t("admin.projectGalleryHint")}</p>
+            </div>
+            <AdminImageGalleryField
+              value={values.gallery ?? []}
+              onChange={(paths) => void setFieldValue("gallery", paths)}
+              onUploadingChange={setGalleryUploading}
+              token={token}
+            />
+          </div>
           <div className="space-y-4 rounded-xl border border-[var(--card-border)] bg-[var(--tag-bg)] p-4">
             <TextField
               value={values.liveUrl ?? ""}
@@ -226,7 +251,7 @@ export function AdminProjectForm({ mode, slug }: { mode: Mode; slug?: string }) 
             />
           </div>
           <div className="flex gap-3">
-            <Button type="submit" variant="primary" isPending={isSubmitting} isDisabled={isSubmitting}>{t("admin.save")}</Button>
+            <Button type="submit" variant="primary" isPending={isSubmitting} isDisabled={isSubmitting || galleryUploading}>{t("admin.save")}</Button>
             <Button variant="ghost" onPress={() => router.push(PATHS.ADMIN_PROJECTS)}>{t("admin.cancel")}</Button>
           </div>
         </Form>
