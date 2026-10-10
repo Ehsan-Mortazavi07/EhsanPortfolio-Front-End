@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const PRODUCTION_IMAGE_HOSTS = ["api.ehsanmor.ir", "ehsan-portfolio-api.onrender.com"] as const;
+const PRODUCTION_IMAGE_HOSTS = ["api.ehsanmor.ir", "ehsan-portfolio-backend.vercel.app"] as const;
 
 function imageRemotePatterns(): NonNullable<NextConfig["images"]>["remotePatterns"] {
   const patterns: NonNullable<NextConfig["images"]>["remotePatterns"] = [

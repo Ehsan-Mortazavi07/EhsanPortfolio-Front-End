@@ -2,8 +2,8 @@ function stripV1Path(base: string): string {
   return base.replace(/\/v1\/?$/, "");
 }
 
-const PRODUCTION_API_URL = "https://api.ehsanmor.ir/v1";
-const PRODUCTION_IMAGE_BASE_URL = "https://api.ehsanmor.ir";
+const PRODUCTION_API_URL = "https://ehsan-portfolio-backend.vercel.app/v1";
+const PRODUCTION_IMAGE_BASE_URL = "https://ehsan-portfolio-backend.vercel.app";
 const defaultApi = "http://localhost:7781/v1";
 
 export const BASE_API_URL =
