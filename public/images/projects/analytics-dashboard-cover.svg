@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" fill="none">
+  <defs>
+    <linearGradient id="surface" x1="130" y1="40" x2="1100" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F1F1E8"/>
+      <stop offset="1" stop-color="#DDE9DD"/>
+    </linearGradient>
+    <linearGradient id="chart" x1="510" y1="450" x2="1017" y2="450" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#43A77C"/>
+      <stop offset="1" stop-color="#1D6A4D"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="750" rx="32" fill="url(#surface)"/>
+  <rect x="70" y="58" width="1060" height="634" rx="24" fill="#FAFBF6" stroke="#CCD8CA" stroke-width="2"/>
+  <rect x="70" y="58" width="214" height="634" rx="24" fill="#183D31"/>
+  <path d="M260 82v584" stroke="#285344" stroke-width="2"/>
+  <circle cx="111" cy="111" r="18" fill="#64BE91"/>
+  <path d="M102 111h18m-9-9v18" stroke="#F4FFF8" stroke-width="3" stroke-linecap="round"/>
+  <text x="145" y="118" fill="#F2F7F2" font-family="ui-sans-serif, system-ui, sans-serif" font-size="20" font-weight="700">INSIGHT</text>
+  <rect x="94" y="172" width="164" height="48" rx="12" fill="#2B5947"/>
+  <rect x="108" y="189" width="14" height="14" rx="3" fill="#8CD7AD"/>
+  <text x="135" y="202" fill="#F1F7F2" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15">Overview</text>
+  <rect x="108" y="252" width="14" height="14" rx="3" stroke="#A4BCAE" stroke-width="2"/>
+  <text x="135" y="265" fill="#B8CABB" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15">Reports</text>
+  <rect x="108" y="304" width="14" height="14" rx="3" stroke="#A4BCAE" stroke-width="2"/>
+  <text x="135" y="317" fill="#B8CABB" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15">Customers</text>
+  <rect x="108" y="356" width="14" height="14" rx="3" stroke="#A4BCAE" stroke-width="2"/>
+  <text x="135" y="369" fill="#B8CABB" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15">Settings</text>
+  <circle cx="111" cy="625" r="17" fill="#D7B769"/>
+  <text x="140" y="622" fill="#EAF1E9" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="600">Admin User</text>
+  <text x="140" y="643" fill="#AFC2B2" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Workspace</text>
+  <text x="326" y="119" fill="#193B30" font-family="ui-sans-serif, system-ui, sans-serif" font-size="28" font-weight="700">Analytics overview</text>
+  <text x="326" y="149" fill="#78887C" font-family="ui-sans-serif, system-ui, sans-serif" font-size="15">Performance at a glance</text>
+  <rect x="782" y="103" width="128" height="30" rx="15" fill="#E8F3E8" stroke="#C7DCC8"/>
+  <text x="846" y="123" text-anchor="middle" fill="#387452" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing=".7">SAMPLE DATA</text>
+  <rect x="938" y="91" width="154" height="42" rx="11" fill="#FFFFFF" stroke="#D8E0D6"/>
+  <text x="1015" y="118" text-anchor="middle" fill="#506457" font-family="ui-sans-serif, system-ui, sans-serif" font-size="14">Last 30 days</text>
+  <rect x="326" y="181" width="231" height="114" rx="15" fill="#FFFFFF" stroke="#DDE5DB"/>
+  <text x="348" y="213" fill="#78887C" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">TOTAL REVENUE</text>
+  <text x="348" y="257" fill="#203D32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="30" font-weight="700">$48,290</text>
+  <text x="520" y="258" text-anchor="end" fill="#318762" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">+12.8%</text>
+  <rect x="578" y="181" width="231" height="114" rx="15" fill="#FFFFFF" stroke="#DDE5DB"/>
+  <text x="600" y="213" fill="#78887C" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">ACTIVE USERS</text>
+  <text x="600" y="257" fill="#203D32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="30" font-weight="700">8,549</text>
+  <text x="772" y="258" text-anchor="end" fill="#318762" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">+8.2%</text>
+  <rect x="830" y="181" width="262" height="114" rx="15" fill="#FFFFFF" stroke="#DDE5DB"/>
+  <text x="852" y="213" fill="#78887C" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">CONVERSION RATE</text>
+  <text x="852" y="257" fill="#203D32" font-family="ui-sans-serif, system-ui, sans-serif" font-size="30" font-weight="700">4.38%</text>
+  <text x="1057" y="258" text-anchor="end" fill="#318762" font-family="ui-sans-serif, system-ui, sans-serif" font-size="13">+1.4%</text>
+  <rect x="326" y="319" width="493" height="328" rx="16" fill="#FFFFFF" stroke="#DDE5DB"/>
+  <text x="351" y="354" fill="#233F34" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="600">Revenue</text>
+  <text x="351" y="377" fill="#89978B" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Monthly performance</text>
+  <path d="M369 424h419M369 478h419M369 532h419M369 586h419" stroke="#E7ECE5" stroke-width="2"/>
+  <path d="M369 576 424 549 474 557 526 498 578 509 630 465 682 476 735 418 788 439" stroke="url(#chart)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M369 576 424 549 474 557 526 498 578 509 630 465 682 476 735 418 788 439v147H369z" fill="#5BB98A" fill-opacity=".12"/>
+  <circle cx="735" cy="418" r="6" fill="#27805A" stroke="#FFFFFF" stroke-width="3"/>
+  <text x="369" y="621" fill="#92A094" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">W1</text>
+  <text x="474" y="621" fill="#92A094" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">W2</text>
+  <text x="578" y="621" fill="#92A094" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">W3</text>
+  <text x="682" y="621" fill="#92A094" font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">W4</text>
+  <rect x="840" y="319" width="252" height="328" rx="16" fill="#FFFFFF" stroke="#DDE5DB"/>
+  <text x="864" y="354" fill="#233F34" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="600">Traffic sources</text>
+  <circle cx="966" cy="474" r="66" stroke="#E9EEE7" stroke-width="20"/>
+  <path d="M966 408a66 66 0 0 1 62 43" stroke="#27805A" stroke-width="20" stroke-linecap="round"/>
+  <path d="M1028 451a66 66 0 0 1-35 80" stroke="#7ABF92" stroke-width="20" stroke-linecap="round"/>
+  <path d="M993 531a66 66 0 0 1-85-26" stroke="#D7B769" stroke-width="20" stroke-linecap="round"/>
+  <text x="966" y="480" text-anchor="middle" fill="#233F34" font-family="ui-sans-serif, system-ui, sans-serif" font-size="21" font-weight="700">62%</text>
+  <circle cx="869" cy="574" r="5" fill="#27805A"/>
+  <text x="883" y="579" fill="#64756A" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Organic</text>
+  <circle cx="983" cy="574" r="5" fill="#7ABF92"/>
+  <text x="997" y="579" fill="#64756A" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Direct</text>
+  <circle cx="869" cy="610" r="5" fill="#D7B769"/>
+  <text x="883" y="615" fill="#64756A" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12">Referral</text>
+</svg>

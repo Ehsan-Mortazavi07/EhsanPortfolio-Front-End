@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="40" y1="24" x2="1120" y2="740" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0B1915"/>
+      <stop offset="1" stop-color="#153D30"/>
+    </linearGradient>
+    <linearGradient id="line" x1="280" y1="180" x2="900" y2="600" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7ED7AE"/>
+      <stop offset="1" stop-color="#43A77C"/>
+    </linearGradient>
+    <filter id="glow" x="0" y="0" width="1200" height="750" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="32"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="750" rx="32" fill="url(#bg)"/>
+  <circle cx="955" cy="165" r="145" fill="#42A77C" fill-opacity=".16" filter="url(#glow)"/>
+  <rect x="102" y="82" width="996" height="586" rx="24" fill="#0D201A" stroke="#467561" stroke-opacity=".66" stroke-width="2"/>
+  <path d="M102 142h996" stroke="#365E4E" stroke-width="2"/>
+  <circle cx="143" cy="112" r="7" fill="#F18D77"/>
+  <circle cx="169" cy="112" r="7" fill="#E5BC6C"/>
+  <circle cx="195" cy="112" r="7" fill="#71C99D"/>
+  <text x="236" y="120" fill="#B9D4C6" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" letter-spacing="1.2">ECOMMERCE API · ILLUSTRATIVE COVER</text>
+  <rect x="152" y="188" width="402" height="412" rx="18" fill="#11271F" stroke="#315946" stroke-width="2"/>
+  <text x="184" y="234" fill="#E6F1EB" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20">Routes</text>
+  <circle cx="191" cy="283" r="5" fill="#72CEA1"/>
+  <text x="212" y="290" fill="#79D9AC" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17">GET</text>
+  <text x="276" y="290" fill="#CFDED4" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17">/v1/products</text>
+  <circle cx="191" cy="340" r="5" fill="#73B7E3"/>
+  <text x="212" y="347" fill="#85C7EF" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17">POST</text>
+  <text x="276" y="347" fill="#CFDED4" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17">/v1/checkout</text>
+  <circle cx="191" cy="397" r="5" fill="#D9B76C"/>
+  <text x="212" y="404" fill="#E5C77F" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17">JWT</text>
+  <text x="276" y="404" fill="#CFDED4" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17">/v1/auth</text>
+  <path d="M184 449h338" stroke="#315946" stroke-width="2"/>
+  <text x="184" y="490" fill="#8CA99A" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15">200 OK</text>
+  <text x="184" y="530" fill="#D4E7DB" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15">{ "status": "success" }</text>
+  <rect x="184" y="558" width="112" height="7" rx="3.5" fill="#4CC18B"/>
+  <rect x="304" y="558" width="66" height="7" rx="3.5" fill="#47735F"/>
+  <rect x="378" y="558" width="92" height="7" rx="3.5" fill="#47735F"/>
+  <rect x="590" y="188" width="468" height="186" rx="18" fill="#11271F" stroke="#315946" stroke-width="2"/>
+  <text x="624" y="235" fill="#8CA99A" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" letter-spacing="1">SAMPLE API OVERVIEW</text>
+  <text x="624" y="300" fill="#F0F5F1" font-family="ui-sans-serif, system-ui, sans-serif" font-size="42" font-weight="700">REST API</text>
+  <text x="824" y="298" fill="#76D1A5" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18">concept</text>
+  <path d="M626 340h394" stroke="#315946" stroke-width="2"/>
+  <text x="624" y="363" fill="#AFC9BA" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15">routes · auth · checkout</text>
+  <text x="979" y="363" text-anchor="end" fill="#80DAB0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15">sample</text>
+  <rect x="590" y="400" width="468" height="200" rx="18" fill="#11271F" stroke="#315946" stroke-width="2"/>
+  <text x="624" y="445" fill="#8CA99A" font-family="ui-sans-serif, system-ui, sans-serif" font-size="16" letter-spacing="1">SERVICE FLOW</text>
+  <rect x="624" y="485" width="104" height="67" rx="12" fill="#18382B" stroke="#4F9874"/>
+  <text x="676" y="525" text-anchor="middle" fill="#D9ECE1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">CLIENT</text>
+  <path d="M741 518h42" stroke="url(#line)" stroke-width="3" stroke-linecap="round"/>
+  <path d="m775 509 10 9-10 9" stroke="#71D3A4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="797" y="485" width="104" height="67" rx="12" fill="#18382B" stroke="#4F9874"/>
+  <text x="849" y="525" text-anchor="middle" fill="#D9ECE1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">API</text>
+  <path d="M914 518h42" stroke="url(#line)" stroke-width="3" stroke-linecap="round"/>
+  <path d="m948 509 10 9-10 9" stroke="#71D3A4" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="970" y="485" width="64" height="67" rx="12" fill="#18382B" stroke="#4F9874"/>
+  <path d="M987 506h30v24h-30zM987 513h30M995 530v7m14-7v7" stroke="#A7D9BD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

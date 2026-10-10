@@ -35,20 +35,19 @@ export function ProjectsPage({ projects, settings }: Props) {
             const title = l(project.title, project.titleFa);
             const cover = resolvePublicUploadUrl(project.coverImageUrl);
             const liveUrl = isSafeExternalUrl(project.liveUrl) ? project.liveUrl : null;
-            const isPortfolio = project.slug === "portfolio-platform";
             const detailUrl = PATHS.PROJECT(project.slug);
 
             return (
               <div key={project.id} className="group green-card flex h-full flex-col overflow-hidden !p-0">
                 <NextLink href={detailUrl} aria-label={`${t("projects.seeDetails")}: ${title}`} className="flex flex-1 flex-col">
-                  <div className={`relative block aspect-[16/10] overflow-hidden ${isPortfolio ? "bg-[#f6f4ec]" : "bg-[var(--card-border)]"}`}>
+                  <div className="relative block aspect-[16/10] overflow-hidden bg-[var(--card-border)]">
                     {cover ? (
                       <RemoteImage
                         src={cover}
                         alt={title}
                         fill
                         quality={100}
-                        className={isPortfolio ? "object-contain p-8" : "object-cover transition group-hover:scale-105"}
+                        className="object-cover transition group-hover:scale-105"
                         sizes="400px"
                       />
                     ) : (
