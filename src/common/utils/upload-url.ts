@@ -15,6 +15,7 @@ const LEGACY_SEED_UPLOAD_PATHS: Record<string, string> = {
 };
 
 export const DEFAULT_IMAGE_FALLBACK = "/images/hero/thumb-plant.svg";
+export const DEFAULT_BRAND_LOGO = "/images/brand/em-monogram.png";
 
 function normalizeUploadPath(path: string): string {
   return LEGACY_SEED_UPLOAD_PATHS[path] ?? path;
