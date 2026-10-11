@@ -10,7 +10,7 @@ import { useTranslation } from "@/common/i18n/useTranslation";
 import { useLocalizedText } from "@/common/i18n/useLocalizedText";
 import type { ProjectDto, SiteSettingsDto } from "@/common/interfaces";
 import { heroTitleLines } from "@/common/utils/hero-title";
-import { DEFAULT_BRAND_LOGO, resolvePublicUploadUrl } from "@/common/utils";
+import { resolvePublicUploadUrl } from "@/common/utils";
 
 type Props = {
   settings: SiteSettingsDto;
@@ -37,8 +37,7 @@ export function HeroSection({ settings, projects }: Props) {
   const title = l(settings.heroTitle, settings.heroTitleFa);
   const lines = heroTitleLines(title);
   const cvHref = resolvePublicUploadUrl(settings.cvUrl);
-  const logoUrl = resolvePublicUploadUrl(settings.logoUrl);
-  const usesDefaultLogo = !logoUrl || logoUrl === DEFAULT_BRAND_LOGO;
+  const customLogo = resolvePublicUploadUrl(settings.logoUrl);
 
   const thumbs: Thumb[] =
     projects.length > 0
@@ -66,13 +65,13 @@ export function HeroSection({ settings, projects }: Props) {
 
       <div className="hero-brand-mark" aria-hidden="true">
         <Image
-          src={logoUrl || DEFAULT_BRAND_LOGO}
+          src={customLogo || "/images/brand/em-monogram.png"}
           alt=""
           width={120}
           height={60}
           priority
           unoptimized
-          className={`h-14 w-auto object-contain sm:h-[4.5rem] ${usesDefaultLogo ? "brightness-0 invert" : ""}`}
+          className={`h-14 w-auto object-contain sm:h-[4.5rem] ${customLogo ? "" : "brightness-0 invert"}`}
         />
       </div>
 
