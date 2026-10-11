@@ -18,6 +18,8 @@ export const SEED_SETTINGS: SiteSettingsDto = {
   heroBioFa:
     "اپلیکیشن‌های وب مقیاس‌پذیر با معماری تمیز، استک‌های مدرن و تمرکز بر عملکرد و تجربه توسعه می‌سازم.",
   heroPortraitUrl: "/images/hero-portrait.svg",
+  logoUrl: "/images/brand/em-monogram.png",
+  faviconUrl: "/images/brand/em-monogram.png",
   cvUrl: "/cv/ehsan-mortazavi-cv.pdf",
   email: "hello@ehsanmortazavi.dev",
   phone: null,

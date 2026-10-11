@@ -14,7 +14,7 @@ type Props = PropsWithChildren<{
 export function PublicPageLayout({ children, settings, hero }: Props) {
   return (
     <PublicShell>
-      <Navbar variant="inner" />
+      <Navbar variant="inner" logoUrl={settings.logoUrl} />
       <main>
         {hero}
         <div className="content-light">{children}</div>

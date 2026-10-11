@@ -82,6 +82,24 @@ export default function AdminSettingsPage() {
             token={token}
             accept=".pdf,application/pdf"
           />
+          <AdminImageField
+            label={t("admin.siteLogo")}
+            value={values.logoUrl ?? null}
+            onChange={(p) => void setFieldValue("logoUrl", p)}
+            token={token}
+            previewAspectRatio="3 / 1"
+            previewFit="contain"
+            hint={t("admin.siteLogoHint")}
+          />
+          <AdminImageField
+            label={t("admin.siteFavicon")}
+            value={values.faviconUrl ?? null}
+            onChange={(p) => void setFieldValue("faviconUrl", p)}
+            token={token}
+            previewAspectRatio="1 / 1"
+            previewFit="contain"
+            hint={t("admin.siteFaviconHint")}
+          />
           <AdminImageField label={t("admin.heroPortrait")} value={values.heroPortraitUrl} onChange={(p) => void setFieldValue("heroPortraitUrl", p)} token={token} />
           <AdminRichTextEditor label={`${t("admin.aboutContent")} (${t("admin.localeEn")})`} value={values.aboutContent ?? ""} onChange={(html) => void setFieldValue("aboutContent", html)} uploadToken={token} />
           <AdminRichTextEditor label={`${t("admin.aboutContent")} (${t("admin.localeFa")})`} value={values.aboutContentFa ?? ""} onChange={(html) => void setFieldValue("aboutContentFa", html)} uploadToken={token} />
