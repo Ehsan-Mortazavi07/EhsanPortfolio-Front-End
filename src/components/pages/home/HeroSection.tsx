@@ -37,7 +37,6 @@ export function HeroSection({ settings, projects }: Props) {
   const title = l(settings.heroTitle, settings.heroTitleFa);
   const lines = heroTitleLines(title);
   const cvHref = resolvePublicUploadUrl(settings.cvUrl);
-  const customLogo = resolvePublicUploadUrl(settings.logoUrl);
 
   const thumbs: Thumb[] =
     projects.length > 0
@@ -65,13 +64,12 @@ export function HeroSection({ settings, projects }: Props) {
 
       <div className="hero-brand-mark" aria-hidden="true">
         <Image
-          src={customLogo || "/images/brand/em-monogram.png"}
+          src="/images/brand/em-monogram.png"
           alt=""
           width={120}
           height={60}
           priority
-          unoptimized
-          className={`h-14 w-auto object-contain sm:h-[4.5rem] ${customLogo ? "" : "brightness-0 invert"}`}
+          className="h-14 w-auto object-contain brightness-0 invert sm:h-[4.5rem]"
         />
       </div>
 

@@ -1,11 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import "@/assets/css/globals.css";
 import { ClientProvider } from "@/components/providers/ClientProvider";
-import { fetchSiteSettings } from "@/common/api/catalog";
 import { SITE_URL } from "@/common/constants";
-import { resolvePublicUploadUrl } from "@/common/utils";
 
-const baseMetadata: Metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: "Ehsan Mortazavi | Full-Stack Developer",
@@ -22,20 +20,6 @@ const baseMetadata: Metadata = {
     description: "International developer portfolio — projects, blog, and contact.",
   },
 };
-
-export async function generateMetadata(): Promise<Metadata> {
-  const settings = await fetchSiteSettings();
-  const favicon = resolvePublicUploadUrl(settings.faviconUrl) || "/images/brand/em-monogram.png";
-
-  return {
-    ...baseMetadata,
-    icons: {
-      icon: favicon,
-      shortcut: favicon,
-      apple: favicon,
-    },
-  };
-}
 
 export const viewport: Viewport = {
   themeColor: [

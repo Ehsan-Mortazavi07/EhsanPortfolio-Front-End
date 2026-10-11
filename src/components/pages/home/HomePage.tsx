@@ -28,7 +28,7 @@ type Props = {
 export function HomePage({ settings, services, experience, projects, skills, testimonials }: Props) {
   return (
     <PublicShell>
-      <Navbar variant="hero" logoUrl={settings.logoUrl} />
+      <Navbar variant="hero" />
       <main>
         <HeroSection settings={settings} projects={projects} />
         <div className="content-light">

@@ -106,8 +106,6 @@ export interface SiteSettingsDto {
   heroBio: string;
   heroBioFa?: string;
   heroPortraitUrl: string | null;
-  logoUrl?: string | null;
-  faviconUrl?: string | null;
   cvUrl: string | null;
   email: string;
   phone: string | null;

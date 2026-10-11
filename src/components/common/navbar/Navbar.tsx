@@ -52,11 +52,9 @@ function MobileNavPanel({ open, pathname, onNavigate }: MobileNavProps) {
 export function Navbar({
   variant = "hero",
   forceVisible = false,
-  logoUrl,
 }: {
   variant?: "hero" | "inner";
   forceVisible?: boolean;
-  logoUrl?: string | null;
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -83,7 +81,7 @@ export function Navbar({
       )}
     >
       <div className="section-container flex h-[var(--site-chrome-bar-height)] items-center justify-between gap-3">
-        {isHome ? <span className="hidden w-[12rem] xl:block" aria-hidden="true" /> : <Logo light imageUrl={logoUrl} />}
+        {isHome ? <span className="hidden w-[12rem] xl:block" aria-hidden="true" /> : <Logo light />}
 
         <nav className="absolute left-1/2 hidden max-w-[52%] -translate-x-1/2 items-center xl:max-w-none xl:flex">
           {PUBLIC_NAV.map((item, index) => {

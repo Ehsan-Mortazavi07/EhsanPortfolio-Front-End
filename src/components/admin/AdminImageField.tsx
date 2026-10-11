@@ -13,20 +13,10 @@ type Props = {
   value: string | null;
   onChange: (path: string | null) => void;
   token: string | null;
-  previewAspectRatio?: "3 / 4" | "4 / 5" | "3 / 1" | "1 / 1";
-  previewFit?: "cover" | "contain";
-  hint?: string;
+  previewAspectRatio?: "3 / 4" | "4 / 5";
 };
 
-export function AdminImageField({
-  label,
-  value,
-  onChange,
-  token,
-  previewAspectRatio = "3 / 4",
-  previewFit = "cover",
-  hint,
-}: Props) {
+export function AdminImageField({ label, value, onChange, token, previewAspectRatio = "3 / 4" }: Props) {
   const { t, locale } = useTranslation();
   const ref = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
@@ -52,16 +42,9 @@ export function AdminImageField({
       <Label className="text-sm font-semibold">{label}</Label>
       {preview && (
         <div className="relative w-full max-w-[11rem] overflow-hidden rounded-xl bg-surface-secondary ring-1 ring-border/50" style={{ aspectRatio: previewAspectRatio }}>
-          <Image
-            src={preview}
-            alt=""
-            fill
-            className={`${previewFit === "contain" ? "object-contain" : "object-cover"} object-center`}
-            unoptimized
-          />
+          <Image src={preview} alt="" fill className="object-cover object-center" unoptimized />
         </div>
       )}
-      {hint ? <p className="text-xs text-foreground/60">{hint}</p> : null}
       <div className="flex gap-2">
         <input
           ref={ref}
