@@ -147,6 +147,14 @@ body {
   color: var(--hero-text);
 }
 
+.hero-content .hero-headline {
+  line-height: 1.12;
+}
+
+.hero-content .hero-headline > span + span {
+  margin-block-start: 0.08em;
+}
+
 .hero-subline {
   margin-inline: auto;
   margin-top: 1.5rem;
@@ -155,6 +163,20 @@ body {
   font-size: 0.875rem;
   line-height: 1.7;
   color: var(--hero-text-muted);
+}
+
+html[dir="rtl"] .hero-content .hero-headline {
+  line-height: 1.38;
+  letter-spacing: 0;
+}
+
+html[dir="rtl"] .hero-content .hero-headline > span + span {
+  margin-block-start: 0.12em;
+}
+
+html[dir="rtl"] .hero-content .hero-subline {
+  margin-top: 2rem;
+  line-height: 1.95;
 }
 
 @media (min-width: 640px) {
