@@ -137,8 +137,8 @@ export function AdminLayoutShell({ children }: { children: React.ReactNode }) {
 
       <Drawer state={drawer}>
         <Drawer.Backdrop className="bg-black/50">
-          <Drawer.Content placement="left" className="max-w-[17rem] border-e border-[var(--admin-sidebar-border)] bg-[var(--admin-sidebar-bg)] text-[var(--admin-chrome-fg)]">
-            <Drawer.Dialog>
+          <Drawer.Content placement="left" className="max-w-[17rem]">
+            <Drawer.Dialog className="admin-mobile-nav-panel">
               <Drawer.Header>
                 <Drawer.Heading>{t("admin.navigation")}</Drawer.Heading>
                 <Drawer.CloseTrigger />

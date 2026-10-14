@@ -1172,6 +1172,26 @@ html.dark .about-intro {
   min-height: 100%;
 }
 
+.admin-mobile-nav-panel {
+  box-sizing: border-box;
+  width: min(17rem, 85vw);
+  max-width: 17rem;
+  height: 100%;
+  border-inline-end: 1px solid var(--admin-sidebar-border);
+  background: var(--admin-sidebar-bg) !important;
+  color: var(--admin-chrome-fg);
+  padding: 1.25rem;
+}
+
+.admin-mobile-nav-panel [data-slot="drawer-heading"],
+.admin-mobile-nav-panel [data-slot="drawer-close-trigger"] {
+  color: var(--admin-chrome-fg);
+}
+
+.admin-mobile-nav-panel [data-slot="drawer-body"] {
+  color: var(--admin-nav-fg);
+}
+
 @media (min-width: 1024px) {
   .admin-sidebar {
     display: flex;
