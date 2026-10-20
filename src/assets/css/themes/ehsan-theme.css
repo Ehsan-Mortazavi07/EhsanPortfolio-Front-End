@@ -111,8 +111,6 @@ html[data-theme="light"] {
   --admin-nav-fg: rgb(255 255 255 / 0.72);
   --admin-nav-fg-active: #ffffff;
   --admin-nav-bg-active: rgb(255 255 255 / 0.12);
-  --admin-nav-bg-hover: rgb(82 183 136 / 0.22);
-  --admin-nav-border-hover: rgb(116 198 157 / 0.58);
   --admin-subtitle-fg: rgb(255 255 255 / 0.45);
 
   --accent: var(--green-800);
@@ -262,8 +260,6 @@ html[data-theme="dark"] {
   --admin-nav-fg: rgb(255 255 255 / 0.72);
   --admin-nav-fg-active: #ffffff;
   --admin-nav-bg-active: rgb(255 255 255 / 0.1);
-  --admin-nav-bg-hover: rgb(82 183 136 / 0.28);
-  --admin-nav-border-hover: rgb(116 198 157 / 0.72);
   --admin-subtitle-fg: rgb(255 255 255 / 0.42);
 
   --accent: var(--green-600);
