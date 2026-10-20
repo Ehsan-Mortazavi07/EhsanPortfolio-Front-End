@@ -759,6 +759,23 @@ html.dark .footer-cta:hover {
   background: var(--footer-bg-bottom);
 }
 
+@media (max-width: 639px) {
+  .site-footer-bar .footer-social {
+    display: inline-flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--footer-border);
+    border-radius: 9999px;
+    background: rgb(255 255 255 / 0.04);
+  }
+
+  .site-footer-bar .footer-cta {
+    min-height: 2.75rem;
+  }
+}
+
 .skill-card {
   display: flex;
   height: 100%;
@@ -1465,6 +1482,11 @@ html[dir="rtl"] .footer-heading {
 
 html[dir="rtl"] .footer-link {
   font-size: 0.95rem;
+}
+
+html[dir="rtl"] .footer-cta {
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 html[dir="rtl"] .footer-muted {
