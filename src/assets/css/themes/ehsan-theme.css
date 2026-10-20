@@ -65,6 +65,9 @@ html[data-theme="light"] {
   --card-bg: #d8f3dc;
   --card-border: #b7ddc8;
   --card-shadow: rgb(27 67 50 / 0.1);
+  --card-bg-hover: #c8e8d4;
+  --card-border-hover: #52b788;
+  --card-hover-shadow: rgb(27 67 50 / 0.18);
   --tag-bg: #c8e8d4;
   --service-card-bg: #d8f3dc;
   --service-card-border: #b7ddc8;
@@ -214,6 +217,9 @@ html[data-theme="dark"] {
   --card-bg: #1b4332;
   --card-border: #2d6a4f;
   --card-shadow: rgb(0 0 0 / 0.28);
+  --card-bg-hover: #245a42;
+  --card-border-hover: #52b788;
+  --card-hover-shadow: rgb(0 0 0 / 0.42);
   --tag-bg: #244735;
   --service-card-bg: #1b4332;
   --service-card-border: #2d6a4f;

@@ -57,7 +57,7 @@ export function ProjectsPage({ projects, settings }: Props) {
                   <div className="flex flex-1 flex-col p-5">
                     <div className="flex items-start justify-between gap-3">
                       <h2 className="text-lg font-bold uppercase tracking-tight group-hover:underline">{title}</h2>
-                      <ArrowUp2 size={16} className="text-foreground/35" aria-hidden="true" />
+                      <ArrowUp2 size={16} className="text-foreground/35 transition-colors group-hover:text-foreground" aria-hidden="true" />
                     </div>
                     <p className="mt-2 text-sm text-foreground/65">{l(project.excerpt, project.excerptFa)}</p>
                     <div className="mt-4 flex flex-wrap gap-2">

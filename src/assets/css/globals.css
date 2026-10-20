@@ -772,12 +772,18 @@ html.dark .footer-cta:hover {
   padding: 1.25rem 0.75rem;
   text-align: center;
   box-shadow: 0 1px 3px var(--card-shadow);
-  transition: box-shadow 0.2s, border-color 0.2s;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
 }
 
 .skill-card:hover {
-  border-color: var(--green-600);
-  box-shadow: 0 6px 20px var(--card-shadow);
+  border-color: var(--card-border-hover);
+  background: var(--card-bg-hover);
+  box-shadow: 0 8px 22px var(--card-hover-shadow);
+  transform: translateY(-2px);
 }
 
 .skill-logo {
@@ -915,7 +921,11 @@ html.dark .skill-logo-img {
   color: var(--content-fg);
   padding: 1.5rem;
   box-shadow: 0 1px 3px var(--card-shadow);
-  transition: box-shadow 0.2s;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
 }
 
 @media (min-width: 640px) {
@@ -924,8 +934,12 @@ html.dark .skill-logo-img {
   }
 }
 
-.green-card:hover {
-  box-shadow: 0 8px 24px var(--card-shadow);
+.green-card:hover,
+.green-card:focus-within {
+  border-color: var(--card-border-hover);
+  background: var(--card-bg-hover);
+  box-shadow: 0 10px 26px var(--card-hover-shadow);
+  transform: translateY(-3px);
 }
 
 .service-card {
@@ -935,7 +949,11 @@ html.dark .skill-logo-img {
   color: var(--content-fg);
   padding: 1.5rem;
   box-shadow: 0 1px 3px var(--card-shadow);
-  transition: box-shadow 0.2s;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
 }
 
 @media (min-width: 640px) {
@@ -944,8 +962,28 @@ html.dark .skill-logo-img {
   }
 }
 
-.service-card:hover {
-  box-shadow: 0 8px 24px var(--card-shadow);
+.service-card:hover,
+.service-card:focus-within {
+  border-color: var(--card-border-hover);
+  background: var(--card-bg-hover);
+  box-shadow: 0 10px 26px var(--card-hover-shadow);
+  transform: translateY(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-card,
+  .green-card,
+  .service-card {
+    transition: none;
+  }
+
+  .skill-card:hover,
+  .green-card:hover,
+  .green-card:focus-within,
+  .service-card:hover,
+  .service-card:focus-within {
+    transform: none;
+  }
 }
 
 .service-card-desc {
