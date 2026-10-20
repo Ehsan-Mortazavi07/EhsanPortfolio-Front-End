@@ -760,6 +760,14 @@ html.dark .footer-cta:hover {
 }
 
 @media (max-width: 639px) {
+  .site-footer-bar .footer-link {
+    font-size: 0.8rem;
+  }
+
+  html[dir="rtl"] .site-footer-bar .footer-link {
+    font-size: 0.8rem;
+  }
+
   .site-footer-bar .footer-social {
     display: inline-flex;
     width: 2.5rem;

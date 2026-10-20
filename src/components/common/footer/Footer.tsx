@@ -21,10 +21,10 @@ export function Footer({ settings }: Props) {
 
   return (
     <footer className="site-footer-bar">
-      <div className="section-container py-10 sm:py-12">
-        <div className="grid gap-8 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-10 lg:grid-cols-3">
-          <div className="min-w-0 sm:col-span-2 lg:col-span-1">
-            <p className="text-lg font-bold tracking-tight">Ehsan Mortazavi</p>
+      <div className="section-container py-8 sm:py-12">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-7 sm:gap-x-10 sm:gap-y-10 lg:grid-cols-3">
+          <div className="min-w-0">
+            <p className="text-base font-bold tracking-tight sm:text-lg">Ehsan Mortazavi</p>
             <p className="footer-muted mt-2 text-sm leading-relaxed">{t("footer.role")}</p>
             <p className="footer-muted mt-4 break-words text-sm [overflow-wrap:anywhere]">{settings.email}</p>
             {settings.location && (
@@ -34,10 +34,10 @@ export function Footer({ settings }: Props) {
 
           <div className="min-w-0">
             <p className="footer-heading">{t("footer.explore")}</p>
-            <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2.5">
+            <ul className="mt-3 grid grid-cols-2 gap-x-2 gap-y-2 sm:mt-4 sm:gap-x-4">
               {FOOTER_NAV.map((item) => (
                 <li key={item.href}>
-                  <NextLink href={item.href} className="footer-link">
+                  <NextLink href={item.href} className="footer-link text-xs sm:text-sm">
                     {t(item.labelKey)}
                   </NextLink>
                 </li>
@@ -45,14 +45,16 @@ export function Footer({ settings }: Props) {
             </ul>
           </div>
 
-          <div className="min-w-0">
-            <p className="footer-heading">{t("footer.collaborate")}</p>
-            <p className="footer-muted mt-3 text-sm leading-relaxed">{t("footer.collaborateSubtitle")}</p>
-            <NextLink href={PATHS.CONTACT} className="footer-cta mt-5 inline-flex">
-              {t("footer.contactMe")}
-            </NextLink>
+          <div className="col-span-2 min-w-0 lg:col-span-1">
+            <div className="flex flex-wrap items-center justify-between gap-3 lg:block">
+              <p className="footer-heading">{t("footer.collaborate")}</p>
+              <NextLink href={PATHS.CONTACT} className="footer-cta inline-flex lg:mt-5">
+                {t("footer.contactMe")}
+              </NextLink>
+            </div>
+            <p className="footer-muted mt-3 hidden text-sm leading-relaxed sm:block">{t("footer.collaborateSubtitle")}</p>
 
-            <div className="mt-6 flex flex-wrap items-center gap-3">
+            <div className="mt-3 flex flex-wrap items-center gap-3 lg:mt-6">
               <SocialLinks settings={socialSettings} />
               <a href={`mailto:${settings.email}`} className="footer-social" aria-label="Email">
                 <Sms size={20} variant="Linear" />
@@ -67,7 +69,7 @@ export function Footer({ settings }: Props) {
           <p className="footer-muted min-w-0 max-w-full break-words">
             © {new Date().getFullYear()} Ehsan Mortazavi. {t("footer.rights")}
           </p>
-          <div className="grid w-full grid-cols-2 justify-items-center gap-x-5 gap-y-2 sm:flex sm:w-auto sm:flex-wrap sm:justify-end sm:gap-4">
+          <div className="hidden w-full flex-wrap gap-4 sm:flex sm:w-auto sm:justify-end">
             {FOOTER_NAV.slice(0, 4).map((item) => (
               <NextLink key={item.href} href={item.href} className="footer-link text-xs">
                 {t(item.labelKey)}
