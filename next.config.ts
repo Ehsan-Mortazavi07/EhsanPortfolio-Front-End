@@ -5,6 +5,7 @@ const PRODUCTION_IMAGE_HOSTS = ["api.ehsanmor.ir", "ehsan-portfolio-backend.verc
 function imageRemotePatterns(): NonNullable<NextConfig["images"]>["remotePatterns"] {
   const patterns: NonNullable<NextConfig["images"]>["remotePatterns"] = [
     { protocol: "https", hostname: "cdn.jsdelivr.net", pathname: "/**" },
+    { protocol: "https", hostname: "**.public.blob.vercel-storage.com", pathname: "/**" },
     ...PRODUCTION_IMAGE_HOSTS.map((hostname) => ({
       protocol: "https" as const,
       hostname,

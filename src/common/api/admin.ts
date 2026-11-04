@@ -1,5 +1,10 @@
 import { axiosInstance } from "@/common/axiosInstance";
+import { uploadPresigned } from "@vercel/blob/client";
 import type { AdminDashboardStats } from "@/common/interfaces";
+import {
+  MAX_UPLOAD_FILE_SIZE,
+  uploadContentTypeForFile,
+} from "@/common/utils/upload-file";
 
 function authHeader(token: string | null) {
   return { Authorization: `Bearer ${token}` };
@@ -53,6 +58,26 @@ export async function adminUploadImage(
   token: string | null,
   file: File,
 ): Promise<{ path: string }> {
+  if (process.env.NODE_ENV === "production") {
+    if (!token) throw new Error("Not authenticated");
+
+    const contentType = uploadContentTypeForFile(file.name, file.type);
+    if (!contentType) throw new Error("File format is not allowed");
+    if (file.size > MAX_UPLOAD_FILE_SIZE) throw new Error("File is too large");
+
+    const extension = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
+    const pathname = `uploads/${crypto.randomUUID()}${extension}`;
+    const blob = await uploadPresigned(pathname, file, {
+      access: "public",
+      contentType,
+      handleUploadUrl: "/api/admin/upload",
+      clientPayload: JSON.stringify({ contentType, size: file.size }),
+      multipart: file.size > 5 * 1024 * 1024,
+    });
+
+    return { path: blob.url };
+  }
+
   const body = new FormData();
   body.append("file", file);
   const res = await axiosInstance.post<{ path: string }>("/admin/upload", body, {
