@@ -1,7 +1,6 @@
-import { issueSignedToken } from "@vercel/blob";
 import {
-  handleUploadPresigned,
-  type HandleUploadPresignedBody,
+  handleUpload,
+  type HandleUploadBody,
 } from "@vercel/blob/client";
 import { NextResponse, type NextRequest } from "next/server";
 import { SERVER_BASE_API_URL } from "@/common/constants";
@@ -73,21 +72,21 @@ async function assertAdminAccess(request: NextRequest): Promise<void> {
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const origin = request.headers.get("origin");
   if (origin && origin !== new URL(request.url).origin) {
-    return NextResponse.json({ error: "Invalid request origin" }, { status: 403 });
+    return NextResponse.json({ message: "Invalid request origin" }, { status: 403 });
   }
 
-  let body: HandleUploadPresignedBody;
+  let body: HandleUploadBody;
   try {
-    body = (await request.json()) as HandleUploadPresignedBody;
+    body = (await request.json()) as HandleUploadBody;
   } catch {
-    return NextResponse.json({ error: "Invalid upload request" }, { status: 400 });
+    return NextResponse.json({ message: "Invalid upload request" }, { status: 400 });
   }
 
   try {
-    const result = await handleUploadPresigned({
+    const result = await handleUpload({
       body,
       request,
-      getSignedToken: async (pathname, clientPayload) => {
+      onBeforeGenerateToken: async (pathname, clientPayload) => {
         if (!isSafeUploadPathname(pathname)) {
           throw new UploadRouteError("File format is not allowed", 400);
         }
@@ -100,25 +99,13 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
         await assertAdminAccess(request);
 
-        const validUntil = Date.now() + 10 * 60 * 1000;
-        const token = await issueSignedToken({
-          pathname,
-          operations: ["put"],
+        return {
           allowedContentTypes: [allowedContentType],
           maximumSizeInBytes: MAX_UPLOAD_FILE_SIZE,
-          validUntil,
-        });
-
-        return {
-          token,
-          urlOptions: {
-            allowedContentTypes: [allowedContentType],
-            maximumSizeInBytes: MAX_UPLOAD_FILE_SIZE,
-            validUntil,
-            addRandomSuffix: false,
-            allowOverwrite: false,
-            cacheControlMaxAge: 30 * 24 * 60 * 60,
-          },
+          validUntil: Date.now() + 10 * 60 * 1000,
+          addRandomSuffix: false,
+          allowOverwrite: false,
+          cacheControlMaxAge: 30 * 24 * 60 * 60,
         };
       },
     });
@@ -127,6 +114,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   } catch (error) {
     const message = error instanceof Error ? error.message : "Upload failed";
     const status = error instanceof UploadRouteError ? error.status : 500;
-    return NextResponse.json({ error: message }, { status });
+    return NextResponse.json({ message }, { status });
   }
 }

@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/common/axiosInstance";
-import { uploadPresigned } from "@vercel/blob/client";
+import { upload } from "@vercel/blob/client";
 import type { AdminDashboardStats } from "@/common/interfaces";
 import {
   MAX_UPLOAD_FILE_SIZE,
@@ -67,7 +67,7 @@ export async function adminUploadImage(
 
     const extension = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
     const pathname = `uploads/${crypto.randomUUID()}${extension}`;
-    const blob = await uploadPresigned(pathname, file, {
+    const blob = await upload(pathname, file, {
       access: "public",
       contentType,
       handleUploadUrl: "/api/admin/upload",
